@@ -18,18 +18,23 @@ class Wibbler {
 		global $load_modules;
 		global $load_helpers;
 
-		$b = new WibblerLoader();
-		if ($b->error !== false) {
-			$this->Show404($b->error);
-		}
+		try {
+			$b = new WibblerLoader();
+			if ($b->error !== false) {
+				$this->Show404($b->error);
+			}
 
-		$main_controller = $b->controller;
-		if (method_exists($main_controller, 'init')) {
-			$main_controller->init($load_modules, $load_helpers);
-			call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
+			$main_controller = $b->controller;
+			if (method_exists($main_controller, 'init')) {
+				$main_controller->init($load_modules, $load_helpers);
+				call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
+			}
+			else {
+				throw new Exception('Class does not inherit from controller');
+			}
 		}
-		else {
-			echo 'Class does not inherit from controller';
+		catch (Exception $ex) {
+			echo $ex->getMessage();
 		}
 	}
 
