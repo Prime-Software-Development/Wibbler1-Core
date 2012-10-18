@@ -15,6 +15,15 @@ class WibblerDependencyContainer {
 	}
 
 	public function getConfig($module) {
+
+		$file = APPPATH . 'config/' . $module . '.php';
 		
+		if (!file_exists($file)) {
+			throw new \Exception('Config file not found');
+			return false;
+		}
+		include($file);
+
+		return $config;
 	}
 }

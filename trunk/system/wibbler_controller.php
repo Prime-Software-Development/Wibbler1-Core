@@ -11,14 +11,13 @@ class WibblerController {
 
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
-	 * @param type $modules
-	 * @param type $helpers 
 	 */
-	function init($modules, $helpers) {
+	function init() {
+		$this->_autoload = $this->_dependencies->getConfig('autoload');
 
-		foreach ($modules as $module)
+		foreach ($this->_autoload['modules'] as $module)
 			$this->_load_module($module, Wibbler::CORE);
-		foreach ($helpers as $helper)
+		foreach ($this->_autoload['helpers'] as $helper)
 			$this->_load_helper($helper, Wibbler::CORE);
 
 	}

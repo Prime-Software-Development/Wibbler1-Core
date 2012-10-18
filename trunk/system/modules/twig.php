@@ -13,8 +13,8 @@ class twig {
 	{
 		$this->_config = $dependencies->getConfig('twig');
 
-		$this->_template_dir = __dir__ . '/../../application/templates/';
-		$this->_cache_dir = __dir__ . '/../../cache/';
+		$this->_template_dir = $this->_config['template_dir'];
+		$this->_cache_dir = $this->_config['cache_dir'];
 
 		\Twig_Autoloader::register();
 
