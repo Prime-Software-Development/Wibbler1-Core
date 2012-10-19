@@ -93,12 +93,16 @@ class WibblerLoader {
 
 		$new_path = $path;
 		foreach ($parts as $index => $part) {
+//echo $index . ' ' . $part . '<br/>';
 			$test_path = $new_path . $part;
-//			echo "testing: " . $new_path . ".php<br/>";
+//echo $test_path . '<br/>';
+//			echo "testing: " . $test_path . ".php<br/>";
 			if (file_exists($test_path . '.php')) {
+//echo "Controller found at: " . $test_path . "<br/>";
 				$this->class_name = $part;
 				$match = true;
 				$this->url_parts = array_slice($parts, $index + 1);
+				$new_path = $test_path . '.php';
 				break;
 			}
 			elseif (is_dir($test_path)) {
@@ -113,9 +117,9 @@ class WibblerLoader {
 		}
 
 		if ($match_fail) {
-//			echo "No controller found :-(";
+			echo "No controller found :-(<br/>";
 		}
-		else {
+		elseif (!$match) {
 			$new_path = $new_path . '/' . $index_class . '.php';
 			if (file_exists($new_path)) {
 				$this->class_name = $index_class;
@@ -125,10 +129,10 @@ class WibblerLoader {
 
 		if ($match) {
 			$this->class_file = $new_path;
-//			echo "Controller " . $new_path . " found";
+//			echo "Controller " . $new_path . " found<br/>";
 		}
 		else {
-			$this->error = "No controller found :-(";
+			$this->error = "No controller found :-(<br/>";
 		}
 
 		return $match;
@@ -147,7 +151,7 @@ class WibblerLoader {
 		$this->full_class_name = $_ns . "\\" . $this->class_name;
 
 		if (class_exists($this->full_class_name)) {
-			$controller = new $this->full_class_name();
+			$controller = new $this->full_class_name(true);
 			return $controller;
 		}
 		else {

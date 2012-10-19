@@ -63,4 +63,8 @@ class urls {
 		}
 		return $result;
 	}
+
+	public function redirect($url) {
+		header('Location: ' . $this->root_url . $url);
+	}
 }
