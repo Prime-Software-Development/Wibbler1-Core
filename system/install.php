@@ -24,6 +24,9 @@ $paths = array(
 	'Modules' => array(
 		'path' => __dir__ . '/../application/modules/'
 	),
+	'Propel' => array(
+		'path' => __dir__ . '/../application/propel/'
+	),
 	'Templates' => array(
 		'path' => __dir__ . '/../application/templates/',
 		'files' => array(
