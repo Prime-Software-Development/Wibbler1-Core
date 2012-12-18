@@ -5,10 +5,18 @@ $paths = array(
 		'path' => __dir__ . '/../application/'
 	),
 	'Config' => array(
-		'path' => __dir__ . '/../application/config/'
+		'path' => __dir__ . '/../application/config/',
+		'files' => array(
+			'/config/autoload.php',
+			'/config/propel.php',
+			'/config/twig.php'
+		)
 	),
 	'Controllers' => array(
-		'path' => __dir__ . '/../application/controllers/'
+		'path' => __dir__ . '/../application/controllers/',
+		'files' => array(
+			'/controllers/welcome.php'
+		)
 	),
 	'Helpers' => array(
 		'path' => __dir__ . '/../application/helpers/'
@@ -17,7 +25,10 @@ $paths = array(
 		'path' => __dir__ . '/../application/modules/'
 	),
 	'Templates' => array(
-		'path' => __dir__ . '/../application/templates/'
+		'path' => __dir__ . '/../application/templates/',
+		'files' => array(
+			'/templates/welcome.twig'
+		)
 	)
 );
 
@@ -35,4 +46,19 @@ foreach ($paths as $index => $path) {
 			echo 'Failed!<br/>';
 		}
 	}
+
+	if (isset($path['files'])) {
+		echo "updating files<br/>";
+		foreach ($path['files'] as $file) {
+			if (!is_file(__dir__ . '/../application/' . $file)) {
+				copy(__dir__ . '/install/' . $file, __dir__ . '/../application/' . $file);
+				echo __dir__ . '/install/' . $file . '  ' . __dir__ . '/../application/' . $file . '<br/>';
+			}
+			
+		}
+	}
+}
+
+if (!is_file(__dir__ . '/../.htaccess')) {
+	copy(__dir__ . '/.htaccess', __dir__ . '/../.htaccess');
 }
