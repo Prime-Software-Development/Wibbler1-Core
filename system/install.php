@@ -1,12 +1,6 @@
 <?php
 
 $paths = array(
-	'Base' => array(
-		'path' => __dir__ . '/../',
-		'files' => array(
-			'/index.php'
-		)
-	),
 	'Application' => array(
 		'path' => __dir__ . '/../application/'
 	),
@@ -67,6 +61,9 @@ foreach ($paths as $index => $path) {
 	}
 }
 
+if (!is_file(__dir__ . '/../index.php')) {
+	copy(__dir__ . '/install/index.php', __dir__ . '/../index.php');
+}
 if (!is_file(__dir__ . '/../.htaccess')) {
 	copy(__dir__ . '/install/.htaccess', __dir__ . '/../.htaccess');
 }
