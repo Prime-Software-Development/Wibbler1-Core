@@ -1,6 +1,19 @@
 <?php
 
 $paths = array(
+	'Resources' => array(
+		'path' => __dir__ . '/../resources/'
+	),
+	'3rd Party' => array(
+		'path' => __dir__ . '/../resources/3rdparty/'
+	),
+	'Javascript' => array(
+		'path' => __dir__ . '/../resources/js/'
+	),
+	'Css' => array(
+		'path' => __dir__ . '/../resources/css/'
+	),
+
 	'Application' => array(
 		'path' => __dir__ . '/../application/'
 	),
