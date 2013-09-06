@@ -1,14 +1,15 @@
 <?php
-namespace Wibbler\User\Modules;
+namespace MyApp;
+require_once(__dir__ . '/BaseController.php');
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$_ns = '\\Wibbler\\User\\Modules';
+$_ns = '\\MyApp';
 
-class Welcome extends \Wibbler\WibblerController {
+class Welcome extends \MyApp\BaseController {
 
 	function index() {
 		$data = array('PageTitle' => 'Hello world');
 
-		$this->twig->display('welcome.twig', $data);
+		$this->ShowTwig('welcome.twig', $data);
 	}
 
 	public function fred($banana) {
