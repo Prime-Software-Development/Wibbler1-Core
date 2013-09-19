@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+	{% block SearchBar %}{% include "search_bar/search_bar_nobuttons.twig" %}{% endblock %}
+	<div class="panel_content">
+	{% block search_pre %}
+    {% endblock %}
+	{% block search_body %}
+	{% endblock %}
+	{% block search_after %}
+    {% endblock %}
+    </div>
+{% endblock %}
