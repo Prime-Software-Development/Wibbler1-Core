@@ -6,6 +6,16 @@ $_ns = '\\MyApp';
 class BaseController extends \Wibbler\WibblerController {
 
 	/**
+	 * Constructor
+	 */
+	function __construct() {
+
+		// If session doesn't exist - start one
+		if (!isset($_SESSION))
+			session_start();
+	}
+
+	/**
 	 * Generates the html to either render or display
 	 * @param type $template
 	 * @param type $data

@@ -7,12 +7,18 @@ $_ns = '\\MyApp';
 class Welcome extends \MyApp\BaseController {
 
 	function index() {
+
+		$action = $this->input->post('login_action');
+
+		switch ($action) {
+			case 'login':
+				//$_SESSION
+				break;
+		}
+
+
 		$data = array('PageTitle' => 'Hello world');
 
 		$this->ShowTwig('welcome.twig', $data);
-	}
-
-	public function fred($banana) {
-		echo "Hello fred " . $banana;
 	}
 }
