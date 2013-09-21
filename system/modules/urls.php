@@ -28,7 +28,7 @@ class urls {
 
 	private function _get_current_uri_string() {
 		$request_uri = $_SERVER['REQUEST_URI'];
-		$result = substr($request_uri, strpos($request_uri, $this->root_uri));
+		$result = substr($request_uri, strpos($request_uri, $this->root_uri) + 1);
 		return $result;
 	}
 
@@ -73,6 +73,6 @@ class urls {
 	}
 
 	public function redirect($url) {
-		header('Location: ' . $this->root_url . $url);
+		header('Location: ' . $this->http . '://' . $this->server_name . $this->root_url . $url);
 	}
 }

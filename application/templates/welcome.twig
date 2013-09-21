@@ -1,8 +1,21 @@
-<html>
-	<head>
-		<title>{{ PageTitle }}</title>
-	</head>
-	<body>
-		The world is round!
-	</body>
-</html>
+{% extends "base.twig" %}
+
+{% block Body %}
+<div>
+	<form method="post">
+		<input type="hidden" name="login_action" value="login" />
+		<p>
+			<label>Username</label>
+			<input type="text" name="username" />
+		</p>
+		<p>
+			<label>Password</label>
+			<input type="password" name="password" />
+		</p>
+
+		<p>
+			<input type="submit" value="Login">
+		</p>
+	</form>
+</div>
+{% endblock %}

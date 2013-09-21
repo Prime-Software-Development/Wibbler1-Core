@@ -3,7 +3,7 @@ namespace MyApp;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(__dir__ . '/BaseController.php');
 
-class BaseSearchDataController extends TRG_DataController {
+class BaseSearchDataController extends BaseDataController {
 	
 	/**
 	 * Autocomplete function - allows for searching using a single key field
