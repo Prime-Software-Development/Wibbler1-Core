@@ -22,14 +22,21 @@ class urls {
 
 		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$this->server_name = $_SERVER['SERVER_NAME'];
-		$this->root_url = $this->_get_current_url();
+		$this->root_url = $this->_get_current_root_url();
+		$this->request_uri = $this->_get_current_uri_string();
+	}
+
+	private function _get_current_uri_string() {
+		$request_uri = $_SERVER['REQUEST_URI'];
+		$result = substr($request_uri, strpos($request_uri, $this->root_uri));
+		return $result;
 	}
 
 	/**
 	 * Gets the current url for the root of the system
 	 * @return string
 	 */
-	private function _get_current_url() {
+	private function _get_current_root_url() {
 		$requested = $_SERVER['REQUEST_URI'];
 		$script = $_SERVER['SCRIPT_NAME'];
 		$result = '';
@@ -57,7 +64,8 @@ class urls {
 				break;
 			}
 		}
-		
+
+		// If there isn't a / on the end
 		if (strrpos($result, "/") != strlen($result)) {
 			$result = substr($result, 0, strrpos($result, "/") + 1);
 		}
