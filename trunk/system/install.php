@@ -44,7 +44,17 @@ $paths = array(
 	'Templates' => array(
 		'path' => __dir__ . '/../application/templates/',
 		'files' => array(
-			'/templates/welcome.twig'
+			'/templates/welcome.twig',
+			'/templates/base.twig'
+		)
+	),
+	'Search Templates' => array(
+		'path' => __dir__ . '/../application/templates/_search',
+		'files' => array(
+			'/templates/_search/base_search.twig',
+			'/templates/_search/base_search_body.twig',
+			'/templates/_search/base_search_empty.twig',
+			'/templates/_search/base_search_results.twig',
 		)
 	)
 );
