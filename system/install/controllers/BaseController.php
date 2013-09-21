@@ -10,6 +10,8 @@ class BaseController extends \Wibbler\WibblerController {
 	 */
 	function __construct() {
 
+		parent::__construct();
+
 		// If session doesn't exist - start one
 		if (!isset($_SESSION))
 			session_start();
