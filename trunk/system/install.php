@@ -29,7 +29,9 @@ $paths = array(
 		'path' => __dir__ . '/../application/controllers/',
 		'files' => array(
 			'/controllers/BaseController.php',
-			'/controllers/welcome.php'
+			'/controllers/welcome.php',
+			'/controllers/BaseSearchController.php',
+			'/controllers/BaseSearchDataController.php'
 		)
 	),
 	'Helpers' => array(

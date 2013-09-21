@@ -3,13 +3,13 @@ namespace MyApp;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(__dir__ . '/BaseController.php');
 
-class BaseSearchController extends TRG_Controller {
+class BaseSearchController extends BaseController {
 
 	/**
 	 * Index function - shows the default search screen - should not be overridden
 	 */
 	public function index() {
-
+echo $this->urls->request_uri;die();
 		// Initialise the search options
 		$this->_init_search();
 

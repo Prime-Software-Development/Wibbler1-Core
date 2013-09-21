@@ -6,7 +6,7 @@ $_ns = '\\MyApp';
 
 class Welcome extends \MyApp\BaseController {
 
-	$users = array(
+	var $users = array(
 		array("id" => 1, "username" => "admin", "password" => "password")
 	);
 
@@ -19,12 +19,12 @@ class Welcome extends \MyApp\BaseController {
 		switch ($action) {
 			case 'login':
 
-				foreach ($users as $user) {
+				foreach ($this->users as $user) {
 					if ($username == $user["username"] && $password = $user["password"]) {
 						$_SESSION["user_id"] = $user["id"];
 
 						// Set the default redirect path
-						$redirect_path = '/dashboard/';
+						$redirect_path = '/user/';
 						// If there is a session variable with the calling url in it
 						if (isset($_SESSION['calling_url'])) {
 							// Change where to redirect to so the user gets to where they wanted
