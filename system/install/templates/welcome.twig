@@ -3,7 +3,7 @@
 {% block Body %}
 <div>
 	<form method="post">
-		<input type="hidden" name="login_action" />
+		<input type="hidden" name="login_action" value="login" />
 		<p>
 			<label>Username</label>
 			<input type="text" name="username" />
@@ -11,6 +11,10 @@
 		<p>
 			<label>Password</label>
 			<input type="password" name="password" />
+		</p>
+
+		<p>
+			<input type="submit" value="Login">
 		</p>
 	</form>
 </div>

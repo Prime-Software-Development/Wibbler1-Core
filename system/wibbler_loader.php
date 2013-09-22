@@ -43,6 +43,11 @@ class WibblerLoader {
 	 */
 	var $controller = null;
 
+	/**
+	 * The path to the controller
+	 */
+	var $controller_path;
+
 	function __construct() {
 
 		$path_parts = $this->init();
@@ -53,11 +58,20 @@ class WibblerLoader {
 		if(!$this->check_path($initial_path, $path_parts))
 			return;
 
+		// If the controller path isn't the root
+		if ($this->controller_path != '/') {
+			// Work out the real path
+			$this->controller_path = substr($this->controller_path, strlen($initial_path));
+		}
+
 		// Try to load the controller
 		$this->controller = $this->check_class();
 		// If the loading has failed - return
 		if ($this->controller === false)
 			return;
+
+		// Set the path to the controller within the controller
+		$this->controller->controller_path = $this->controller_path;
 
 		// Check the method exists within the controller
 		if ($this->check_method() === false)
@@ -87,6 +101,7 @@ class WibblerLoader {
 	private function check_path($path, $parts) {
 
 		global $index_class;
+		$this->controller_path = "/";
 		
 		$match = false;
 		$match_fail = false;
@@ -108,6 +123,7 @@ class WibblerLoader {
 			elseif (is_dir($test_path)) {
 //				echo "IsDir: " . $new_path . "<br/>";
 				$new_path = $test_path . '/';
+				$this->controller_path = $new_path;
 			}
 			else {
 				$match_fail = true;
@@ -118,6 +134,7 @@ class WibblerLoader {
 
 		if ($match_fail) {
 			echo "No controller found :-(<br/>";
+			return false;
 		}
 		elseif (!$match) {
 			$new_path = $new_path . '/' . $index_class . '.php';
