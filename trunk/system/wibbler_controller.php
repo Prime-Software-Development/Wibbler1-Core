@@ -4,6 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class WibblerController {
 	private $_dependencies;
+	public $controller_path;
 
 	function __construct() {
 		global $dependencies;

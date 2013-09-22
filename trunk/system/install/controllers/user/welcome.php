@@ -6,6 +6,8 @@ $_ns = '\\MyApp\\User';
 
 class Welcome extends \MyApp\BaseSearchController {
 
+	var $end_controller_path = __dir__;
+
 	/**
 	 * Initialises features required for the search screen - can be overridden
 	 * Extra data should be added to the $this->data array

@@ -32,6 +32,11 @@ class urls {
 		return $result;
 	}
 
+	public function split_uri_from_path($request_uri) {
+		$result = substr($request_uri, strpos($request_uri, BASEPATH) + strlen(BASEPATH) + 1);
+		return $result;
+	}
+
 	/**
 	 * Gets the current url for the root of the system
 	 * @return string

@@ -1,0 +1,51 @@
+{% extends SubPage ? "_search/base_search_empty.twig" : "_search/base_search.twig" %}
+
+{% set forms = "_form_elements/" %}
+
+{% block search_body %}
+	{% if default_sort_column is not defined %}{% set default_sort_column = 0 %}{% endif %}
+	<div class="SearchBlock"
+			data-search_path="{{ user_info.include_path }}{{ search_path }}"
+			data-detail_path="{{ user_info.include_path }}{{ detail_path }}"
+			data-save_path="{{ user_info.include_path }}{{ save_path }}"
+			data-manage_path="{% if manage_path %}{{ user_info.include_path }}{{ manage_path }}{% endif %}"
+			data-manager="{{ jsObject }}"
+			data-search_results_width="{{ search_results_width }}"
+			data-custom_item_selector={% if custom_item_selector is not defined %}false{% else %}{{ custom_item_selector}}{%endif %} {# is set to true then the plugin won't try to load another page or dialog - the user must implement the viewing functionality (ie for showing driver's passports) #}
+			data-use_datatable={% if use_datatable is defined %}{{ use_datatable }}{% else %}true{% endif %}
+	>
+		<div class="SearchHeader">
+			<div class="frmSearch" >
+				{% block SearchOptions %}
+					<div class="SearchOptions">
+						<label>Name</label>
+						<input type="text" name="SearchName" />
+						<div class="ClearAll"></div>
+					</div>
+				{% endblock %}
+
+				<div class="SearchButtons">
+					{% block SearchButtons %}
+						<input type='button' class='btnSearch button' value='Search' />
+						<div class="ClearAll"></div>
+						<input type='button' class='btnAddItem button' value='Add User'/>
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+
+		<div class="search_results" style="clear:both; padding-top:20px;" >
+			{% include "_search/base_search_results.twig" %}
+		</div>
+
+		<div class='dlgDetails DialogForm'>
+			<div class='frmDialog' target='' method='POST'>
+				{% block DialogContents %}
+				{% endblock %}
+			</div>
+		</div>
+
+		{% block ExtraDialogs %}
+		{% endblock %}
+	</div>
+{% endblock %}
