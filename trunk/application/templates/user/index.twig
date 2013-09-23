@@ -1,1 +1,10 @@
-{% extends "_search/base_search.twig" %}
+{% if SubPage is not defined %}
+	{% set SubPage = false %}
+{% endif %}
+
+{% set h_one = 'Manage Users' %}
+{% set PageTitle = 'Users' %}
+{% set search_path = 'user/data/search/' %}
+{% set manage_path = 'user/details/manage/' %}
+
+{% extends "user/search_full.twig" %}

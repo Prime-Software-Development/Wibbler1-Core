@@ -1,0 +1,19 @@
+{% extends "_search/base_search_body.twig" %}
+{% block SearchOptions %}
+	<input type="hidden" name="SearchUserClientId" class="ClientId" value="{{ client.id }}"/>
+	<div class="SearchOptions">
+
+	<p>
+		<label class='Caption tooltip' title='User&rsquo;s name' for="SearchUserName">User</label>
+		<input type='text' name='SearchUserName' id='SearchUserName' />
+	</p>
+
+	</div>
+{% endblock %}
+
+{% block SearchButtons %}
+	<div class="SearchButtons">
+		<p><input type='button' class='btnSearch button_modern tooltip' value='User Search' title='Search for users'/></p>
+		<p><input type='button' class='btnAddItem button_modern tooltip' value='Add User' title='Add a new User'/></p>
+	</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% set scripts = ['../js/hr/user/search.js', '../js/hr/user/manage.js'] %}
+{% set styles = ['layout.css'] %}
+
+{# extends "_layouts/standard.twig" #}
+{% extends "admin_nav.html" %}
+
+{% set SubPage = true %}
+{% set search_path = 'hr/user/data/search/' %}
+{% set manage_path = 'hr/user/details/manage/' %}
+{% set save_path = 'hr/user/data/save/' %}
+{% set exclude_legacy_css = true %}
+
+
+{% set h_one %}<a href="{{ user_info.root_path }}hr/user/details/">Manage Users</a> &gt; {{ user.name }}{% endset %}
+
+{% block SearchBar %}
+{% include "hr/user/search_bar.twig" %}{% endblock %}
+
+  
+{% block body %}
+
+<div class="NewLayout panel_content">
+<form id="form_user">
+	<div class="ui-widget-content ui-corner-all" style="padding: 10px;">
+		<input type='hidden' name='UserId' class='UserDetailsId' value='{{user.id}}'>
+
+		<p>
+		  <label class='Caption'>Name</label>
+		  <input type='text' name='Name' class='UserDetailsName required' value='{{user.name}}'>
+		</p>
+		<p>
+		  <label class='Caption'>E-Mail Address</label>
+		  <input type='text' name='UserName' class='UserDetailsUserName required' value='{{user.username}}'>
+		</p>
+		<p>
+		  <label class='Caption'>New Password</label>
+		  <input type='password' name='Password' class='UserDetailsPassword'>
+		</p>
+		<p>
+		  <label class='Caption'>Remove User</label>
+		  <input type='checkbox' name='RemoveUser' class='UserDetailsRemoveUser radio' value="1">
+		</p>
+		<p>
+
+		  <label class='Caption'>Auto Logout After</label>
+		  <select name="SessionLength" class="UserDetailsSessionLength">
+			<option {% if user.login_timeout == 5 %} selected {% endif %} value="5">5 Minutes</option>
+			<option {% if user.login_timeout == 10 %} selected {% endif %} value="10">10 Minutes</option>
+			<option {% if user.login_timeout == 15 %} selected {% endif %} value="15">15 Minutes</option>
+			<option {% if user.login_timeout == 30 %} selected {% endif %} value="30">30 Minutes</option>
+			<option {% if user.login_timeout == 45 %} selected {% endif %} value="45">45 Minutes</option>
+			<option {% if user.login_timeout == 60 %} selected {% endif %} value="60">60 Minutes</option>
+			<option {% if user.login_timeout == 120 %} selected {% endif %} value="120">2 Hours</option>
+			<option {% if user.login_timeout == 240 %} selected {% endif %} value="240">4 Hours</option>
+			<option {% if user.login_timeout == 480 %} selected {% endif %} value="480">8 Hours</option>
+		  </select>
+		</p>
+
+		<p>
+			<label class='Caption'>Default Depot</label>
+			<select name="DefaultDepot" class="UserDetailsDefaultDepot">
+				<option value="0">Select a Depot</option>
+				{% for depot in depots %}
+				  <option {% if depot.default %} selected {% endif %} value="{{ depot.id }}">{{ depot.name }}</option>
+				{% endfor %}
+			</select>
+		</p>
+	</div>
+
+	<div class="Accordion">
+		<h3>Existing Permissions</h3>
+		<div>
+			<p>
+				<label>Depots</label>
+				<div>{{ user.group_depots|replace({",": ", "}) }}</div>
+			</p>
+			<p>
+				<label>Security Rights</label>
+				<div>{{ user.group_securityrights|replace({",": ", "}) }}</div>
+			</p>
+		</div>
+		
+		<h3>Group Membership</h3>
+		<div>
+			<table class="ListValues">
+				<thead class='ui-widget-header'>
+					<tr>
+						<th>Group</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody class="UserUsergroupsList">
+
+				{% for user_group in user_groups %}
+					<tr class="user_group_is_member_{{ user_group.is_member }}">
+						<td>
+						  <label class="label_checkbox"><input {% if user_group.is_member %} checked="checked" {% endif %} type="checkbox" name="user_group_id_member[{{ user_group.Id}}]" />{{ user_group.Name }}</label>
+						</td>
+						<td>
+						  {{ user_group.Type}}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</form>
+</div>
+
+{% endblock %}
