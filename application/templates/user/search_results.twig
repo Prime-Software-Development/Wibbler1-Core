@@ -1,0 +1,21 @@
+{% extends "_search/base_search_results.twig" %}
+
+{% block Header %}
+	<th>Name</th>
+	<th>EMail Address</th>
+	<th>Last Access</th>
+	<th>Auto Logout</th>
+	<th>Security Group</th>
+	<th>Rights</th>
+	<th>Depots</th>
+{% endblock %}
+
+{% block Row %}
+	<td class="cellUserName itemSelector">{{ Row.name }}</td>
+	<td>{{ Row.username }}</td>
+	<td>{{ Row.last_page_view }}</td>
+	<td class="right_align">{{ Row.login_timeout }} mins</td>
+	<td>{{ Row.membership_list }}</td>
+	<td>{{ Row.group_securityrights|slice(0,100) }}{% if Row.group_securityrights|length > 100 %}...{% endif %}</td>
+	<td>{{ Row.group_depots|slice(0,100) }}{% if Row.group_depots|length > 100 %}...{% endif %}</td>
+{% endblock %}
