@@ -46,13 +46,13 @@ class BaseController extends \Wibbler\WibblerController {
 	 * @param type $data
 	 * @return type
 	 */
-	private function _GenerateTwig($template, $data) {
-		$data['system']['paths']['root'] = $this->urls->root_url;
-		$data['system']['paths']['resources'] = $this->urls->root_url . 'resources/';
-		$data['system']['paths']['css'] = $this->urls->root_url . 'resources/css/';
-		$data['system']['paths']['jscript'] = $this->urls->root_url . 'resources/js/';
+	private function _GenerateTwig($template) {
+		$this->data['system']['paths']['root'] = $this->urls->get_full_url();
+		$this->data['system']['paths']['resources'] = $this->urls->root_url . 'resources/';
+		$this->data['system']['paths']['css'] = $this->urls->root_url . 'resources/css/';
+		$this->data['system']['paths']['jscript'] = $this->urls->root_url . 'resources/js/';
 
-		return $this->twig->render($template, $data);
+		return $this->twig->render($template, $this->data);
 	}
 
 	/**
@@ -60,8 +60,8 @@ class BaseController extends \Wibbler\WibblerController {
 	 * @param type $template
 	 * @param type $data
 	 */
-	function RenderTwig($template, $data) {
-		return $this->_GenerateTwig($template, $data);
+	function RenderTwig($template) {
+		return $this->_GenerateTwig($template);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class BaseController extends \Wibbler\WibblerController {
 	 * @param type $template
 	 * @param type $data
 	 */
-	function ShowTwig($template, $data) {
-		echo $this->_GenerateTwig($template, $data);
+	function ShowTwig($template) {
+		echo $this->_GenerateTwig($template);
 	}
 }

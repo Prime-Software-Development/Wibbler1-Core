@@ -30,10 +30,10 @@ class Wibbler {
 				call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
 			}
 			else {
-				throw new Exception('Class does not inherit from controller');
+				$this->Show404('Class does not inherit from controller');
 			}
 		}
-		catch (Exception $ex) {
+		catch (\Exception $ex) {
 			echo $ex->getMessage();
 		}
 	}

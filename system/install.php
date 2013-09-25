@@ -34,6 +34,13 @@ $paths = array(
 			'/controllers/BaseSearchDataController.php'
 		)
 	),
+	'SampleControllers' => array(
+		'path' => __dir__ . '/../application/controllers/user/',
+		'files' => array(
+			'/controllers/user/data.php',
+			'/controllers/user/welcome.php'
+		)
+	),
 	'Helpers' => array(
 		'path' => __dir__ . '/../application/helpers/'
 	),
@@ -46,8 +53,11 @@ $paths = array(
 	'Templates' => array(
 		'path' => __dir__ . '/../application/templates/',
 		'files' => array(
+			'/templates/base.twig',
+			'/templates/footer.twig',
+			'/templates/navigation.twig',
+			'/templates/secured.twig',
 			'/templates/welcome.twig',
-			'/templates/base.twig'
 		)
 	),
 	'Search Templates' => array(
@@ -57,8 +67,18 @@ $paths = array(
 			'/templates/_search/base_search_body.twig',
 			'/templates/_search/base_search_empty.twig',
 			'/templates/_search/base_search_results.twig',
+			'/templates/_search/manage.twig',
+			'/templates/_search/search_bar.twig'
+		)
+	),
+	'Sample Templates' => array(
+		'path' => __dir__ . '/../application/templates/user',
+		'files' => array(
+			'/templates/user/index.twig',
+			'/templates/user/search_results.twig'
 		)
 	)
+
 );
 
 foreach ($paths as $index => $path) {
