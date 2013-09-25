@@ -76,6 +76,6 @@ class urls {
 		return $this->http . '://' . $this->server_name . $this->root_url;
 	}
 	public function redirect($url) {
-		header('Location: ' . $this->get_full_url . $url);
+		header('Location: ' . $this->get_full_url() . $url);
 	}
 }
