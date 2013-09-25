@@ -45,8 +45,8 @@ class Welcome extends \MyApp\BaseController {
 		}
 
 
-		$data = array('PageTitle' => 'Hello world');
+		$this->data = array('PageTitle' => 'Hello world');
 
-		$this->ShowTwig('welcome.twig', $data);
+		$this->ShowTwig('welcome.twig');
 	}
 }

@@ -23,19 +23,14 @@ class urls {
 		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$this->server_name = $_SERVER['SERVER_NAME'];
 		$this->root_url = $this->_get_current_root_url();
-		$this->request_uri = $this->_get_current_uri_string();
+//		$this->request_uri = $this->_get_current_uri_string();
 	}
 
-	private function _get_current_uri_string() {
+	/*private function _get_current_uri_string() {
 		$request_uri = $_SERVER['REQUEST_URI'];
 		$result = substr($request_uri, strpos($request_uri, $this->root_uri) + 1);
 		return $result;
-	}
-
-	public function split_uri_from_path($request_uri) {
-		$result = substr($request_uri, strpos($request_uri, BASEPATH) + strlen(BASEPATH) + 1);
-		return $result;
-	}
+	}*/
 
 	/**
 	 * Gets the current url for the root of the system
@@ -77,7 +72,10 @@ class urls {
 		return $result;
 	}
 
+	public function get_full_url() {
+		return $this->http . '://' . $this->server_name . $this->root_url;
+	}
 	public function redirect($url) {
-		header('Location: ' . $this->http . '://' . $this->server_name . $this->root_url . $url);
+		header('Location: ' . $this->get_full_url . $url);
 	}
 }

@@ -8,12 +8,23 @@ class BaseSearchController extends BaseController {
 	var $end_controller_path = '';
 
 	/**
+	 * Constructor
+	 */
+	function __construct() {
+
+		parent::__construct();
+	}
+
+	/**
 	 * Index function - shows the default search screen - should not be overridden
 	 */
 	public function index() {
 
 		// Initialise the search options
 		$this->_init_search();
+
+		// Note this isn't the manager screen for twig
+		$this->data['IsManager'] = false;
 
 		// Output to twig
 		$this->ShowTwig($this->controller_path . "index.twig");
@@ -38,8 +49,11 @@ class BaseSearchController extends BaseController {
 		// Initialise the manage options
 		$this->_init_manage($id);
 
+		// Note this isn't the manager screen for twig
+		$this->data['IsManager'] = true;
+
 		// Output to twig
-		$this->ShowTwig($this->controller_path . "manage.twig");
+		$this->ShowTwig($this->controller_path . "index.twig");
 	}
 
 	/**

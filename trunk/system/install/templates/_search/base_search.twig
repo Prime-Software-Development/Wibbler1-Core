@@ -1,14 +1,29 @@
-{% extends "base.twig" %}
+{% extends "secured.twig" %}
 
-{% block Body %}
+{% if extra_js_files is defined %}
+	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js']|merge(extra_js_files) %}
+{% else %}
+	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js'] %}
+{% endif %}
 
-	{% block SearchBar %}{# include "search_bar/search_bar_nobuttons.twig" #}{% endblock %}
+{% block SearchBar %}
+	{% include "_search/search_bar.twig" %}
+{% endblock %}
+
+{% block Contents %}
 	<div class="panel_content">
-	{% block search_pre %}
-	{% endblock %}
-	{% block search_body %}
-	{% endblock %}
-	{% block search_after %}
-    {% endblock %}
-    </div>
+
+		{# Allows text to be displayed above the main search area #}
+		{% block search_pre %}
+		{% endblock %}
+
+		{# Main search area - results will be within the block #}
+		{% block search_body %}
+		{% endblock %}
+
+		{# Allows text to be displayed below the main search area #}
+		{% block search_after %}
+		{% endblock %}
+
+	</div>
 {% endblock %}

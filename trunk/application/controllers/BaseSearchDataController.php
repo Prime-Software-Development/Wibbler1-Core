@@ -3,7 +3,7 @@ namespace MyApp;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(__dir__ . '/BaseController.php');
 
-class BaseSearchDataController extends BaseDataController {
+class BaseSearchDataController extends BaseController {
 	
 	/**
 	 * Autocomplete function - allows for searching using a single key field
@@ -38,10 +38,10 @@ class BaseSearchDataController extends BaseDataController {
 	 */
 	public function search() {
 		// Run the actual search
-		$this->data = $this->_search(false);
+		$this->_search(false);
 
 		// Output to twig
-		$this->ShowTwig("search_results");
+		$this->ShowTwig($this->controller_path . "search_results.twig");
 	}
 
 	/**

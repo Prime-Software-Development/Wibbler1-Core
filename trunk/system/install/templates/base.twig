@@ -13,10 +13,14 @@
 		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js"></script>
 
 		<script type="text/javascript" src="{{ system.paths.jscript }}script.js"></script>
-		<script type="text/javascript" src="{{ system.paths.jscript }}search.js"></script>
 
-		{% block Scripts %}
-		{% endblock %}
+		{% for js_file in js_files %}
+			<script type="text/javascript" src="{{ system.paths.jscript }}{{ js_file }}"></script>
+		{% endfor %}
+
+		<script>
+			path_include = "{{ system.paths.root }}";
+		</script>
 	</head>
 	<body>
 		{% block Body %}
