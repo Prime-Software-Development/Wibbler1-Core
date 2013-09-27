@@ -39,4 +39,16 @@ class twig {
 
 		$template->display($data);
 	}
+	/**
+	 * Adds a new filter function to the twig environment
+	 * @param type $name Name of the filter
+	 * @param type $filter Function to call
+	 */
+	public function add_filter($name, $filter) {
+		$this->_twig->addFilter($name, new \Twig_Filter_Function($filter));
+	}
+
+	public function set_number_format($decimal_places = 0, $decimal_point_char = ".", $thousand_seperator = ",") {
+		$this->_twig->getExtension('core')->setNumberFormat($decimal_places, $decimal_point_char, $thousand_seperator);
+	}
 }

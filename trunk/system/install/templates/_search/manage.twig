@@ -6,11 +6,13 @@
 	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js'] %}
 {% endif %}
 
-{% block SearchBar %}
-	{% include "_search/search_bar.twig" %}
-{% endblock %}
+{% block MainContentBlock %}
+	{% include "_search/settings.twig" with {'ContainerClass': 'Manage'} %}
+		{% block SearchBar %}
+			{% include "_search/search_bar.twig" %}
+		{% endblock %}
 
-{% block Contents %}
-	{% block ManageContents %}
-	{% endblock %}
+		{% block ManageContents %}
+		{% endblock %}
+	</div>
 {% endblock %}

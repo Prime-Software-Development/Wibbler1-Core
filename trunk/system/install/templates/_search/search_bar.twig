@@ -14,7 +14,10 @@
 		{% endblock %}
 
 		{% block SearchBarFullResults %}
-			<div id="panel_full_search">
+			<div id="panel_full_search" style="display: none;">
+				{% set IsManager = false %}
+				{% set SubPage = true %}
+				{% include DataPath ~ "/index.twig" %}
 			</div>
 		{% endblock %}
 
