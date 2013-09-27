@@ -3,34 +3,26 @@
 {% extends SubPage ? "_search/base_search_empty.twig" : "_search/base_search.twig" %}
 
 {% block search_body %}
-	<div class="SearchBlock"
-			data-search_path="{{ user_info.include_path }}{{ DataPath }}/data/search/"
-			data-manage_path="{{ user_info.include_path }}{{ DataPath }}/welcome/manage/"
-			data-manager="{{ jsObject }}"
-			data-custom_item_selector={% if custom_item_selector is not defined %}false{% else %}{{ custom_item_selector}}{%endif %} {# is set to true then the plugin won't try to load another page or dialog - the user must implement the viewing functionality (ie for showing driver's passports) #}
-	>
-		<div class="SearchHeader">
-			<div class="frmSearch" >
+	<div class="SearchHeader">
+		<div class="frmSearch" >
 
-				{% block SearchOptions %}
-					<div class="SearchOptions">
-						<label>Name</label>
-						<input type="text" name="SearchName" />
-						<div class="ClearAll"></div>
-					</div>
-				{% endblock %}
-
-				<div class="SearchButtons">
-					{% block SearchButtons %}
-					{% endblock %}
+			{% block SearchOptions %}
+				<div class="SearchOptions">
+					<label>Name</label>
+					<input type="text" name="SearchName" />
+					<div class="ClearAll"></div>
 				</div>
+			{% endblock %}
 
+			<div class="SearchButtons">
+				{% block SearchButtons %}
+				{% endblock %}
 			</div>
-		</div>
 
-		<div class="search_results" style="clear:both; padding-top:20px;" >
-			{#{% include "_search/base_search_results.twig" %}#}
 		</div>
+	</div>
 
+	<div class="search_results" style="clear:both; padding-top:20px;" >
+		{#{% include "_search/base_search_results.twig" %}#}
 	</div>
 {% endblock %}

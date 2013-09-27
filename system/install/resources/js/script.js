@@ -1,4 +1,4 @@
-var CMSManager = {
+var SystemManager = {
 	properties: {
 		is_ie6: false
 	},
@@ -10,6 +10,7 @@ var CMSManager = {
 		t.init_events();
 
 		$('.SearchBlock').searchBlockManager();
+		$('.ManageBlock').manageBlockManager();
 	},
 
 	init_style: function() {
@@ -30,9 +31,19 @@ var CMSManager = {
 	init_events: function(){
 		var t = this;
 		var p = t.properties;
+	},
+
+	blockUI: function(message) {
+		$.blockUI({ message: message });
+	},
+	unblockUI: function() {
+		$.unblockUI();
+	},
+	informUI: function(message) {
+		$.growlUI('Notification', message);
 	}
 }
 
 $(document).ready(function(){
-	CMSManager.init();
+	SystemManager.init();
 });

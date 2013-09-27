@@ -2,80 +2,84 @@
 
 $paths = array(
 	'Resources' => array(
-		'path' => __dir__ . '/../resources/'
+		'path' => '/resources/'
 	),
 	'3rd Party' => array(
-		'path' => __dir__ . '/../resources/3rdparty/'
+		'path' => '/resources/3rdparty/'
 	),
 	'Javascript' => array(
-		'path' => __dir__ . '/../resources/js/'
+		'path' => '/resources/js/',
+		'files' => array(
+			'script.js',
+			'search.js'
+		)
 	),
 	'Css' => array(
-		'path' => __dir__ . '/../resources/css/'
+		'path' => '/resources/css/'
 	),
 
 	'Application' => array(
-		'path' => __dir__ . '/../application/'
+		'path' => '/application/'
 	),
 	'Config' => array(
-		'path' => __dir__ . '/../application/config/',
+		'path' => '/application/config/',
 		'files' => array(
-			'/config/autoload.php',
-			'/config/propel.php',
-			'/config/twig.php'
+			'autoload.php',
+			'propel.php',
+			'twig.php'
 		)
 	),
 	'Controllers' => array(
-		'path' => __dir__ . '/../application/controllers/',
+		'path' => '/application/controllers/',
 		'files' => array(
-			'/controllers/BaseController.php',
-			'/controllers/welcome.php',
-			'/controllers/BaseSearchController.php',
-			'/controllers/BaseSearchDataController.php'
+			'BaseController.php',
+			'welcome.php',
+			'BaseSearchController.php',
+			'BaseSearchDataController.php'
 		)
 	),
 	'SampleControllers' => array(
-		'path' => __dir__ . '/../application/controllers/user/',
+		'path' => '/application/controllers/user/',
 		'files' => array(
-			'/controllers/user/data.php',
-			'/controllers/user/welcome.php'
+			'data.php',
+			'welcome.php'
 		)
 	),
 	'Helpers' => array(
-		'path' => __dir__ . '/../application/helpers/'
+		'path' => '/application/helpers/'
 	),
 	'Modules' => array(
-		'path' => __dir__ . '/../application/modules/'
+		'path' => '/application/modules/'
 	),
 	'Propel' => array(
-		'path' => __dir__ . '/../application/propel/'
+		'path' => '/application/propel/'
 	),
 	'Templates' => array(
-		'path' => __dir__ . '/../application/templates/',
+		'path' => '/application/templates/',
 		'files' => array(
-			'/templates/base.twig',
-			'/templates/footer.twig',
-			'/templates/navigation.twig',
-			'/templates/secured.twig',
-			'/templates/welcome.twig',
+			'base.twig',
+			'footer.twig',
+			'navigation.twig',
+			'secured.twig',
+			'welcome.twig',
 		)
 	),
 	'Search Templates' => array(
-		'path' => __dir__ . '/../application/templates/_search',
+		'path' => '/application/templates/_search/',
 		'files' => array(
-			'/templates/_search/base_search.twig',
-			'/templates/_search/base_search_body.twig',
-			'/templates/_search/base_search_empty.twig',
-			'/templates/_search/base_search_results.twig',
-			'/templates/_search/manage.twig',
-			'/templates/_search/search_bar.twig'
+			'base_search.twig',
+			'base_search_body.twig',
+			'base_search_empty.twig',
+			'base_search_results.twig',
+			'manage.twig',
+			'search_bar.twig'
 		)
 	),
 	'Sample Templates' => array(
-		'path' => __dir__ . '/../application/templates/user',
+		'path' => '/application/templates/user/',
 		'files' => array(
-			'/templates/user/index.twig',
-			'/templates/user/search_results.twig'
+			'index.twig',
+			'search_results.twig'
 		)
 	)
 
@@ -83,12 +87,15 @@ $paths = array(
 
 foreach ($paths as $index => $path) {
 	echo $index;
-	if (is_dir($path['path'])) {
+
+	$dest_dir = __dir__ . '/../' . $path['path'];
+
+	if (is_dir($dest_dir)) {
 		echo ': OK<br/>';
 	}
 	else {
 		echo ': Missing - ';
-		if (mkdir($path['path'])) {
+		if (mkdir($dest_dir)) {
 			echo 'Created<br/>';
 		}
 		else {
@@ -99,9 +106,12 @@ foreach ($paths as $index => $path) {
 	if (isset($path['files'])) {
 		echo "updating files<br/>";
 		foreach ($path['files'] as $file) {
-			if (!is_file(__dir__ . '/../application/' . $file)) {
-				copy(__dir__ . '/install/' . $file, __dir__ . '/../application/' . $file);
-				echo __dir__ . '/install/' . $file . '  ' . __dir__ . '/../application/' . $file . '<br/>';
+			$to_file_name = __dir__ . '/..' . $path['path'] . $file;
+			$from_file_name = __dir__ . '/install' . $path['path'] . $file;
+
+			if (!is_file($to_file_name)) {
+				copy($from_file_name, $to_file_name);
+				echo 'Copied from: ' . $from_file_name . '  to:' . $to_file_name . '<br/>';
 			}
 		}
 	}

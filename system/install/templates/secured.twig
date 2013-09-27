@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% set js_files = ['search.js'] %}
+{% set js_files = ['search.js', 'manage.js'] %}
 {% if extra_js_files is defined %}
 	{% set js_files = js_files|merge(extra_js_files) %}
 {% endif %}
@@ -10,10 +10,7 @@
 		{% include "navigation.twig" %}
 	{% endblock %}
 
-	{% block SearchBar %}
-	{% endblock %}
-
-	{% block Contents %}
+	{% block MainContentBlock %}
 	{% endblock %}
 
 	{% block Footer %}

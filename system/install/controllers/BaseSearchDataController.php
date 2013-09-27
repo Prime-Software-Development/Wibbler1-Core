@@ -13,12 +13,12 @@ class BaseSearchDataController extends BaseController {
 		// Find the objects using the search method
 		$objects = $this->_search(true);
 
-		if (count($objects) == 0) {
+		if (count($this->data) == 0) {
 			$results = array();
 		}
 		else {
 			// Process the objects as required
-			$results = $this->_process_autocomplete($objects);
+			$results = $this->_process_autocomplete($this->data);
 		}
 
 		// Output the results as a json string
