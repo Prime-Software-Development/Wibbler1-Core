@@ -23,6 +23,11 @@ class urls {
 		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$this->server_name = $_SERVER['SERVER_NAME'];
 		$this->root_url = $this->_get_current_root_url();
+
+		$this->root_uri = $this->root_url;
+		if (strpos($this->root_uri, 'index.php') !== false) {
+			$this->root_uri = substr($this->root_uri, 0, strpos($this->root_uri, "index.php"));
+		}
 //		$this->request_uri = $this->_get_current_uri_string();
 	}
 
@@ -44,7 +49,7 @@ class urls {
 		// If index.php is in the request - then we aren't using htaccess rewrites
 		// Therefore find the path quickly from the request
 		if (strpos($requested, "index.php") > 0) {
-			$result = substr($requested, 0, strpos($requested, "index.php") + 9) . '/';
+			$result = substr($requested, 0, strpos($requested, "index.php") + 9). '/';
 			return $result;
 		}
 
