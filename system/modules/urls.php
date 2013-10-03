@@ -13,6 +13,10 @@ class urls {
 	 */
 	var $root_url = '';
 	/**
+	 * @var string URL to the controller
+	 */
+	var $controller_path = '';
+	/**
 	 * @var string Name of the server
 	 */
 	var $server_name = '';
@@ -23,19 +27,7 @@ class urls {
 		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$this->server_name = $_SERVER['SERVER_NAME'];
 		$this->root_url = $this->_get_current_root_url();
-
-		$this->root_uri = $this->root_url;
-		if (strpos($this->root_uri, 'index.php') !== false) {
-			$this->root_uri = substr($this->root_uri, 0, strpos($this->root_uri, "index.php"));
-		}
-//		$this->request_uri = $this->_get_current_uri_string();
 	}
-
-	/*private function _get_current_uri_string() {
-		$request_uri = $_SERVER['REQUEST_URI'];
-		$result = substr($request_uri, strpos($request_uri, $this->root_uri) + 1);
-		return $result;
-	}*/
 
 	/**
 	 * Gets the current url for the root of the system
@@ -50,6 +42,7 @@ class urls {
 		// Therefore find the path quickly from the request
 		if (strpos($requested, "index.php") > 0) {
 			$result = substr($requested, 0, strpos($requested, "index.php") + 9). '/';
+			$this->controller_path = substr($this->root_uri, 0, strpos($this->root_uri, "index.php"));
 			return $result;
 		}
 
@@ -74,6 +67,8 @@ class urls {
 		if (strrpos($result, "/") != strlen($result)) {
 			$result = substr($result, 0, strrpos($result, "/") + 1);
 		}
+
+		$this->controller_path = $result;
 		return $result;
 	}
 
