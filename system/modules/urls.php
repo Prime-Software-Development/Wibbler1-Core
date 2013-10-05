@@ -41,8 +41,8 @@ class urls {
 		// If index.php is in the request - then we aren't using htaccess rewrites
 		// Therefore find the path quickly from the request
 		if (strpos($requested, "index.php") > 0) {
-			$result = substr($requested, 0, strpos($requested, "index.php") + 9). '/';
-			$this->controller_path = substr($this->root_uri, 0, strpos($this->root_uri, "index.php"));
+			$result = substr($requested, 0, strpos($requested, "index.php"));
+			$this->controller_path = substr($this->root_uri, 0, strpos($this->root_uri, "index.php")) . '/';
 			return $result;
 		}
 
