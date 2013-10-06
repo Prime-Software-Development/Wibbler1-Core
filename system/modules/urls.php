@@ -42,7 +42,7 @@ class urls {
 		// Therefore find the path quickly from the request
 		if (strpos($requested, "index.php") > 0) {
 			$result = substr($requested, 0, strpos($requested, "index.php"));
-			$this->controller_path = substr($this->root_uri, 0, strpos($this->root_uri, "index.php")) . '/';
+			$this->controller_path = substr($requested, 0, strpos($requested, "index.php") + 9) . '/';
 			return $result;
 		}
 
