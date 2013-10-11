@@ -10,8 +10,10 @@
 		{% include "navigation.twig" %}
 	{% endblock %}
 
-	{% block MainContentBlock %}
-	{% endblock %}
+	<div id='MainContent'>
+		{% block MainContentBlock %}
+		{% endblock %}
+	</div>
 
 	{% block Footer %}
 		{% include "footer.twig" %}

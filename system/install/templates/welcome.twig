@@ -2,6 +2,11 @@
 
 {% block Body %}
 <div>
+	{% if message %}
+		<div class='error'>
+			{{ message }}
+		</div>
+	{% endif %}
 	<form method="post">
 		<input type="hidden" name="login_action" value="login" />
 		<p>

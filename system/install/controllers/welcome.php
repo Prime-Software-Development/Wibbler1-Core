@@ -10,11 +10,18 @@ class Welcome extends \MyApp\BaseController {
 		array("id" => 1, "username" => "admin", "password" => "password")
 	);
 
+	function __construct() {
+		$this->bl_bypass_security = true;
+		parent::__construct();
+	}
+
 	function index() {
 
 		$action = $this->input->post('login_action');
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+
+		$this->data = array();
 
 		switch ($action) {
 			case 'login':
@@ -24,7 +31,7 @@ class Welcome extends \MyApp\BaseController {
 						$_SESSION["user_id"] = $user["id"];
 
 						// Set the default redirect path
-						$redirect_path = '/user/';
+						$redirect_path = '/rad_search/';
 						// If there is a session variable with the calling url in it
 						if (isset($_SESSION['calling_url'])) {
 							// Change where to redirect to so the user gets to where they wanted
@@ -38,14 +45,14 @@ class Welcome extends \MyApp\BaseController {
 						exit();
 					}
 				}
+
+				$this->data['message'] = 'Your username or password did not match any existing records.';
 				break;
 			case 'logout':
 				$_SESSION["user_id"] = null;
 				break;
 		}
 
-
-		$this->data = array('PageTitle' => 'Hello world');
 
 		$this->ShowTwig('welcome.twig');
 	}

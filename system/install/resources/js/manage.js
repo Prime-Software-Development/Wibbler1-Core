@@ -49,6 +49,11 @@
 			}
 
 			_this.init_events();
+
+			$('.accordion', _this.$el).accordion({
+				active: false,
+				collapsible: true
+			});
 		},
 
 		init_events: function() {
