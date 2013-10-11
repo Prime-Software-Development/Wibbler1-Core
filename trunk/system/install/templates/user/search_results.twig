@@ -6,6 +6,6 @@
 {% endblock %}
 
 {% block Row %}
-	<td class="itemSelector">{{ Row.name }}</td>
-	<td>{{ Row.username }}</td>
+	<td class="itemSelector">{{ Row.getForename }} {{ Row.getSurname }}</td>
+	<td>{{ Row.getEmailAddress }}</td>
 {% endblock %}

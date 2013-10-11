@@ -25,15 +25,19 @@
 	<div class="panel_content">
 		<form id="form_user">
 			<div class="ui-widget-content ui-corner-all" style="padding: 10px;">
-				<input type='hidden' name='UserId' class='UserDetailsId' value='{{user.id}}'>
+				<input type='hidden' name='UserId' class='UserDetailsId' value='{{user.getId}}'>
 
 				<p>
-				  <label class='Caption'>Name</label>
-				  <input type='text' name='Name' class='UserDetailsName required' value='{{user.name}}'>
+				  <label class='Caption'>Forename</label>
+				  <input type='text' name='Forname' class='UserDetailsForename required' value='{{user.getForename}}'>
+				</p>
+				<p>
+				  <label class='Caption'>Surname</label>
+				  <input type='text' name='Surname' class='UserDetailsSurname required' value='{{user.getSurname}}'>
 				</p>
 				<p>
 				  <label class='Caption'>E-Mail Address</label>
-				  <input type='text' name='UserName' class='UserDetailsUserName required' value='{{user.username}}'>
+				  <input type='text' name='EmailAddress' class='UserDetailsEmail required' value='{{user.getEmailAddress}}'>
 				</p>
 				<p>
 				  <label class='Caption'>New Password</label>

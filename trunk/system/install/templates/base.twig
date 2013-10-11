@@ -3,7 +3,7 @@
 		<title>{{ PageTitle }}</title>
 
 		<script>
-			var path_root = '{{ system.paths.root }}';
+			var path_root = '{{ system.paths.controller }}';
 			var path_resources = '{{ system.paths.resources }}';
 			var path_js = '{{ system.paths.jscript }}';
 		</script>
@@ -13,6 +13,12 @@
 		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.61.0-2013.06.06/jquery.blockUI.min.js"></script>
 
+		<script type="text/javascript" src="{{ system.paths.rdparty }}RGraph/libraries/RGraph.common.core.js"></script>
+		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.line.js"></script>
+		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.bar.js"></script>
+		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.scatter.js"></script>
+		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.common.dynamic.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="{{ system.paths.css }}style.css" />
 		<script type="text/javascript" src="{{ system.paths.jscript }}script.js"></script>
 
@@ -21,7 +27,7 @@
 		{% endfor %}
 
 		<script>
-			path_include = "{{ system.paths.root }}";
+			path_include = "{{ system.paths.controller }}";
 		</script>
 	</head>
 	<body>

@@ -5,6 +5,8 @@ $_ns = '\\MyApp';
 
 class BaseController extends \Wibbler\WibblerController {
 
+	var $bl_bypass_security = false;
+
 	/**
 	 * Constructor
 	 */
@@ -15,6 +17,9 @@ class BaseController extends \Wibbler\WibblerController {
 		// If session doesn't exist - start one
 		if (!isset($_SESSION))
 			session_start();
+
+		if (!$this->bl_bypass_security)
+			$this->CheckUser();
 	}
 
 	/**
@@ -40,29 +45,6 @@ class BaseController extends \Wibbler\WibblerController {
 		return true;
 	}
 
-	public function ip_route_filter($input, $element_required) {
-
-		$input = trim($input);
-
-		switch ($element_required) {
-			case "IP":
-				return substr($input, 0, strpos($input, "/"));
-				break;
-			case "Num":
-				$slash_pos = strpos($input, "/");
-				$space_pos = strpos($input, " ");
-				if ($space_pos === false)
-					return substr($input, $slash_pos + 1);
-				else
-					return substr($input, $slash_pos + 1, $space_pos - $slash_pos - 1);
-				break;
-			case "Priority":
-				return substr($input, strrpos($input, " ") + 1);
-				break;
-		}
-		return $input;
-	}
-
 	/**
 	 * Generates the html to either render or display
 	 * @param type $template
@@ -70,13 +52,11 @@ class BaseController extends \Wibbler\WibblerController {
 	 * @return type
 	 */
 	private function _GenerateTwig($template) {
-		// Add a filter to twig to convert from minutes to time format
-		$this->twig->add_filter("ip_route_filter", "\\MyApp\BaseController::ip_route_filter");
-
-		$this->data['system']['paths']['root'] = $this->urls->get_full_url();
+		$this->data['system']['paths']['controller'] = $this->urls->controller_path;
 		$this->data['system']['paths']['resources'] = $this->urls->root_url . 'resources/';
 		$this->data['system']['paths']['css'] = $this->urls->root_url . 'resources/css/';
 		$this->data['system']['paths']['jscript'] = $this->urls->root_url . 'resources/js/';
+		$this->data['system']['paths']['rdparty'] = $this->urls->root_url . 'resources/3rdparty/';
 
 		return $this->twig->render($template, $this->data);
 	}
