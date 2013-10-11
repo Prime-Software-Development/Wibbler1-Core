@@ -15,7 +15,10 @@ $paths = array(
 		)
 	),
 	'Css' => array(
-		'path' => '/resources/css/'
+		'path' => '/resources/css/',
+		'files' => array(
+			'style.css'
+		)
 	),
 
 	'Application' => array(
@@ -72,7 +75,8 @@ $paths = array(
 			'base_search_empty.twig',
 			'base_search_results.twig',
 			'manage.twig',
-			'search_bar.twig'
+			'search_bar.twig',
+			'settings.twig'
 		)
 	),
 	'Sample Templates' => array(
