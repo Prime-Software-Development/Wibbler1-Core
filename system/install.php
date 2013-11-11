@@ -10,6 +10,7 @@ $paths = array(
 	'Javascript' => array(
 		'path' => '/resources/js/',
 		'files' => array(
+			'manage.js',
 			'script.js',
 			'search.js'
 		)
