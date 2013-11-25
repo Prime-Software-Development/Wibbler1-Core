@@ -75,6 +75,15 @@ class urls {
 	public function get_full_url() {
 		return $this->http . '://' . $this->server_name . $this->root_url;
 	}
+
+	public function get_requested_url() {
+		$requested_uri = $_SERVER['REQUEST_URI'];
+		if ( strpos($requested_uri, '/' ) === 0 ) {
+			$requested_uri = substr( $requested_uri, 1 );
+		}
+		return $requested_uri;
+	}
+
 	public function redirect($url) {
 		header('Location: ' . $this->get_full_url() . $url);
 	}
