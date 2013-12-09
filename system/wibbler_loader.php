@@ -83,9 +83,9 @@ class WibblerLoader {
 			$path = substr($_SERVER['REDIRECT_QUERY_STRING'], 1);
 		}
 		else {
-			$path = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME']) + 1);
+			$path = substr($_SERVER['REQUEST_URI'], 1);
 		}
-		
+
 		$parts = explode('/', $path);
 		// Remove the empty element from the array
 		if ($parts[count($parts) - 1] == '')
