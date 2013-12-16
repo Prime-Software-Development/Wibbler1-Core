@@ -90,6 +90,9 @@ class WibblerLoader {
 		// Remove the empty element from the array
 		if ($parts[count($parts) - 1] == '')
 			array_pop($parts);
+		if ($parts[0] == 'index.php') {
+			array_shift( $parts );
+		}
 		return $parts;
 	}
 
