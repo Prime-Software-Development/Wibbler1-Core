@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>{{ PageTitle }}</title>
+
+		<script>
+			var path_root = '{{ system.paths.root }}';
+			var path_resources = '{{ system.paths.resources }}';
+			var path_js = '{{ system.paths.jscript }}';
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/redmond/jquery-ui.css" />
+		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js"></script>
+
+		<script type="text/javascript" src="{{ system.paths.jscript }}script.js"></script>
+
+		{% for js_file in js_files %}
+			<script type="text/javascript" src="{{ system.paths.jscript }}{{ js_file }}"></script>
+		{% endfor %}
+
+		<script>
+			path_include = "{{ system.paths.root }}";
+		</script>
+	</head>
+	<body>
+		{% block Body %}
+		{% endblock %}
+	</body>
+</html>
