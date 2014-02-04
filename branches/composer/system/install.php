@@ -1,6 +1,21 @@
 <?php
 
 $paths = array(
+	'Base' => array(
+		'path' => '/',
+		'files' => array(
+			'composer.json'
+		)
+	),
+	'Common' => array(
+		'path' => '/common/'
+	),
+	'Propel' => array(
+		'path' => '/common/propel/'
+	),
+	'Generated Classes' => array(
+		'path' => '/common/propel/generated-classes/'
+	),
 	'Resources' => array(
 		'path' => '/resources/'
 	),
@@ -28,9 +43,7 @@ $paths = array(
 	'Config' => array(
 		'path' => '/application/config/',
 		'files' => array(
-			'autoload.php',
-			'propel.php',
-			'twig.php'
+			'autoload.php'
 		)
 	),
 	'Controllers' => array(
