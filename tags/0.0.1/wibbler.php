@@ -2,9 +2,9 @@
 namespace Trunk\Wibbler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once(__dir__ . '/wibbler_loader.php');
-require_once(__dir__ . '/wibbler_controller.php');
-require_once(__dir__ . '/wibbler_dependency_container.php');
+//require_once(__dir__ . '/wibbler_loader.php');
+//require_once(__dir__ . '/wibbler_controller.php');
+//require_once(__dir__ . '/wibbler_dependency_container.php');
 
 /**
  * Main class which creates all others
