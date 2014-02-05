@@ -3,5 +3,8 @@
 	"require": {
 		"propel/propel": "2.0.0-alpha2",
 		"twig/twig": "1.*"
+	},
+	"autoload":{
+		"classmap": ["Trunk/Wibbler/"]
 	}
 }
