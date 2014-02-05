@@ -5,6 +5,6 @@
 		"twig/twig": "1.*"
 	},
 	"autoload":{
-		"classmap": ["Trunk/Wibbler/"]
+		"classmap": ["/"]
 	}
 }
