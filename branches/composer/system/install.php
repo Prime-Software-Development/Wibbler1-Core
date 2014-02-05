@@ -16,14 +16,27 @@ $paths = array(
 	'Generated Classes' => array(
 		'path' => '/common/propel/generated-classes/'
 	),
+	'Helpers' => array(
+		'path' => '/common/helpers/'
+	),
+	'Modules' => array(
+		'path' => '/common/modules/'
+	),
+	'Web' => array(
+		'path' => '/web/',
+		'files' => array(
+			'index.php',
+			'.htaccess'
+		)
+	),
 	'Resources' => array(
-		'path' => '/resources/'
+		'path' => '/web/resources/'
 	),
 	'3rd Party' => array(
-		'path' => '/resources/3rdparty/'
+		'path' => '/web/resources/3rdparty/'
 	),
 	'Javascript' => array(
-		'path' => '/resources/js/',
+		'path' => '/web/resources/js/',
 		'files' => array(
 			'manage.js',
 			'script.js',
@@ -31,23 +44,23 @@ $paths = array(
 		)
 	),
 	'Css' => array(
-		'path' => '/resources/css/',
+		'path' => '/web/resources/css/',
 		'files' => array(
 			'style.css'
 		)
 	),
 
 	'Application' => array(
-		'path' => '/application/'
+		'path' => '/web/application/'
 	),
 	'Config' => array(
-		'path' => '/application/config/',
+		'path' => '/web/application/config/',
 		'files' => array(
 			'autoload.php'
 		)
 	),
 	'Controllers' => array(
-		'path' => '/application/controllers/',
+		'path' => '/web/application/controllers/',
 		'files' => array(
 			'BaseController.php',
 			'welcome.php',
@@ -56,23 +69,14 @@ $paths = array(
 		)
 	),
 	'SampleControllers' => array(
-		'path' => '/application/controllers/user/',
+		'path' => '/web/application/controllers/user/',
 		'files' => array(
 			'data.php',
 			'welcome.php'
 		)
 	),
-	'Helpers' => array(
-		'path' => '/application/helpers/'
-	),
-	'Modules' => array(
-		'path' => '/application/modules/'
-	),
-	'Propel' => array(
-		'path' => '/application/propel/'
-	),
 	'Templates' => array(
-		'path' => '/application/templates/',
+		'path' => '/web/application/templates/',
 		'files' => array(
 			'base.twig',
 			'footer.twig',
@@ -82,7 +86,7 @@ $paths = array(
 		)
 	),
 	'Search Templates' => array(
-		'path' => '/application/templates/_search/',
+		'path' => '/web/application/templates/_search/',
 		'files' => array(
 			'base_search.twig',
 			'base_search_body.twig',
@@ -94,7 +98,7 @@ $paths = array(
 		)
 	),
 	'Sample Templates' => array(
-		'path' => '/application/templates/user/',
+		'path' => '/web/application/templates/user/',
 		'files' => array(
 			'index.twig',
 			'search_results.twig'
@@ -133,11 +137,4 @@ foreach ($paths as $index => $path) {
 			}
 		}
 	}
-}
-
-if (!is_file(__dir__ . '/../index.php')) {
-	copy(__dir__ . '/install/index.php', __dir__ . '/../index.php');
-}
-if (!is_file(__dir__ . '/../.htaccess')) {
-	copy(__dir__ . '/install/.htaccess', __dir__ . '/../.htaccess');
 }

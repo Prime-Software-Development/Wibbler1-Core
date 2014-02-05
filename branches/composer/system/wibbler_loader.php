@@ -1,5 +1,5 @@
 <?php
-namespace Wibbler;
+namespace Trunk\Wibbler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
