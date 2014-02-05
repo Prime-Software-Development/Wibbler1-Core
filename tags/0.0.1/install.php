@@ -25,7 +25,7 @@ class Install {
 			if (isset($path['files'])) {
 				echo "updating files<br/>";
 				foreach ($path['files'] as $file) {
-					$to_file_name = __dir__ . '/..' . $path['path'] . $file;
+					$to_file_name = $directory . $path['path'] . $file;
 					$from_file_name = __dir__ . '/install' . $path['path'] . $file;
 
 					if (!is_file($to_file_name)) {
