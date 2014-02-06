@@ -1,6 +1,6 @@
 <?php
 namespace Trunk\Wibbler;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once COMMONPATH . '/propel/generated-conf/config.php';
 
 class WibblerController {
 	private $_dependencies;
