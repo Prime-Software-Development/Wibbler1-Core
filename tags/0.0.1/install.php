@@ -85,7 +85,7 @@ class Install {
 				'index.twig',
 				'search_results.twig'
 			)
-		)
+		),
 
 		'Controllers' => array(
 			'path' => '/common/web1/',
@@ -102,7 +102,7 @@ class Install {
 				'data.php',
 				'welcome.php'
 			)
-		)
+		),
 
 		'Web1' => array(
 			'path' => '/web1/',
