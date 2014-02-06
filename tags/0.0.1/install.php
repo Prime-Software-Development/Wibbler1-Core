@@ -39,12 +39,6 @@ class Install {
 
 
 	var $paths = array(
-		'Base' => array(
-			'path' => '/',
-			'files' => array(
-				'composer.json'
-			)
-		),
 		'Common' => array(
 			'path' => '/common/'
 		),
@@ -60,61 +54,11 @@ class Install {
 		'Modules' => array(
 			'path' => '/common/modules/'
 		),
-		'Web' => array(
-			'path' => '/web/',
-			'files' => array(
-				'index.php',
-				'.htaccess'
-			)
-		),
-		'Resources' => array(
-			'path' => '/web/resources/'
-		),
-		'3rd Party' => array(
-			'path' => '/web/resources/3rdparty/'
-		),
-		'Javascript' => array(
-			'path' => '/web/resources/js/',
-			'files' => array(
-				'manage.js',
-				'script.js',
-				'search.js'
-			)
-		),
-		'Css' => array(
-			'path' => '/web/resources/css/',
-			'files' => array(
-				'style.css'
-			)
-		),
-
-		'Application' => array(
-			'path' => '/web/application/'
-		),
-		'Config' => array(
-			'path' => '/web/application/config/',
-			'files' => array(
-				'autoload.php'
-			)
-		),
-		'Controllers' => array(
-			'path' => '/web/application/controllers/',
-			'files' => array(
-				'BaseController.php',
-				'welcome.php',
-				'BaseSearchController.php',
-				'BaseSearchDataController.php'
-			)
-		),
-		'SampleControllers' => array(
-			'path' => '/web/application/controllers/user/',
-			'files' => array(
-				'data.php',
-				'welcome.php'
-			)
-		),
 		'Templates' => array(
-			'path' => '/web/application/templates/',
+			'path' => '/common/templates/'
+		),
+		'Template Web1' => array(
+			'path' => '/common/templates/web1/',
 			'files' => array(
 				'base.twig',
 				'footer.twig',
@@ -124,7 +68,7 @@ class Install {
 			)
 		),
 		'Search Templates' => array(
-			'path' => '/web/application/templates/_search/',
+			'path' => '/common/templates/web1/_search/',
 			'files' => array(
 				'base_search.twig',
 				'base_search_body.twig',
@@ -136,12 +80,53 @@ class Install {
 			)
 		),
 		'Sample Templates' => array(
-			'path' => '/web/application/templates/user/',
+			'path' => '/common/templates/web1/user/',
 			'files' => array(
 				'index.twig',
 				'search_results.twig'
 			)
 		)
 
+		'Controllers' => array(
+			'path' => '/common/web1/',
+			'files' => array(
+				'BaseController.php',
+				'welcome.php',
+				'BaseSearchController.php',
+				'BaseSearchDataController.php'
+			)
+		),
+		'SampleControllers' => array(
+			'path' => '/common/web1/user/',
+			'files' => array(
+				'data.php',
+				'welcome.php'
+			)
+		)
+
+		'Web1' => array(
+			'path' => '/web1/',
+			'files' => array(
+				'index.php',
+				'.htaccess'
+			)
+		),
+		'3rd Party' => array(
+			'path' => '/web1/3rdparty/'
+		),
+		'Javascript' => array(
+			'path' => '/web1/js/',
+			'files' => array(
+				'manage.js',
+				'script.js',
+				'search.js'
+			)
+		),
+		'Css' => array(
+			'path' => '/web1/css/',
+			'files' => array(
+				'style.css'
+			)
+		)
 	);
 }

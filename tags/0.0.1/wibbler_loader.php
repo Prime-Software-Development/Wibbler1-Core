@@ -52,7 +52,7 @@ class WibblerLoader {
 
 		$path_parts = $this->init();
 
-		$initial_path = __dir__ . '/../application/controllers/';
+		$initial_path = CONTROLLERPATH;
 
 		// If the controller file can't be found - return
 		if(!$this->check_path($initial_path, $path_parts))

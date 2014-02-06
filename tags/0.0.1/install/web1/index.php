@@ -14,6 +14,7 @@ $index_method = 'index';
 
 // Path to the system folder
 define('BASEPATH', str_replace("\\", "/", __dir__));
-define('APPPATH', str_replace("\\", "/", __dir__ . '/application/'));
+define('CONTROLLERPATH', str_replace("\\", "/", __dir__ . '/../common/web1/'));
 
-require_once(BASEPATH . '/system/wibbler.php');
+// Initiate the system
+new \Trunk\Wibbler\Wibbler();

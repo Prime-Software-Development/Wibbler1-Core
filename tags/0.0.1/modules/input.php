@@ -1,5 +1,5 @@
 <?php
-namespace Wibbler\Modules;
+namespace Trunk\Wibbler\Modules;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class input {

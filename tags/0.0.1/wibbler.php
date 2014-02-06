@@ -2,10 +2,6 @@
 namespace Trunk\Wibbler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-//require_once(__dir__ . '/wibbler_loader.php');
-//require_once(__dir__ . '/wibbler_controller.php');
-//require_once(__dir__ . '/wibbler_dependency_container.php');
-
 /**
  * Main class which creates all others
  */
@@ -47,6 +43,3 @@ class Wibbler {
 
 // Create a new dependency injection container
 $dependencies = new WibblerDependencyContainer(null);
-
-// Initiate the system
-new \Trunk\Wibbler\Wibbler();
