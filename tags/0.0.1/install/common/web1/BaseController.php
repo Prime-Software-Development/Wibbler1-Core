@@ -3,7 +3,7 @@ namespace MyApp;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 $_ns = '\\MyApp';
 
-class BaseController extends \Wibbler\WibblerController {
+class BaseController extends \Trunk\Wibbler\WibblerController {
 
 	var $bl_bypass_security = false;
 

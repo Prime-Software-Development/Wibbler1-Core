@@ -43,7 +43,11 @@ class Install {
 			'path' => '/common/'
 		),
 		'Propel' => array(
-			'path' => '/common/propel/'
+			'path' => '/common/propel/',
+			'files' => array(
+				'updatedb.sh',
+				'runtime-conf.xml'
+			)
 		),
 		'Generated Classes' => array(
 			'path' => '/common/propel/generated-classes/'
