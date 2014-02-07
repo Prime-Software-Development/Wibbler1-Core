@@ -7,22 +7,24 @@ class WibblerController {
 	public $controller_path;
 
 	function __construct() {
-		global $dependencies;
-		$this->_dependencies = $dependencies;
-
-		$this->init();
+		$this->init( array() );
 	}
 
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
-	function init() {
-		$this->_autoload = $this->_dependencies->getConfig('autoload');
+	function init( $load_modules ) {
+		global $dependencies;
+		$this->_dependencies = $dependencies;
 
-		foreach ($this->_autoload['modules'] as $module)
-			$this->$module = $this->_dependencies->getModule($module);
-		foreach ($this->_autoload['helpers'] as $helper)
-			$this->_dependencies->getHelper($helper);
+		if ( $this->_dependencies !== null )
+			$this->_autoload = $this->_dependencies->getConfig('autoload');
+
+		foreach ( $load_modules as $module ) {
+			$module_path = "\\Trunk\\Wibbler\\Modules\\" . $module;
+			$this->$module = new $module_path;
+		}
+
 	}
 
 	/**

@@ -14,8 +14,8 @@ $index_method = 'index';
 
 // Path to the system folder
 define('BASEPATH', str_replace("\\", "/", __dir__));
+define('COMMONPATH', str_replace("\\", "/", __dir__) . '/../common/');
 define('CONTROLLERPATH', str_replace("\\", "/", __dir__ . '/../common/web1/'));
-define('COMMONPATH', str_replace("\\", "/", __dir__) . '../common/');
 
 // Initiate the system
 new \Trunk\Wibbler\Wibbler();

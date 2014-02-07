@@ -22,7 +22,7 @@ class Wibbler {
 
 			$main_controller = $b->controller;
 			if (method_exists($main_controller, 'init')) {
-				$main_controller->init();
+				$main_controller->init( $load_modules );
 				call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
 			}
 			else {
