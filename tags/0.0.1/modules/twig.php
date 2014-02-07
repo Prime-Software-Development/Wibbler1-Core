@@ -9,9 +9,10 @@ class twig {
 	private $_template_dir;
 	private $_cache_dir;
 
-	function __construct(\Wibbler\WibblerDependencyContainer $dependencies)
+	function __construct( )
 	{
-		$this->_config = $dependencies->getConfig('twig');
+		global $twig_options;
+		$this->_config = $twig_options;
 
 		$this->_template_dir = $this->_config['template_dir'];
 		$this->_cache_dir = $this->_config['cache_dir'];
