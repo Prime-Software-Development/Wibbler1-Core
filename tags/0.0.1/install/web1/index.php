@@ -1,9 +1,6 @@
 <?php
 require '../vendor/autoload.php';
 
-$load_modules = array('urls', 'twig', 'propel');
-$load_helpers = array();
-
 // Name of the class to use as the main index for controllers
 $index_class = 'welcome';
 
@@ -16,6 +13,12 @@ $index_method = 'index';
 define('BASEPATH', str_replace("\\", "/", __dir__));
 define('COMMONPATH', str_replace("\\", "/", __dir__) . '/../common/');
 define('CONTROLLERPATH', str_replace("\\", "/", __dir__ . '/../common/web1/'));
+
+
+$load_modules = array('urls', 'input', 'twig');
+$load_helpers = array();
+$twig_options = array( 'template_dir' => COMMONPATH . "/templates/web1", 'cache_dir' => COMMONPATH . "/cache");
+
 
 // Initiate the system
 new \Trunk\Wibbler\Wibbler();
