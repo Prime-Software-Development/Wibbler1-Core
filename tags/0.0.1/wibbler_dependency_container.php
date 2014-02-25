@@ -17,6 +17,7 @@ class WibblerDependencyContainer {
 
 	public function getConfig($module) {
 
+		return array();
 		$file = APPPATH . 'config/' . $module . '.php';
 		
 		if (!file_exists($file)) {
@@ -50,9 +51,9 @@ class WibblerDependencyContainer {
 	 * Actually load the module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */
-	private function _load_module($module) {
+	private function _load_module( $module, $namespace = "\\Wibbler\\Modules\\" ) {
 		$core_file_path = __dir__ . '/modules/' . $module . '.php';
-		$user_file_path = __dir__ . '/../application/modules/' . $module . '.php';
+		$user_file_path = COMMONPATH . '/modules/' . $module . '.php';
 
 		$file_path = false;
 		if (file_exists($core_file_path))
@@ -63,7 +64,7 @@ class WibblerDependencyContainer {
 		if ($file_path !== false) {
 			include_once($file_path);
 
-			$ns_extra = "\\Wibbler\\Modules\\" . $module;
+			$ns_extra = $namespace . $module;
 			return new $ns_extra($this);
 		}
 
@@ -76,7 +77,7 @@ class WibblerDependencyContainer {
 	 */
 	private function _load_helper($helper) {
 		$core_file_path = __dir__ . '/helpers/' . $helper . '.php';
-		$user_file_path = __dir__ . '/../application/helpers/' . $helper . '.php';
+		$user_file_path = COMMONPATH . '/helpers/' . $helper . '.php';
 
 		$file_path = false;
 		if (file_exists($core_file_path))

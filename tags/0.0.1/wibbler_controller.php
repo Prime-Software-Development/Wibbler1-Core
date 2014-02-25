@@ -7,14 +7,14 @@ class WibblerController {
 	public $controller_path;
 
 	function __construct() {
-		$this->init( array() );
+		$this->init( array(), null );
 	}
 
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
-	function init( $load_modules ) {
-		global $dependencies;
+	function init( $load_modules, $dependencies ) {
+
 		$this->_dependencies = $dependencies;
 
 		if ( $this->_dependencies !== null )

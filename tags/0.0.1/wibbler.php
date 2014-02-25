@@ -14,6 +14,9 @@ class Wibbler {
 		global $load_modules;
 		global $load_helpers;
 
+		// Create a new dependency injection container
+		$dependencies = new WibblerDependencyContainer(null);
+
 		try {
 			$b = new WibblerLoader();
 			if ($b->error !== false) {
@@ -22,7 +25,7 @@ class Wibbler {
 
 			$main_controller = $b->controller;
 			if (method_exists($main_controller, 'init')) {
-				$main_controller->init( $load_modules );
+				$main_controller->init( $load_modules, $dependencies );
 				call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
 			}
 			else {
@@ -40,6 +43,3 @@ class Wibbler {
 		die();
 	}
 }
-
-// Create a new dependency injection container
-$dependencies = new WibblerDependencyContainer(null);
