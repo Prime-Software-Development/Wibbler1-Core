@@ -29,12 +29,12 @@ class WibblerDependencyContainer {
 		return $config;
 	}
 
-	public function getModule($module) {
+	public function getModule($module, $namespace) {
 
 		if (isset($this->_modules[$module]))
 			return $this->_modules[$module];
 
-		$this->_modules[$module] = $this->_load_module($module);
+		$this->_modules[$module] = $this->_load_module($module, $namespace);
 		return $this->_modules[$module];
 	}
 

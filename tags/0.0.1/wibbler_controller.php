@@ -31,8 +31,8 @@ class WibblerController {
 	 * Load a user module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */
-	public function load_module($module) {
-		$this->$module = $this->_dependencies->getModule($module);
+	public function load_module($module, $namespace ) {
+		$this->$module = $this->_dependencies->getModule( $module, $namespace);
 	}
 
 	/**
