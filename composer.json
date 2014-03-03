@@ -1,9 +1,5 @@
 {
 	"name": "Trunk/Wibbler",
-	"require": {
-		"propel/propel": ">= 2.0",
-		"twig/twig": "1.*"
-	},
 	"autoload":{
 		"classmap": ["/"]
 	}
