@@ -13,20 +13,20 @@ class WibblerController {
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
-	function init( $dependencies ) {
+	function init( $dependencies = null ) {
 
 		// Keep a note of the dependency manager
 		$this->_dependencies = $dependencies;
 
-		// Get the autoload config
-		$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
+		if ( $dependencies !== null ) {
+			// Get the autoload config
+			$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
 
-		// Go through the modules to autoload
-		foreach ( $this->_autoload[ 'modules' ] as $module ) {
-			// And load them
-			$this->load_module( $module );
-//			$module_path = "\\Trunk\\Wibbler\\Modules\\" . $module;
-//			$this->$module = new $module_path;
+			// Go through the modules to autoload
+			foreach ( $this->_autoload[ 'modules' ] as $module ) {
+				// And load them
+				$this->load_module( $module );
+			}
 		}
 	}
 

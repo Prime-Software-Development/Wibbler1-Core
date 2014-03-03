@@ -10,7 +10,7 @@ class BaseController extends \Trunk\Wibbler\WibblerController {
 	/**
 	 * Constructor
 	 */
-	function __construct( $dependencies ) {
+	function __construct( $dependencies = null ) {
 
 		parent::__construct( $dependencies );
 
