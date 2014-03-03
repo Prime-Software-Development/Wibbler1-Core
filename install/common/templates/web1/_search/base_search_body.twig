@@ -3,8 +3,9 @@
 {% extends SubPage ? "_search/base_search_empty.twig" : "_search/base_search.twig" %}
 
 {% block search_body %}
-	<div class="SearchHeader">
+	<div class="SearchHeader ui-widget-content ui-corner-all">
 		<div class="frmSearch" >
+			<input type="hidden" name="ExcelExport" class="ExcelExport" value="0" />
 
 			{% block SearchOptions %}
 				<div class="SearchOptions">
