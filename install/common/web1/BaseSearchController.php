@@ -8,14 +8,6 @@ class BaseSearchController extends BaseController {
 	var $end_controller_path = '';
 
 	/**
-	 * Constructor
-	 */
-	function __construct() {
-
-		parent::__construct();
-	}
-
-	/**
 	 * Index function - shows the default search screen - should not be overridden
 	 */
 	public function index() {

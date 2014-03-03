@@ -48,7 +48,10 @@ class WibblerDependencyContainer {
 	 * Actually load the module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */
-	private function _load_module( $module, $namespace = "\\Wibbler\\Modules\\" ) {
+	private function _load_module( $module, $namespace = null ) {
+		if ( $namespace == null )
+			$namespace = "\\Trunk\\Wibbler\\Modules\\";
+
 		$core_file_path = __dir__ . '/modules/' . $module . '.php';
 		$user_file_path = COMMONPATH . '/modules/' . $module . '.php';
 

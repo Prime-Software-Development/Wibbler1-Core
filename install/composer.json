@@ -13,7 +13,6 @@
 		"monolog/monolog": "1.*",
 		"propel/propel": "2.0.0-alpha2",
 		"pear-pear/Mail_Mime": "1.8.*",
-		"twig/twig": "1.*",
 		"Trunk/Wibbler": "0.0.*@dev"
 	},
 	"autoload": {

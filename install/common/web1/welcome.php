@@ -10,10 +10,7 @@ class Welcome extends \MyApp\BaseController {
 		array("id" => 1, "username" => "admin", "password" => "password")
 	);
 
-	function __construct() {
-		$this->bl_bypass_security = true;
-		parent::__construct();
-	}
+	var $bl_bypass_security = true;
 
 	function index() {
 

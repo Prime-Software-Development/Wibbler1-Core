@@ -48,7 +48,14 @@ class WibblerLoader {
 	 */
 	var $controller_path;
 
-	function __construct() {
+	/**
+	 * Keep track of the dependency manager
+	 */
+	var $_dependencies;
+
+	function __construct( $dependencies ) {
+
+		$this->_dependencies = $dependencies;
 
 		$path_parts = $this->init();
 
@@ -66,9 +73,12 @@ class WibblerLoader {
 
 		// Try to load the controller
 		$this->controller = $this->check_class();
+
 		// If the loading has failed - return
-		if ($this->controller === false)
+		if ($this->controller === false) {
+			$this->error = "No controller found";
 			return;
+		}
 
 		// Set the path to the controller within the controller
 		$this->controller->controller_path = $this->controller_path;
@@ -171,7 +181,7 @@ class WibblerLoader {
 		$this->full_class_name = $_ns . "\\" . $this->class_name;
 
 		if (class_exists($this->full_class_name)) {
-			$controller = new $this->full_class_name(true);
+			$controller = new $this->full_class_name( $this->_dependencies );
 			return $controller;
 		}
 		else {
