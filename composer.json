@@ -1,0 +1,6 @@
+{
+	"name": "Trunk/Wibbler",
+	"autoload":{
+		"classmap": ["/"]
+	}
+}
