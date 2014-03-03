@@ -1,0 +1,7 @@
+<div class="{{ ContainerClass }}Block"
+		data-root_path="{{ user_info.include_path }}{{ DataPath }}"
+		data-search_manager="{{ jsSearchObject }}"
+		data-manage_manager="{{ jsManageObject }}"
+		data-custom_item_selector={% if custom_item_selector is not defined %}false{% else %}{{ custom_item_selector}}{%endif %} {# is set to true then the plugin won't try to load another page or dialog - the user must implement the viewing functionality (ie for showing driver's passports) #}
+		data-parent_id="{{ ParentObjectId }}"
+>
