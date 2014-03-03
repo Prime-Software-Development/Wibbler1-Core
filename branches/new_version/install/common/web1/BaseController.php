@@ -10,9 +10,9 @@ class BaseController extends \Trunk\Wibbler\WibblerController {
 	/**
 	 * Constructor
 	 */
-	function __construct() {
+	function __construct( $dependencies ) {
 
-		parent::__construct();
+		parent::__construct( $dependencies );
 
 		// If session doesn't exist - start one
 		if (!isset($_SESSION))
