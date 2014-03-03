@@ -42,6 +42,12 @@ class Install {
 		'Common' => array(
 			'path' => '/common/'
 		),
+		'Config' => array(
+			'path' => '/common/config/',
+			'files' => array(
+				'autoload.php'
+			)
+		),
 		'Propel' => array(
 			'path' => '/common/propel/',
 			'files' => array(

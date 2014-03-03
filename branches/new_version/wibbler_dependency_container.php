@@ -15,8 +15,7 @@ class WibblerDependencyContainer {
 
 	public function getConfig($module) {
 
-		return array();
-		$file = APPPATH . 'config/' . $module . '.php';
+		$file = COMMONPATH . 'config/' . $module . '.php';
 		
 		if (!file_exists($file)) {
 			throw new \Exception('Config file not found');
