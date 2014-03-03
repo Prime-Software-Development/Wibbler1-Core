@@ -15,7 +15,7 @@ class Wibbler {
 		global $load_helpers;
 
 		// Create a new dependency injection container
-		$dependencies = new WibblerDependencyContainer(null);
+		$dependencies = new WibblerDependencyContainer( );
 
 		try {
 			$b = new WibblerLoader();

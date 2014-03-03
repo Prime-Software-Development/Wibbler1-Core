@@ -9,8 +9,10 @@
 			root_path: '',
 			autocomplete_path: '',
 			manage_path: '',
+			create_path: '',
 			save_path: '',
 			search_path: '',				// Path to search over
+			parent_id: null,
 			custom_item_selector: false		// If the user is going to implement a custom dialog / new page when an item is selected
 		};
 
@@ -34,7 +36,9 @@
 			_this.opts.search_path = _this.opts.root_path + "/data/search/";
 			_this.opts.save_path = _this.opts.root_path + "/data/save/";
 			_this.opts.manage_path = _this.opts.root_path + "/welcome/manage/";
+			_this.opts.create_path = _this.opts.root_path + "/welcome/create/";
 			_this.opts.custom_item_selector = _this.$el.data('custom_item_selector');
+			_this.opts.parent_id = _this.$el.data('parent_id');
 
 
 			var obj_name = _this.$el.data('search_manager');
@@ -59,19 +63,7 @@
 
 			// Initiate the search button
 			$('.btnSearch', _this.$el).click(function() {
-				if (!_this.presearch_test()) {
-					return;										/*	If preprocessor returns false then exit the search call */
-				}
-
-				SystemManager.blockUI('Searching...');
-
-				$.post(_this.opts.include_path + _this.opts.search_path, $('.frmSearch input,.frmSearch textarea,.frmSearch select', _this.$el).serialize(), function(data) {
-					$('.search_results', _this.$el).html(data);
-					SystemManager.unblockUI();
-				})
-				.error(function() {
-					SystemManager.unblockUI();
-				});
+				_this.search();
 				return false;
 			});
 
@@ -89,7 +81,7 @@
 				SystemManager.blockUI('Running Excel Report...');
 
 				// Change so we export to excel
-				$('#ExcelExport', _this.$el).val(1);
+				$('.ExcelExport', _this.$el).val(1);
 
 				// If there's no wrapper form around the search
 				if (!$('.frmSearch').parent().hasClass('FormWrapper')) {
@@ -99,7 +91,7 @@
 				// Submit the form
 				$('.frmSearch').parent().submit();
 				// Change so we don't export when doing a 'normal' search
-				$('#ExcelExport', _this.$el).val(0);
+				$('.ExcelExport', _this.$el).val(0);
 
 				SystemManager.unblockUI();
 			});
@@ -145,8 +137,32 @@
 		show_item: function(element, new_item) {
 			var _this = this;
 
-			window.location = _this.opts.include_path + _this.opts.manage_path + (new_item == true ? '' : $(element).parents('tr').data('id'));
+			window.location = _this.opts.include_path + (new_item == true ? _this.opts.create_path + _this.opts.parent_id : _this.opts.manage_path + $(element).parents('tr').data('id'));
 			return;
+		},
+
+		search: function() {
+			var _this = this;
+			if (!_this.presearch_test()) {
+				return;										/*	If preprocessor returns false then exit the search call */
+			}
+
+			SystemManager.blockUI('Searching...');
+
+			$.post(_this.opts.include_path + _this.opts.search_path, $('.frmSearch input,.frmSearch textarea,.frmSearch select', _this.$el).serialize(), function(data) {
+				$('.search_results', _this.$el).html(data);
+
+				// If there is a post_search function
+				if ( _this.manager_object != null && typeof _this.manager_object.post_search !== 'undefined' ) {
+					// Run it
+					_this.manager_object.post_search();
+				}
+
+				SystemManager.unblockUI();
+			})
+			.error(function() {
+				SystemManager.unblockUI();
+			});
 		}
 	};
 

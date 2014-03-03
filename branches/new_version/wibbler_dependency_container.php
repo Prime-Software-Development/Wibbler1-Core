@@ -8,11 +8,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class WibblerDependencyContainer {
 
 	private $_instances = array();
-	private $_params = array();
 	private $_modules = array();
 
-	function __construct($params) {
-		$this->_params = $params;
+	function __construct() {
 	}
 
 	public function getConfig($module) {
