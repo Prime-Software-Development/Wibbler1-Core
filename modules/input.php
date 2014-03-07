@@ -1,13 +1,12 @@
 <?php
 namespace Trunk\Wibbler\Modules;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class input {
 	function __construct() {
 	}
 
 	function get($variable = null, $default = null) {
-		if ($variable == null)
+		if ( $variable == null )
 			return $_GET;
 
 		if (isset($_GET[$variable]))
@@ -17,6 +16,9 @@ class input {
 	}
 
 	function post($variable, $default = null) {
+		if ( $variable == null )
+			return $_POST;
+
 		if (isset($_POST[$variable]))
 			return $_POST[$variable];
 		else
