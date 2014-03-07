@@ -1,6 +1,5 @@
 <?php
 namespace Trunk\Wibbler\Modules;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once 'Twig/Autoloader.php';
 
 class twig {
