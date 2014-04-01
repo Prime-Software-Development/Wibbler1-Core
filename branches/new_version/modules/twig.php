@@ -1,6 +1,5 @@
 <?php
 namespace Trunk\Wibbler\Modules;
-require_once 'Twig/Autoloader.php';
 
 class twig {
 
