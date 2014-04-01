@@ -24,7 +24,7 @@ class urls {
 	function __construct() {
 
 		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
-		$this->server_name = $_SERVER['SERVER_NAME'];
+		$this->server_name = $_SERVER['HTTP_HOST'];
 		$this->root_url = $this->_get_current_root_url();
 	}
 

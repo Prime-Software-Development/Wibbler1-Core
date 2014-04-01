@@ -1,6 +1,6 @@
 <?php
 namespace Trunk\Wibbler;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+$_ns = "\\Trunk\\Wibbler";
 
 /**
  * Main class which creates all others
