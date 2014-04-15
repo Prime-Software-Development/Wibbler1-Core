@@ -48,14 +48,7 @@ class WibblerLoader {
 	 */
 	var $controller_path;
 
-	/**
-	 * Keep track of the dependency manager
-	 */
-	var $_dependencies;
-
-	function __construct( $dependencies ) {
-
-		$this->_dependencies = $dependencies;
+	function __construct( ) {
 
 		$path_parts = $this->init();
 
@@ -181,7 +174,7 @@ class WibblerLoader {
 		$this->full_class_name = $_ns . "\\" . $this->class_name;
 
 		if (class_exists($this->full_class_name)) {
-			$controller = new $this->full_class_name( $this->_dependencies );
+			$controller = new $this->full_class_name( );
 			return $controller;
 		}
 		else {
@@ -210,7 +203,7 @@ class WibblerLoader {
 		if (method_exists($this->controller, $method)) {
 //			$this->controller->$method();
 			// Create some reflection to confirm parameter counts are ok
-			
+
 			// Start reflecting the class
 			$class = new \ReflectionClass($this->full_class_name);
 			// Get the method details

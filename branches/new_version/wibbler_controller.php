@@ -6,27 +6,21 @@ class WibblerController {
 	private $_dependencies;
 	public $controller_path;
 
-	function __construct( $dependencies ) {
-		$this->init( $dependencies );
-	}
-
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
-	function init( $dependencies = null ) {
+	function __construct( ) {
 
 		// Keep a note of the dependency manager
-		$this->_dependencies = $dependencies;
+		$this->_dependencies = WibblerDependencyContainer::Instance();
 
-		if ( $dependencies !== null ) {
-			// Get the autoload config
-			$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
+		// Get the autoload config
+		$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
 
-			// Go through the modules to autoload
-			foreach ( $this->_autoload[ 'modules' ] as $module ) {
-				// And load them
-				$this->load_module( $module );
-			}
+		// Go through the modules to autoload
+		foreach ( $this->_autoload[ 'modules' ] as $module ) {
+			// And load them
+			$this->load_module( $module );
 		}
 	}
 

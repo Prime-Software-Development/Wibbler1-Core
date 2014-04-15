@@ -5,12 +5,20 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Dependency container for dependency injection
  */
-class WibblerDependencyContainer {
+final class WibblerDependencyContainer {
 
 	private $_instances = array();
 	private $_modules = array();
 
-	function __construct() {
+	private function __construct() {
+	}
+
+	public static function Instance() {
+		static $inst = null;
+		if ( $inst === null ) {
+			$inst = new WibblerDependencyContainer();
+		}
+		return $inst;
 	}
 
 	public function getConfig($module) {

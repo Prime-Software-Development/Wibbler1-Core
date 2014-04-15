@@ -1,6 +1,6 @@
 <?php
 namespace Trunk\Wibbler;
-$_ns = "\\Trunk\\Wibbler";
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Main class which creates all others
@@ -14,18 +14,16 @@ class Wibbler {
 		global $load_modules;
 		global $load_helpers;
 
-		// Create a new dependency injection container
-		$dependencies = new WibblerDependencyContainer( );
-
 		try {
-			$b = new WibblerLoader( $dependencies );
+			$b = new WibblerLoader( );
+
 			if ($b->error !== false) {
 				$this->Show404($b->error);
 			}
 
 			$main_controller = $b->controller;
 
-			call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
+			call_user_func_array(array($b->controller, $b->class_method), $b->url_parts);
 		}
 		catch (\Exception $ex) {
 			echo $ex->getMessage();
