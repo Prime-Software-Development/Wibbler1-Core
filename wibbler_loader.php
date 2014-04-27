@@ -82,6 +82,15 @@ class WibblerLoader {
 	}
 
 	protected function init() {
+
+		// If PHP_SAPI == 'cli' we have been called from the command line - process argv
+		if ( PHP_SAPI == 'cli' ) {
+			global $argv;
+			$arguments = $argv;
+			array_shift( $arguments );
+			return $arguments;
+		}
+
 		if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
 			$path = substr($_SERVER['REDIRECT_QUERY_STRING'], 1);
 		}
