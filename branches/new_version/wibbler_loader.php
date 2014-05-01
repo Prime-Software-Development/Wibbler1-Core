@@ -184,6 +184,7 @@ class WibblerLoader {
 
 		if (class_exists($this->full_class_name)) {
 			$controller = new $this->full_class_name( );
+			$controller->url_parts = $this->url_parts;
 			return $controller;
 		}
 		else {
