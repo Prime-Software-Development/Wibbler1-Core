@@ -1,0 +1,29 @@
+{% if SubPage is not defined %}{% set SubPage = false %}{% endif %}
+
+{% extends SubPage ? "_search/base_search_empty.twig" : "_search/base_search.twig" %}
+
+{% block search_body %}
+	<div class="SearchHeader ui-widget-content ui-corner-all">
+		<div class="frmSearch" >
+			<input type="hidden" name="ExcelExport" class="ExcelExport" value="0" />
+
+			{% block SearchOptions %}
+				<div class="SearchOptions">
+					<label>Name</label>
+					<input type="text" name="SearchName" />
+					<div class="ClearAll"></div>
+				</div>
+			{% endblock %}
+
+			<div class="SearchButtons">
+				{% block SearchButtons %}
+				{% endblock %}
+			</div>
+
+		</div>
+	</div>
+
+	<div class="search_results" style="clear:both; padding-top:20px;" >
+		{#{% include "_search/base_search_results.twig" %}#}
+	</div>
+{% endblock %}

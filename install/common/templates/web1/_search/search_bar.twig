@@ -1,0 +1,62 @@
+<div id="global_search_bar">
+
+	{% block SearchBarTitle %}
+		<div id="global_title_bar">
+			<p>
+				{{ SearchTitle }}
+				{% if SearchTitleList %}
+					{% for Page in SearchTitleList %}
+						{% if Page.Link %}
+							<a href="{{ system.paths.controller ~ Page.Link }}">{{ Page.Name }}</a>
+						{% else %}
+							{{ Page.Name }}
+						{% endif %}
+						{% if not loop.last %}
+							->
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</p>
+		</div>
+	{% endblock %}
+
+	<div id="global_manager_bar">
+		{% if IsManager %}
+			{% block SearchBarQuickSearch %}
+				<div id="panel_quick_search">
+					<input type="text" id="txt_quick_search" placeholder="Quick Search..." value="" />
+					<input type="button" class="search_bar_button button_modern" id="a_show_full_search" value="more..."/>
+				</div>
+			{% endblock %}
+
+			{% block SearchBarFullResults %}
+				<div id="panel_full_search" style="display: none;">
+					{% set IsManager = false %}
+					{% set SubPage = true %}
+					{% include DataPath ~ "/index.twig" %}
+				</div>
+			{% endblock %}
+
+			<div id="panel_search_buttons">
+				{% block SearchBarButtons %}
+					<input type="button" class="search_bar_button button_modern button_green" id="btn_panel_search_save" value="Save"/>
+					<input type="button" class="search_bar_button button_modern button_red" id="btn_panel_search_discard" value="Cancel"/>
+					{% block SearchBarExtraButtons %}
+					{% endblock %}
+				{% endblock %}
+			</div>
+			<div style="clear:both;"></div>
+		{% endif %}
+	</div>
+
+	<div id='global_user_select'>
+		{{ current_user.getForename }} {{ current_user.getSurname }} ({{ current_user.getSite.getName }}{{ current_user.getBranch.getName }})
+{#
+		<div id="global_change_client" style="background-color: black; z-index: 100;">
+			<div style="padding: 3px;">
+				Change Site
+			</div>
+			<input type="text" name="ChangeSite" id="ChangeSite" />
+		</div>#}
+	</div>
+</div>
