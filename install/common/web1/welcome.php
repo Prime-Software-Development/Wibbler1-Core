@@ -1,10 +1,10 @@
 <?php
-namespace MyApp;
+namespace Trunk\Tinc;
 require_once(__dir__ . '/BaseController.php');
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-$_ns = '\\MyApp';
+$_ns = '\\Trunk\\Tinc';
 
-class Welcome extends \MyApp\BaseController {
+class Welcome extends \Trunk\Tinc\BaseController {
 
 	var $users = array(
 		array("id" => 1, "username" => "admin", "password" => "password")
