@@ -16,14 +16,13 @@ class Wibbler {
 
 		try {
 			$b = new WibblerLoader( );
+			$main_controller = $b->controller;
 
-			if ($b->error !== false) {
+			if ( $b->error !== false || $main_controller === null ) {
 				$this->Show404($b->error);
 			}
 
-			$main_controller = $b->controller;
-
-			call_user_func_array(array($b->controller, $b->class_method), $b->url_parts);
+			call_user_func_array(array($main_controller, $b->class_method), $b->url_parts);
 		}
 		catch (\Exception $ex) {
 			echo $ex->getMessage();
