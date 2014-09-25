@@ -5,19 +5,25 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Dependency container for dependency injection
  */
-class WibblerDependencyContainer {
+final class WibblerDependencyContainer {
 
 	private $_instances = array();
-	private $_params = array();
 	private $_modules = array();
 
-	function __construct($params) {
-		$this->_params = $params;
+	private function __construct() {
+	}
+
+	public static function Instance() {
+		static $inst = null;
+		if ( $inst === null ) {
+			$inst = new WibblerDependencyContainer();
+		}
+		return $inst;
 	}
 
 	public function getConfig($module) {
 
-		$file = APPPATH . 'config/' . $module . '.php';
+		$file = COMMONPATH . 'config/' . $module . '.php';
 		
 		if (!file_exists($file)) {
 			throw new \Exception('Config file not found');
@@ -28,12 +34,12 @@ class WibblerDependencyContainer {
 		return $config;
 	}
 
-	public function getModule($module) {
+	public function getModule($module, $namespace) {
 
 		if (isset($this->_modules[$module]))
 			return $this->_modules[$module];
 
-		$this->_modules[$module] = $this->_load_module($module);
+		$this->_modules[$module] = $this->_load_module($module, $namespace);
 		return $this->_modules[$module];
 	}
 
@@ -50,9 +56,12 @@ class WibblerDependencyContainer {
 	 * Actually load the module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */
-	private function _load_module($module) {
+	private function _load_module( $module, $namespace = null ) {
+		if ( $namespace == null )
+			$namespace = "\\Trunk\\Wibbler\\Modules\\";
+
 		$core_file_path = __dir__ . '/modules/' . $module . '.php';
-		$user_file_path = __dir__ . '/../application/modules/' . $module . '.php';
+		$user_file_path = COMMONPATH . '/modules/' . $module . '.php';
 
 		$file_path = false;
 		if (file_exists($core_file_path))
@@ -63,7 +72,7 @@ class WibblerDependencyContainer {
 		if ($file_path !== false) {
 			include_once($file_path);
 
-			$ns_extra = "\\Wibbler\\Modules\\" . $module;
+			$ns_extra = $namespace . $module;
 			return new $ns_extra($this);
 		}
 
@@ -76,7 +85,7 @@ class WibblerDependencyContainer {
 	 */
 	private function _load_helper($helper) {
 		$core_file_path = __dir__ . '/helpers/' . $helper . '.php';
-		$user_file_path = __dir__ . '/../application/helpers/' . $helper . '.php';
+		$user_file_path = COMMONPATH . '/helpers/' . $helper . '.php';
 
 		$file_path = false;
 		if (file_exists($core_file_path))

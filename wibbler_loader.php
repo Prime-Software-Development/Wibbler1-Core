@@ -48,11 +48,11 @@ class WibblerLoader {
 	 */
 	var $controller_path;
 
-	function __construct() {
+	function __construct( ) {
 
 		$path_parts = $this->init();
 
-		$initial_path = __dir__ . '/../application/controllers/';
+		$initial_path = CONTROLLERPATH;
 
 		// If the controller file can't be found - return
 		if(!$this->check_path($initial_path, $path_parts))
@@ -66,9 +66,12 @@ class WibblerLoader {
 
 		// Try to load the controller
 		$this->controller = $this->check_class();
+
 		// If the loading has failed - return
-		if ($this->controller === false)
+		if ($this->controller === false) {
+			$this->error = "No controller found";
 			return;
+		}
 
 		// Set the path to the controller within the controller
 		$this->controller->controller_path = $this->controller_path;
@@ -79,6 +82,15 @@ class WibblerLoader {
 	}
 
 	protected function init() {
+
+		// If PHP_SAPI == 'cli' we have been called from the command line - process argv
+		if ( PHP_SAPI == 'cli' ) {
+			global $argv;
+			$arguments = $argv;
+			array_shift( $arguments );
+			return $arguments;
+		}
+
 		if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
 			$path = substr($_SERVER['REDIRECT_QUERY_STRING'], 1);
 		}
@@ -90,7 +102,7 @@ class WibblerLoader {
 		// Remove the empty element from the array
 		if ($parts[count($parts) - 1] == '')
 			array_pop($parts);
-		if ($parts[0] == 'index.php') {
+		if ( isset( $parts[0] ) && $parts[0] == 'index.php') {
 			array_shift( $parts );
 		}
 		return $parts;
@@ -171,7 +183,8 @@ class WibblerLoader {
 		$this->full_class_name = $_ns . "\\" . $this->class_name;
 
 		if (class_exists($this->full_class_name)) {
-			$controller = new $this->full_class_name(true);
+			$controller = new $this->full_class_name( );
+			$controller->url_parts = $this->url_parts;
 			return $controller;
 		}
 		else {
@@ -200,7 +213,7 @@ class WibblerLoader {
 		if (method_exists($this->controller, $method)) {
 //			$this->controller->$method();
 			// Create some reflection to confirm parameter counts are ok
-			
+
 			// Start reflecting the class
 			$class = new \ReflectionClass($this->full_class_name);
 			// Get the method details
