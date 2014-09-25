@@ -1,0 +1,45 @@
+{% set PageTitle = 'Users' %}
+{% set SearchTitle = 'Manage Users' %}
+{% set DataPath = "user" %}
+{% set jsObject = "UserSearchManager" %}
+
+{% extends IsManager ? "_search/manage.twig" : "_search/base_search_body.twig" %}
+
+{% block SearchOptions %}
+	<div class="SearchOptions">
+		<p>
+			<label for="SearchUserName">User</label>
+			<input type='text' name='SearchUserName' id='SearchUserName' />
+		</p>
+	</div>
+{% endblock %}
+
+{% block SearchButtons %}
+	<div class="SearchButtons">
+		<p><input type='button' class='btnSearch button' value='User Search'/></p>
+		<p><input type='button' class='btnAddItem button' value='Add User'/></p>
+	</div>
+{% endblock %}
+
+{% block ManageContents %}
+	<div class="panel_content">
+		<form id="form_user">
+			<div class="ui-widget-content ui-corner-all" style="padding: 10px;">
+				<input type='hidden' name='UserId' class='UserDetailsId' value='{{user.id}}'>
+
+				<p>
+				  <label class='Caption'>Name</label>
+				  <input type='text' name='Name' class='UserDetailsName required' value='{{user.name}}'>
+				</p>
+				<p>
+				  <label class='Caption'>E-Mail Address</label>
+				  <input type='text' name='UserName' class='UserDetailsUserName required' value='{{user.username}}'>
+				</p>
+				<p>
+				  <label class='Caption'>New Password</label>
+				  <input type='password' name='Password' class='UserDetailsPassword'>
+				</p>
+			</div>
+		</form>
+	</div>
+{% endblock %}
