@@ -1,0 +1,16 @@
+{% extends "secured.twig" %}
+
+{% if extra_js_files is defined %}
+	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js']|merge(extra_js_files) %}
+{% else %}
+	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js'] %}
+{% endif %}
+
+{% block SearchBar %}
+	{% include "_search/search_bar.twig" %}
+{% endblock %}
+
+{% block Contents %}
+	{% block ManageContents %}
+	{% endblock %}
+{% endblock %}

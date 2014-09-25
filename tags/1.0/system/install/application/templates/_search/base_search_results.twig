@@ -1,0 +1,29 @@
+{% if not_searched %}
+	<span>Enter criteria and click Search above</span>
+{% elseif count == 0 %}
+	<span>No results found so far. Please try changing your search criteria.</span>
+{% else %}
+	{% block FullSearchResults %}
+		{% if is_excel is defined and is_excel == true %}
+			<table class="ListValues ResultsTable" data-excel-sheet="true" data-excel-sheet-title="{{title}}" >
+		{% else %}
+			{% block ResultHeader %}
+			{% endblock %}
+
+			<table class="ListValues ResultsTable" >
+		{% endif %}
+			<thead class="ui-widget-header">
+				<tr>
+					{% block Header %}{% endblock %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for Row in table_rows %}
+					<tr data-id="{% if Row.Id %}{{Row.Id}}{% else %}{{Row.id}}{% endif %}">
+						{% block Row %}{% endblock %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}
+{% endif %}
