@@ -1,5 +1,5 @@
 <?php
-namespace Wibbler;
+namespace Trunk\Wibbler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once(__dir__ . '/wibbler_loader.php');
@@ -49,4 +49,4 @@ class Wibbler {
 $dependencies = new WibblerDependencyContainer(null);
 
 // Initiate the system
-new \Wibbler\Wibbler();
+new \Trunk\Wibbler\Wibbler();
