@@ -1,6 +1,5 @@
 <?php
-namespace Wibbler\Modules;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+namespace Trunk\Wibbler\Modules;
 
 class urls {
 
@@ -20,13 +19,23 @@ class urls {
 	 * @var string Name of the server
 	 */
 	var $server_name = '';
+	/**
+	 * @var bool Whether we are being access from the command line
+	 */
+	var $is_cli = false;
 
 	// Constructor of the core urls module
 	function __construct() {
 
-		$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
-		$this->server_name = $_SERVER['SERVER_NAME'];
-		$this->root_url = $this->_get_current_root_url();
+		// If PHP_SAPI == 'cli' we have been called from the command line
+		if ( PHP_SAPI == 'cli' ) {
+			$this->is_cli = true;
+		}
+		else {
+			$this->http = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
+			$this->server_name = $_SERVER['HTTP_HOST'];
+			$this->root_url = $this->_get_current_root_url();
+		}
 	}
 
 	/**

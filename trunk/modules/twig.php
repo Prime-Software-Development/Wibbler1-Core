@@ -1,7 +1,5 @@
 <?php
-namespace Wibbler\Modules;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once 'Twig/Autoloader.php';
+namespace Trunk\Wibbler\Modules;
 
 class twig {
 
@@ -9,14 +7,15 @@ class twig {
 	private $_template_dir;
 	private $_cache_dir;
 
-	function __construct(\Wibbler\WibblerDependencyContainer $dependencies)
+	function __construct( )
 	{
-		$this->_config = $dependencies->getConfig('twig');
+		global $twig_options;
+		$this->_config = $twig_options;
 
 		$this->_template_dir = $this->_config['template_dir'];
 		$this->_cache_dir = $this->_config['cache_dir'];
 
-		\Twig_Autoloader::register();
+		#\Twig_Autoloader::register();
 
 		$loader = new \Twig_Loader_Filesystem($this->_template_dir);
 		$this->_twig = new \Twig_Environment($loader, array(
