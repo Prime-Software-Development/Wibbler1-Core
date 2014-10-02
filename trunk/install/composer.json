@@ -1,9 +1,22 @@
 {
+   "repositories": [
+		{
+			"type": "vcs",
+			"url": "https://svn.trunksoftware.co.uk/Wibbler/"
+		},
+		{
+			"type": "pear",
+			"url": "http://pear.php.net"
+		}
+   ],
 	"require": {
+		"monolog/monolog": "1.*",
 		"propel/propel": "2.0.0-alpha2",
-		"twig/twig": "1.*"
+		"pear-pear/Mail_Mime": "1.8.*",
+		"Trunk/Wibbler": "0.0.*@dev"
 	},
 	"autoload": {
 		"classmap": ["common/propel/generated-classes"]
 	}
+
 }

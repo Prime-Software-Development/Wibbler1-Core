@@ -1,7 +1,7 @@
 <?php
-namespace MyApp;
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+namespace Trunk\Tinc;
 require_once(__dir__ . '/BaseController.php');
+$_ns = '\\Trunk\\Tinc';
 
 class BaseSearchDataController extends BaseController {
 	
@@ -40,8 +40,16 @@ class BaseSearchDataController extends BaseController {
 		// Run the actual search
 		$this->_search(false);
 
-		// Output to twig
-		$this->ShowTwig($this->controller_path . "search_results.twig");
+		if ( $this->input->post('ExcelExport') == 1 ) {
+			$this->data['ExcelExport'] = true;
+			// Output to excel
+#			$this->ShowTwig($this->controller_path . "search_results.twig");
+			$this->GenerateExcel($this->controller_path . "search_results.twig", "Fred");
+		}
+		else {
+			// Output to twig
+			$this->ShowTwig($this->controller_path . "search_results.twig");
+		}
 	}
 
 	/**
