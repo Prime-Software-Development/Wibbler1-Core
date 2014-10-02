@@ -19,12 +19,8 @@
 		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.scatter.js"></script>
 		<script type="text/javascript" src="{{ system.paths.rdparty }}/RGraph/libraries/RGraph.common.dynamic.js"></script>
 
-		<link rel="stylesheet" type="text/css" href="{{ system.paths.css }}style.css" />
-		<script type="text/javascript" src="{{ system.paths.jscript }}script.js"></script>
-
-		{% for js_file in js_files %}
-			<script type="text/javascript" src="{{ system.paths.jscript }}{{ js_file }}"></script>
-		{% endfor %}
+		{% include "includes.twig" with { "file_list" : web1_js_files, "path": "web1", "type": "js", "defaults": [ 'script.js' ] } %}
+		{% include "includes.twig" with { "file_list" : web1_css_files, "path": "web1", "type": "css", "defaults": [ 'style.css' ] } %}
 
 		<script>
 			path_include = "{{ system.paths.controller }}";

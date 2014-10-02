@@ -1,0 +1,26 @@
+{% set files = file_list %}
+{% if files is not defined or files == null %}
+	{% set files = {} %}
+{% endif %}
+
+{% if defaults is defined %}
+	{% set files = { "base" : defaults } | merge( files ) %}
+{% endif %}
+
+{% for js_files in files %}
+	{% for File in js_files %}
+		{% if type == 'css' %}
+			<link rel="stylesheet" type="text/css" href="{{ system.paths.resources }}jscss/{{ type }}/{{ path }}/{{ File }}" />
+		{% elseif type == 'js' %}
+			<script type="text/javascript" src="{{ system.paths.resources }}jscss/{{ type }}/{{ path }}/{{ File }}"></script>
+		{% elseif type == '3rd_js' %}
+			<script type="text/javascript" src="{{ system.paths.jscript }}{{ File }}"></script>
+		{% elseif type == '3rd_css' %}
+			<link rel="stylesheet" type="text/css" href="{{ system.paths.css }}{{ File }}" />
+		{% elseif type == 'xternal_js' %}
+			<script type="text/javascript" src="{{ File }}"></script>
+		{% elseif type == 'xternal_css' %}
+			<link rel="stylesheet" type="text/css" href="{{ File }}" />
+		{% endif %}
+	{% endfor %}
+{% endfor %}
