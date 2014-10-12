@@ -1,62 +1,76 @@
+{% macro controller_opts( name, param ) %}
+    {%
+        set hash = {
+            branch: {
+                page: "system/branch",
+                title: "Branch"
+            },
+            company: {
+                page: "system/company",
+                title: "Company"
+            }
+        }
+    %}
+    {{ hash[ name ][ param ] }}
+{% endmacro %}
+{% import _self as get_hash %}
+
 <div id="global_search_bar">
+    {% block SearchBarTitle %}
+        <div id="global_title_bar">
+            <p>
+                {% if not BreadcrumbPath %}
+                    {{ Options.PageTitle }}
+                {% endif %}
+                {% for Page in Options.BreadcrumbList %}
+                    {% if loop.first %}
+                        {% set CrumbPosition = Page.page %}
+                    {% else %}
+                        {% set CrumbPosition = CrumbPosition ~ "," ~ Page.page %}
+                    {% endif %}
+                    {% if loop.first %}
+                        <a href="{{ system.paths.controller ~ get_hash.controller_opts( Page.page, "page" ) }}">{{ get_hash.controller_opts( Page.page, "title" ) }}</a>
+                    {% else %}
+                        {{ get_hash.controller_opts( Page.page, "title" ) }}
+                    {% endif %}
+                    ->
+                    <a href="{{ system.paths.controller ~ get_hash.controller_opts( Page.page, "page" ) }}/welcome/manage/{{ Page.id }}/{{ CrumbPosition }}">{{ Page.name|striptags|slice(0,50) }}</a>
+                    {% if not loop.last %}
+                        ->
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    {% endblock %}
 
-	{% block SearchBarTitle %}
-		<div id="global_title_bar">
-			<p>
-				{{ SearchTitle }}
-				{% if SearchTitleList %}
-					{% for Page in SearchTitleList %}
-						{% if Page.Link %}
-							<a href="{{ system.paths.controller ~ Page.Link }}">{{ Page.Name }}</a>
-						{% else %}
-							{{ Page.Name }}
-						{% endif %}
-						{% if not loop.last %}
-							->
-						{% endif %}
-					{% endfor %}
-				{% endif %}
-			</p>
-		</div>
-	{% endblock %}
+    <div id="global_manager_bar">
+        {% if IsManager %}
+            {% block SearchBarQuickSearch %}
+                <div id="panel_quick_search">
+                    <input type="text" id="txt_quick_search" placeholder="Quick Search..." value="" />
+                    <input type="button" class="search_bar_button button_modern" id="a_show_full_search" value="more..."/>
+                </div>
+            {% endblock %}
 
-	<div id="global_manager_bar">
-		{% if IsManager %}
-			{% block SearchBarQuickSearch %}
-				<div id="panel_quick_search">
-					<input type="text" id="txt_quick_search" placeholder="Quick Search..." value="" />
-					<input type="button" class="search_bar_button button_modern" id="a_show_full_search" value="more..."/>
-				</div>
-			{% endblock %}
+            {% block SearchBarFullResults %}
+                <div id="panel_full_search" style="display: none;">
+                    {% include Options.DataPath ~ "/index.twig" with { IsManager: false, SubPage: true, SearchBar: true } %}
+                </div>
+            {% endblock %}
 
-			{% block SearchBarFullResults %}
-				<div id="panel_full_search" style="display: none;">
-					{% set IsManager = false %}
-					{% set SubPage = true %}
-					{% include DataPath ~ "/index.twig" %}
-				</div>
-			{% endblock %}
+            <div id="panel_search_buttons">
+                {% block SearchBarButtons %}
+                    <input type="button" class="search_bar_button button_modern button_green" id="btn_panel_search_save" value="Save" data-tour-step="panel_save"/>
+                    <input type="button" class="search_bar_button button_modern button_red" id="btn_panel_search_discard" value="Cancel"/>
+                    {% block SearchBarExtraButtons %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+            <div style="clear:both;"></div>
+        {% endif %}
+    </div>
 
-			<div id="panel_search_buttons">
-				{% block SearchBarButtons %}
-					<input type="button" class="search_bar_button button_modern button_green" id="btn_panel_search_save" value="Save"/>
-					<input type="button" class="search_bar_button button_modern button_red" id="btn_panel_search_discard" value="Cancel"/>
-					{% block SearchBarExtraButtons %}
-					{% endblock %}
-				{% endblock %}
-			</div>
-			<div style="clear:both;"></div>
-		{% endif %}
-	</div>
-
-	<div id='global_user_select'>
-		{{ current_user.getForename }} {{ current_user.getSurname }} ({{ current_user.getSite.getName }}{{ current_user.getBranch.getName }})
-{#
-		<div id="global_change_client" style="background-color: black; z-index: 100;">
-			<div style="padding: 3px;">
-				Change Site
-			</div>
-			<input type="text" name="ChangeSite" id="ChangeSite" />
-		</div>#}
-	</div>
+    <div id='global_user_select'>
+        {{ current_user.getForename }} {{ current_user.getSurname }} ({{ current_user.getSite.getName }}{{ current_user.getBranch.getName }})
+    </div>
 </div>

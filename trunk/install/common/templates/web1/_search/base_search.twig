@@ -1,31 +1,28 @@
 {% extends "secured.twig" %}
 
-{% if extra_js_files is defined %}
-	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js']|merge(extra_js_files) %}
-{% else %}
-	{% set extra_js_files = [DataPath ~ '/index.js', DataPath ~ '/manage.js'] %}
-{% endif %}
+{% set web1_js_files = web1_js_files is defined ? web1_js_files : {} %}
+{% set web1_js_files = { "base_search" : [Options.DataPath ~ '/index.js', Options.DataPath ~ '/manage.js'] } | merge( web1_js_files ) %}
 
 {% block MainContentBlock %}
-	{% include "_search/settings.twig" with {'ContainerClass': 'Search'} %}
-		{% block SearchBar %}
-			{% include "_search/search_bar.twig" %}
-		{% endblock %}
+    {% include "_search/settings.twig" with {'ContainerClass': 'Search'} %}
 
-		<div class="panel_content">
+    {% block SearchBar %}
+        {% include "_search/search_bar.twig" %}
+    {% endblock %}
 
-			{# Allows text to be displayed above the main search area #}
-			{% block search_pre %}
-			{% endblock %}
+    <div class="panel_content">
 
-			{# Main search area - results will be within the block #}
-			{% block search_body %}
-			{% endblock %}
+        {# Allows text to be displayed above the main search area #}
+        {% block search_pre %}
+        {% endblock %}
 
-			{# Allows text to be displayed below the main search area #}
-			{% block search_after %}
-			{% endblock %}
+        {# Main search area - results will be within the block #}
+        {% block search_body %}
+        {% endblock %}
 
-		</div>
-	</div>
+        {# Allows text to be displayed below the main search area #}
+        {% block search_after %}
+        {% endblock %}
+
+    </div>
 {% endblock %}

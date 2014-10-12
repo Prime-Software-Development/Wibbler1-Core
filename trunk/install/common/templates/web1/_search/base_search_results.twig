@@ -1,35 +1,37 @@
 {% spaceless %}
 
-	{% block AboveResultTable %}{% endblock %}
+    {% block AboveResultTable %}{% endblock %}
 
-	{% if not_searched %}
-		<span>Enter criteria and click Search above</span>
-	{% elseif count == 0 %}
-		<span>No results found so far. Please try changing your search criteria.</span>
-	{% else %}
-		{% block FullSearchResults %}
-			{% if ExcelExport is defined and ExcelExport == true %}
-				<table class="ListValues ResultsTable" data-excel-sheet="true" data-excel-sheet-title="{{ ExcelTitle }}" >
-			{% else %}
-				{% block ResultHeader %}
-				{% endblock %}
+    {% if not_searched %}
+        <span>Enter criteria and click Search above</span>
+    {% elseif count == 0 %}
+        <span>No results found so far. Please try changing your search criteria.</span>
+    {% else %}
+        {% block FullSearchResults %}
+            {% if ExcelExport is defined and ExcelExport == true %}
+                <table class="ListValues ResultsTable" data-excel-sheet="true" data-excel-sheet-title="{{ ExcelTitle }}" >
+            {% else %}
+                {% block ResultHeader %}
+                {% endblock %}
 
-				<table class="ListValues ResultsTable" >
-			{% endif %}
-				<thead class="ui-widget-header">
-					<tr>
-						{% block Header %}{% endblock %}
-					</tr>
-				</thead>
-				<tbody>
-					{% for Row in table_rows %}
-						<tr data-id="{% if Row.Id %}{{Row.Id}}{% else %}{{Row.id}}{% endif %}">
-							{% block Row %}{% endblock %}
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endblock %}
-	{% endif %}
+                <table class="ListValues ResultsTable" >
+            {% endif %}
+            <thead class="ui-widget-header">
+            <tr>
+                {% block Header %}{% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for Row in table_rows %}
+                <tr data-id="{% if Row.Id %}{{Row.Id}}{% else %}{{Row.id}}{% endif %}" class="{% block RowClasses %}{% endblock %}" {% block RowData %}{% endblock %}>
+                    {% block Row %}{% endblock %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        {% endblock %}
+    {% endif %}
+
+    {% block BelowResultTable %}{% endblock %}
 
 {% endspaceless %}

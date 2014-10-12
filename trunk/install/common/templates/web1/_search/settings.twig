@@ -1,7 +1,21 @@
 <div class="{{ ContainerClass }}Block"
-		data-root_path="{{ user_info.include_path }}{{ DataPath }}"
-		data-search_manager="{{ jsSearchObject }}"
-		data-manage_manager="{{ jsManageObject }}"
-		data-custom_item_selector={% if custom_item_selector is not defined %}false{% else %}{{ custom_item_selector}}{%endif %} {# is set to true then the plugin won't try to load another page or dialog - the user must implement the viewing functionality (ie for showing driver's passports) #}
-		data-parent_id="{{ ParentObjectId }}"
+     data-root_path="{{ user_info.include_path }}{{ Options.DataPath }}"
+     data-search_manager="{{ Options.jsSearchObject }}"
+     data-manage_manager="{{ Options.jsManageObject }}"
+     data-custom_item_selector={% if Options.custom_item_selector is not defined %}false{% else %}{{ Options.custom_item_selector}}{%endif %} {# is set to true then the plugin won't try to load another page or dialog - the user must implement the viewing functionality (ie for showing driver's passports) #}
+     data-parent_id="{{ ParentObjectId }}"
+     data-parent_object="{{ ParentObjectType }}"
+     data-breadcrumb="{% if SearchBar %}{{ BreadcrumbPath }}{% else %}{% if BreadcrumbPath %}{{ BreadcrumbPath }},{% endif %}{{ Options.PageBreadcrumb }}{% endif %}"
+     data-is_new="{{ IsNewObject }}"
+     data-use_datatable="{% if Options.UseDataTable is defined %}{{ Options.UseDataTable }}{% else %}true{% endif %}"
+
+        {% if IsManager %}
+            {% if IsNewObject %}
+                {% set block = 'create' %}
+            {% else %}
+                {% set block = 'manage' %}
+            {% endif %}
+        {% else %}
+            {% set block = 'search' %}
+        {% endif%}
 >
