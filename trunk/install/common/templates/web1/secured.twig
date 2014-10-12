@@ -1,9 +1,7 @@
 {% extends "base.twig" %}
 
-{% set js_files = ['search.js', 'manage.js'] %}
-{% if extra_js_files is defined %}
-	{% set js_files = js_files|merge(extra_js_files) %}
-{% endif %}
+{% set web1_js_files = web1_js_files is defined ? web1_js_files : {} %}
+{% set web1_js_files = { "secured" : [ 'script.js', 'search.js', 'manage.js' ] } | merge( web1_js_files ) %}
 
 {% block Body %}
 	{% block Navigation %}
