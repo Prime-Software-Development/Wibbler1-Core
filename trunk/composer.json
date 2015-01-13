@@ -1,11 +1,10 @@
 {
 	"name": "Trunk/Wibbler",
 	"require": {
+		"php": ">=5.3.0",
 		"twig/twig": "1.*"
 	},
 	"autoload":{
-	  "psr-4": {
-	  	"Trunk\\Wibbler\\": "src/"
-	  }
+	  "files": ["src/"]
 	}
 }
