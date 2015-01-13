@@ -4,8 +4,8 @@
 		"twig/twig": "1.*"
 	},
 	"autoload":{
-	  "psr-0": {
-	  	"Trunk\\Wibbler\\": "/src/"
+	  "psr-4": {
+	  	"Trunk\\Wibbler\\": "src/"
 	  }
 	}
 }
