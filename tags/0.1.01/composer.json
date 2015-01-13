@@ -1,0 +1,11 @@
+{
+	"name": "Trunk/Wibbler",
+	"require": {
+		"twig/twig": "1.*"
+	},
+	"autoload":{
+	  "psr-0": {
+	  	"Trunk\\Wibbler\\": "/src/"
+	  }
+	}
+}
