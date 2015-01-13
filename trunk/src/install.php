@@ -46,13 +46,12 @@ class Install {
 
 	function go( $directory ) {
 
-		
-		$from_dir = __dir__ . '/install/common';
+		$from_dir = __dir__ . '/../install/common';
 		$to_dir = $directory . '/common';
 		echo "Copying from " . $from_dir . " to " . $to_dir . "\n";
 		$this->xcopy( $from_dir, $to_dir );
 
-		$from_dir = __dir__ . '/install/web1';
+		$from_dir = __dir__ . '/../install/web1';
 		$to_dir = $directory . '/web1';
 		echo "Copying from " . $from_dir . " to " . $to_dir . "\n";
 		$this->xcopy( $from_dir, $to_dir );
