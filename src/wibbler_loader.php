@@ -210,6 +210,15 @@ class WibblerLoader {
 			$this->class_method = $index_method;
 		$method = $this->class_method;
 //echo "<strong>" . $method . "</strong><br/>";
+
+		// If the method name begins with an underscore
+		if ( substr( $method, 0, 1 ) == "_" ) {
+			// Note the method is unavailable - underscores are reserved for internal use only
+			$this->error = 'Method unavailable';
+			// Return
+			return;
+		}
+
 		if (method_exists($this->controller, $method)) {
 //			$this->controller->$method();
 			// Create some reflection to confirm parameter counts are ok
