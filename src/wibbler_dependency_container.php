@@ -48,7 +48,7 @@ final class WibblerDependencyContainer {
 		if (isset($this->_modules[$helper]))
 			return $this->_modules[$helper];
 
-		$this->_modules[$helper] = $this->_load_module($helper);
+		$this->_modules[$helper] = $this->_load_helper($helper);
 		return $this->_modules[$helper];
 	}
 
