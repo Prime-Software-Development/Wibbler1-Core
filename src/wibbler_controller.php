@@ -1,6 +1,6 @@
 <?php
 namespace Trunk\Wibbler;
-if ( defined( PROPEL_INC ) ) {
+if ( defined( "PROPEL_INC" ) ) {
 	\Propel::init( COMMONPATH . 'propel/build/conf/' . PROPEL_INC );
 }
 else {
