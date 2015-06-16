@@ -1,6 +1,11 @@
 <?php
 namespace Trunk\Wibbler;
-require_once COMMONPATH . '/propel/generated-conf/config.php';
+if ( PROPEL_INC ) {
+	\Propel::init( COMMONPATH . 'propel/build/conf/' . PROPEL_INC );
+}
+else {
+	require_once COMMONPATH . '/propel/generated-conf/config.php';
+}
 
 class WibblerController {
 	private $_dependencies;
