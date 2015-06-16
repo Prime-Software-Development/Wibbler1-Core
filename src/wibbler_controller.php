@@ -2,19 +2,29 @@
 namespace Trunk\Wibbler;
 if ( defined( "PROPEL_INC" ) ) {
 	\Propel::init( COMMONPATH . 'propel/build/conf/' . PROPEL_INC );
-}
-else {
+} else {
 	require_once COMMONPATH . '/propel/generated-conf/config.php';
 }
 
 class WibblerController {
 	private $_dependencies;
-	public $controller_path;
+
+	/**
+	 * Holds the full URL path to this controller
+	 * @var
+	 */
+	protected $controller_path;
+
+	/**
+	 * Holds an array of the URL path to the controller
+	 * @var array
+	 */
+	protected $controller_path_parts = [ ];
 
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
-	function __construct( ) {
+	function __construct() {
 
 		// Keep a note of the dependency manager
 		$this->_dependencies = WibblerDependencyContainer::Instance();
@@ -33,15 +43,25 @@ class WibblerController {
 	 * Load a user module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */
-	public function load_module($module, $namespace = null) {
-		$this->$module = $this->_dependencies->getModule( $module, $namespace);
+	public function load_module( $module, $namespace = null ) {
+		$this->$module = $this->_dependencies->getModule( $module, $namespace );
 	}
 
 	/**
 	 * Load a user helper file
 	 * @param string $helper Name of the helper file to load
 	 */
-	public function load_helper($helper) {
-		$this->_dependencies->getHelper($helper);
+	public function load_helper( $helper ) {
+		$this->_dependencies->getHelper( $helper );
+	}
+
+	/**
+	 * Sets the path and parts of the path to the controller
+	 * @param $controller_path
+	 * @param $controller_path_parts
+	 */
+	public function _set_controller_details( $controller_path, $controller_path_parts ) {
+		$this->controller_path = $controller_path;
+		$this->controller_path_parts = $controller_path_parts;
 	}
 }
