@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>{{ PageTitle }}</title>
+
+		<script>
+			var path_root = '{{ system.paths.controller }}';
+			var path_resources = '{{ system.paths.resources }}';
+			var path_js = '{{ system.paths.jscript }}';
+		</script>
+
+        {# jquery / jquery ui includes #}
+        <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.1/themes/cupertino/jquery-ui.css" />
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+        {# jquery validate include #}
+        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js"></script>
+
+        {# jquery blockUI include #}
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
+
+		{% include "includes.twig" with { "file_list" : web1_js_files, "path": "web1", "type": "js", "defaults": [ 'script.js' ] } %}
+		{% include "includes.twig" with { "file_list" : web1_css_files, "path": "web1", "type": "css", "defaults": [ 'style.css' ] } %}
+
+		<script>
+			path_include = "{{ system.paths.controller }}";
+		</script>
+	</head>
+	<body>
+		{% block Body %}
+		{% endblock %}
+	</body>
+</html>
