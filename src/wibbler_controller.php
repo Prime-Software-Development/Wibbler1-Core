@@ -32,10 +32,22 @@ class WibblerController {
 		// Get the autoload config
 		$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
 
-		// Go through the modules to autoload
-		foreach ( $this->_autoload[ 'modules' ] as $module ) {
-			// And load them
-			$this->load_module( $module );
+		// If there are modules to load
+		if ( isset( $this->_autoload[ 'modules' ] ) ) {
+			// Go through the modules to autoload
+			foreach ( $this->_autoload[ 'modules' ] as $module ) {
+				// And load them (default namespace)
+				$this->load_module( $module );
+			}
+		}
+
+		// If there are helpers to load
+		if ( isset( $this->_autoload[ 'helpers' ] ) ) {
+			// Go through the helpers to autoload
+			foreach ( $this->_autoload[ 'helpers' ] as $helper ) {
+				// And load them
+				$this->load_helper( $helper );
+			}
 		}
 	}
 
