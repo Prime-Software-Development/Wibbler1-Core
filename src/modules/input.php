@@ -24,4 +24,14 @@ class input {
 		else
 			return $default;
 	}
+
+	function server($variable, $default = null) {
+		if ( $variable == null )
+			return $_SERVER;
+
+		if (isset($_SERVER[$variable]))
+			return $_SERVER[$variable];
+		else
+			return $default;
+	}
 }
