@@ -68,6 +68,16 @@ class WibblerController {
 	}
 
 	/**
+	 * Loads the config file into the config variable
+	 * @param $file_name
+	 * @throws \Exception
+	 */
+	public function load_config( $file_name ) {
+
+		$this->config = $this->_dependencies->getConfig( $file_name );
+	}
+
+	/**
 	 * Sets the path and parts of the path to the controller
 	 * @param $controller_path
 	 * @param $controller_path_parts
