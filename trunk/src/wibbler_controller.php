@@ -22,6 +22,11 @@ class WibblerController {
 	protected $controller_path_parts = [ ];
 
 	/**
+	 * @var \Trunk\Wibbler\Modules\Config
+	 */
+	protected $config;
+
+	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
@@ -29,8 +34,11 @@ class WibblerController {
 		// Keep a note of the dependency manager
 		$this->_dependencies = WibblerDependencyContainer::Instance();
 
+		// Load the configuration loading module
+		$this->load_module( "config" );
+
 		// Get the autoload config
-		$this->_autoload = $this->_dependencies->getConfig( 'autoload' );
+		$this->_autoload = $this->config->load( 'autoload' );// $this->_dependencies->getConfig( 'autoload' );
 
 		// If there are modules to load
 		if ( isset( $this->_autoload[ 'modules' ] ) ) {
@@ -65,16 +73,6 @@ class WibblerController {
 	 */
 	public function load_helper( $helper ) {
 		$this->_dependencies->getHelper( $helper );
-	}
-
-	/**
-	 * Loads the config file into the config variable
-	 * @param $file_name
-	 * @throws \Exception
-	 */
-	public function load_config( $file_name ) {
-
-		$this->config = $this->_dependencies->getConfig( $file_name );
 	}
 
 	/**
