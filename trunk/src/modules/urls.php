@@ -91,7 +91,7 @@ class urls {
 		return $requested_uri;
 	}
 
-	public function redirect( $url ) {
+	public function redirect( $url = "" ) {
 		header( 'Location: ' . $this->get_full_url() . $url );
 	}
 }
