@@ -102,6 +102,11 @@ class WibblerLoader {
 			$path = substr( $_SERVER[ 'REQUEST_URI' ], 1 );
 		}
 
+		// If there is a question mark
+		if ( strpos( $path, "?") !== false ) {
+			$path = substr( $path, 0, strpos( $path, "?") );
+		}
+
 		$parts = explode( '/', $path );
 		// Remove the empty element from the array
 		if ( $parts[ count( $parts ) - 1 ] == '' )
