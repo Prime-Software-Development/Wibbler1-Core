@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
-class config {
+class config extends base {
 
 	/**
 	 * All of the config parameters loaded so far

@@ -1,13 +1,12 @@
 <?php
 namespace Trunk\Wibbler;
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
+include_once( __DIR__ . "/base.php" );
 
 /**
  * Dependency container for dependency injection
  */
 final class WibblerDependencyContainer {
-
-	private $_instances = array();
 
 	/**
 	 * Cache of the modules which have been loaded
@@ -19,29 +18,19 @@ final class WibblerDependencyContainer {
 	 * The instance of this object
 	 * @var null
 	 */
-	static $inst = null;
+	private static $_instance = null;
 
+	/**
+	 * Private constructor - stops creation of this without using Instance (below)
+	 */
 	private function __construct() {
 	}
 
 	public static function Instance() {
-		if ( self::$inst === null ) {
-			self::$inst = new WibblerDependencyContainer();
+		if ( self::$_instance === null ) {
+			self::$_instance = new WibblerDependencyContainer();
 		}
-		return self::$inst;
-	}
-
-	public function getConfig( $module ) {
-
-		$file = COMMONPATH . 'config/' . $module . '.php';
-
-		if ( !file_exists( $file ) ) {
-			throw new \Exception( 'Config file not found' );
-			return false;
-		}
-		include( $file );
-
-		return $config;
+		return self::$_instance;
 	}
 
 	public function getModule( $module, $namespace = null, $option = null ) {
@@ -83,7 +72,9 @@ final class WibblerDependencyContainer {
 			include_once( $file_path );
 
 			$ns_extra = $namespace . $module;
-			return new $ns_extra( $option );
+
+			// We are using a singleton pattern for this module
+			return $ns_extra::Instance( $option );
 		}
 
 		return false;

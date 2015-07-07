@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
-class input {
+class input extends base {
 	function __construct() {
 	}
 
