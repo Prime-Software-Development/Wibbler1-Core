@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler;
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
-include_once( __DIR__ . "/base.php" );
+include_once( __DIR__ . "/modules/base.php" );
 
 /**
  * Dependency container for dependency injection
