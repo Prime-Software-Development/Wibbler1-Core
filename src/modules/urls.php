@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
-class urls {
+class urls extends base {
 
 	/**
 	 * @var string Request type (http or https)

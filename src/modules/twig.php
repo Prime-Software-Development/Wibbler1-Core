@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
-class twig {
+class twig extends base {
 
 	private $_twig;
 	private $_template_dir;
