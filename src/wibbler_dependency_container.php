@@ -8,17 +8,27 @@ if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 final class WibblerDependencyContainer {
 
 	private $_instances = array();
+
+	/**
+	 * Cache of the modules which have been loaded
+	 * @var array
+	 */
 	private $_modules = array();
+
+	/**
+	 * The instance of this object
+	 * @var null
+	 */
+	static $inst = null;
 
 	private function __construct() {
 	}
 
 	public static function Instance() {
-		static $inst = null;
-		if ( $inst === null ) {
-			$inst = new WibblerDependencyContainer();
+		if ( self::$inst === null ) {
+			self::$inst = new WibblerDependencyContainer();
 		}
-		return $inst;
+		return self::$inst;
 	}
 
 	public function getConfig( $module ) {
