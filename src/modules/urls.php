@@ -31,7 +31,7 @@ class urls extends base {
 		if ( PHP_SAPI == 'cli' ) {
 			$this->is_cli = true;
 		} else {
-			$this->http = isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? $_SERVER[ 'REQUEST_SCHEME' ] : ( $_SERVER[ 'HTTPS' ] ? 'https' : 'http' );
+			$this->http = isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? $_SERVER[ 'REQUEST_SCHEME' ] : ( isset($_SERVER[ 'HTTPS' ]) ? 'https' : 'http' );
 			$this->server_name = $_SERVER[ 'HTTP_HOST' ];
 			$this->root_url = $this->_get_current_root_url();
 		}
