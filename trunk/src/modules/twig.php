@@ -50,4 +50,8 @@ class twig extends base {
 	public function set_number_format($decimal_places = 0, $decimal_point_char = ".", $thousand_seperator = ",") {
 		$this->_twig->getExtension('core')->setNumberFormat($decimal_places, $decimal_point_char, $thousand_seperator);
 	}
+
+    public function add_global( $name, $value ) {
+        $this->_twig->addGlobal( $name, $value );
+    }
 }
