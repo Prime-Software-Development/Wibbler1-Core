@@ -3,6 +3,12 @@ namespace Trunk\Wibbler\Modules;
 
 abstract class base {
 
+	protected $dependencies;
+
+	function __construct() {
+		$this->dependencies = \Trunk\Wibbler\WibblerDependencyContainer::Instance();
+	}
+
 	static $instances = array();
 
 	final public static function Instance( $options )
