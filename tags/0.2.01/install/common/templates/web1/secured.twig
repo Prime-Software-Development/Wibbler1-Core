@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% set web1_js_files = web1_js_files is defined ? web1_js_files : {} %}
+{% set web1_js_files = { "secured" : [ 'script.js', 'search.js', 'manage.js' ] } | merge( web1_js_files ) %}
+
+{% block Body %}
+	{% block Navigation %}
+		{% include "navigation.twig" %}
+	{% endblock %}
+
+	<div id='MainContent'>
+		{% block MainContentBlock %}
+		{% endblock %}
+	</div>
+
+	{% block Footer %}
+		{% include "footer.twig" %}
+	{% endblock %}
+{% endblock %}
