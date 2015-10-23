@@ -2,7 +2,7 @@
 namespace Trunk\Tinc;
 $_ns = '\\Trunk\\Tinc';
 
-class BaseController extends \Trunk\Wibbler\WibblerController {
+class CoreController extends \Trunk\Wibbler\WibblerController {
 
 	var $bl_bypass_security = false;
 	var $session_length = 60;
