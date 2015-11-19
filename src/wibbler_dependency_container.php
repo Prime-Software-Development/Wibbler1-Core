@@ -59,6 +59,15 @@ final class WibblerDependencyContainer {
 		if ( $namespace == null )
 			$namespace = "\\Trunk\\Wibbler\\Modules\\";
 
+		// If the class exists (it should if using composer)
+		if ( class_exists( $namespace . $module ) ) {
+			// Set the namespace
+			$ns_extra = $namespace . $module;
+
+			// We are using a singleton pattern for this module
+			return $ns_extra::Instance( $option );
+		}
+
 		$core_file_path = __dir__ . '/modules/' . $module . '.php';
 		$user_file_path = COMMONPATH . '/modules/' . $module . '.php';
 
