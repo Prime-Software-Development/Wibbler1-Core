@@ -51,10 +51,30 @@ class WibblerLoader {
 	/**
 	 * The path to the controller
 	 */
-	var $controller_path;
+	public $controller_path;
 
-	function __construct() {
+	/**
+	 * The instance of this object
+	 * @var null
+	 */
+	private static $_instance = null;
 
+	/**
+	 * @return WibblerLoader
+	 */
+	public static function Instance() {
+		if ( self::$_instance === null ) {
+			self::$_instance = new WibblerLoader();
+			self::$_instance->post_construct();
+		}
+		return self::$_instance;
+	}
+
+	function __construct()
+	{
+	}
+
+	private function post_construct() {
 		$path_parts = $this->init();
 
 		$initial_path = CONTROLLERPATH;

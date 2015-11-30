@@ -1,6 +1,6 @@
 <?php
 namespace Trunk\Wibbler\Modules;
-
+require_once __dir__ . "/../wibbler_loader.php";
 class urls extends base {
 
 	/**
@@ -24,6 +24,11 @@ class urls extends base {
 	 */
 	var $is_cli = false;
 
+	/**
+	 * @var \Trunk\Wibbler\WibblerLoader
+	 */
+	private $wibbler_loader = null;
+
 	// Constructor of the core urls module
 	function __construct() {
 
@@ -35,6 +40,8 @@ class urls extends base {
 			$this->server_name = $_SERVER[ 'HTTP_HOST' ];
 			$this->root_url = $this->_get_current_root_url();
 		}
+
+		$this->wibbler_loader = \Trunk\Wibbler\WibblerLoader::Instance();
 	}
 
 	/**
@@ -93,5 +100,9 @@ class urls extends base {
 
 	public function redirect( $url = "" ) {
 		header( 'Location: ' . $this->get_full_url() . $url );
+	}
+
+	public function get_controller_path() {
+		return $this->wibbler_loader->controller_path;
 	}
 }

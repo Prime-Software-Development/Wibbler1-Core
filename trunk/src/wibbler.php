@@ -15,7 +15,7 @@ class Wibbler {
 		global $load_helpers;*/
 
 		try {
-			$wibbler_loader = new WibblerLoader();
+			$wibbler_loader = WibblerLoader::Instance();
 			$main_controller = $wibbler_loader->controller;
 
 			if ( $wibbler_loader->error !== false || $main_controller === null ) {
