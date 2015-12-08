@@ -33,6 +33,12 @@ class WibblerLoader {
 	 */
 	var $class_method = null;
 	/**
+	 * The method to call within the class
+	 * if $class_method does not exist
+	 * @var string
+	 */
+	var $remap_method = '_remap';
+	/**
 	 * Any fatal error found when trying to load the class / method or false if all is ok
 	 * @var mixed
 	 */
@@ -282,6 +288,13 @@ class WibblerLoader {
 
 			return true;
 		} else {
+			// Check if we have remap function if we do call it
+			if( method_exists( $this->controller, $this->remap_method ) ){
+				$this->class_method = '_remap';
+				array_unshift( $this->url_parts, $method );
+
+				return;
+			}
 			$this->error = 'Method not found';
 		}
 	}
