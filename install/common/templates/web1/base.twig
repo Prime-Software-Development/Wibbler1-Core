@@ -1,15 +1,15 @@
 <html>
-	<head>
-		<title>{{ PageTitle }}</title>
+<head>
+	<title>{{ PageTitle }}</title>
 
-		{% include "external_includes.twig" %}
+	{% include "external_includes.twig" %}
 
-		{% include "includes.twig" with { "file_list" : web1_js_files, "path": "web1", "type": "js", "defaults": [ 'script.js' ] } %}
-		{% include "includes.twig" with { "file_list" : web1_css_files, "path": "web1", "type": "css", "defaults": [ 'style.css' ] } %}
+	{#{% include "includes.twig" with { "file_list" : web1_js_files, "path": "web1", "type": "js", "defaults": [ 'script.js' ] } %}#}
+	{% include "includes.twig" with { "file_list" : web1_css_files, "path": "web1", "type": "css", "defaults": [ 'style.css' ] } %}
 
-	</head>
-	<body>
-		{% block Body %}
-		{% endblock %}
-	</body>
+</head>
+<body>
+{% block Body %}
+{% endblock %}
+</body>
 </html>

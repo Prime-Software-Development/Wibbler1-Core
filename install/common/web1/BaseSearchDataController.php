@@ -5,6 +5,8 @@ $_ns = '\\Trunk\\Tinc';
 
 class BaseSearchDataController extends BaseController {
 
+    protected $default_sort = "";
+
     /**
      * Autocomplete function - allows for searching using a single key field
      */
@@ -49,14 +51,53 @@ class BaseSearchDataController extends BaseController {
     public function search() {
         $parent_id = $this->input->post( 'ParentId' );
         $parent_type = $this->input->post( 'ParentType' );
+        $page_no = $this->input->post( 'PageNumber' );
+        $sort_order = $this->input->post( 'SortOrder' );
+        $sort_direction = $this->input->post( 'SortDirection' );
+        $excel_export = $this->input->post('ExcelExport') == 1;
 
         // Run the actual search
-        $this->_search( false, $parent_id, $parent_type );
+        $query = $this->_search( false, $parent_id, $parent_type );
 
-        if ( $this->input->post('ExcelExport') == 1 ) {
+        $sort_order = $sort_order == "" ? $this->default_sort : $sort_order;
+        $sort_direction = $sort_direction == "" ? "asc" : $sort_direction;
+        if ( strpos( $sort_order, "," ) !== false ) {
+            $parts = explode( ",", $sort_order );
+            foreach( $parts as $part ) {
+                $query->orderBy( $part, $sort_direction == "desc" ? Criteria::DESC : Criteria::ASC );
+            }
+        }
+        else {
+            $query->orderBy( $sort_order, $sort_direction == "desc" ? Criteria::DESC : Criteria::ASC );
+        }
+
+        // If this isn't an excel export, and a page number has been requested
+        if ( !$excel_export && $page_no > 0 ) {
+            // Paginate the results
+            $rows = $query->paginate( $page_no, 50 );
+
+            $this->data[ 'pagination' ][ 'active_page' ] = $page_no;
+            $this->data[ 'pagination' ][ 'needed' ] = $rows->haveToPaginate();
+            $this->data[ 'pagination' ][ 'pages' ] = $rows->getLinks( 5 );
+            $this->data[ 'pagination' ][ 'last_page' ] = $rows->getLastPage();
+            $this->data[ 'pagination' ][ 'num_results' ] = $rows->getNbResults();
+            $this->data[ 'pagination' ][ 'first_result' ] = $rows->getFirstIndex();
+            $this->data[ 'pagination' ][ 'last_result' ] = $rows->getLastIndex();
+
+        }
+        else {
+            $rows = $query->find();
+        }
+
+        $this->data[ 'table_rows' ] = $rows;
+        $this->data[ 'count' ] = count( $rows );
+        $this->data[ 'sort_order' ] = $sort_order;
+        $this->data[ 'sort_dir' ] = $sort_direction;
+
+        // If this is an excel export
+        if ( $excel_export ) {
             $this->data['ExcelExport'] = true;
             // Output to excel
-#			$this->ShowTwig($this->controller_path . "search_results.twig");
             $this->GenerateExcel($this->controller_path . "search_results.twig", "Fred");
         }
         else {
@@ -68,6 +109,13 @@ class BaseSearchDataController extends BaseController {
     /**
      * Actually perform the search and return an array of objects
      * @param bool $auto_complete Whether this is a auto-complete search and therefore should use different terms
+     */
+    /**
+     * Actually perform the search and return an array of objects
+     * @param bool $auto_complete Whether this is a auto-complete search and therefore should use different terms
+     * @param null|object $parent_id Parent of this object (if relevant)
+     * @param null|object $parent_type Type of the parent of this object (if relevant)
+     * @return PropelQuery
      */
     protected function _search( $auto_complete = false, $parent_id = null, $parent_type = null ) {
 

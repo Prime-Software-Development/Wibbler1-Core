@@ -1,3 +1,5 @@
+{% from '_generic/macros.twig' import sortheader %}
+
 {% spaceless %}
 
     {% block AboveResultTable %}{% endblock %}
@@ -14,24 +16,30 @@
                 {% block ResultHeader %}
                 {% endblock %}
 
-                <table class="ListValues ResultsTable" >
+                {% block AboveResultPagination %}{% include '_extend/pagination.twig' with { "Top": true } %}{% endblock %}
+
+                <table class="table table-striped table-bordered table-hover table-condensed" >
             {% endif %}
-            <thead class="ui-widget-header">
+            <thead class="search-results-header">
             <tr>
                 {% block Header %}{% endblock %}
             </tr>
             </thead>
-            <tbody>
+            <tbody class="selection_rows">
             {% for Row in table_rows %}
-                <tr data-id="{% if Row.Id %}{{Row.Id}}{% else %}{{Row.id}}{% endif %}" class="{% block RowClasses %}{% endblock %}" {% block RowData %}{% endblock %}>
+                <tr data-id="{% if Row.Id %}{{Row.Id}}{% else %}{{Row.id}}{% endif %}" class="selection_row {% block RowClasses %}{% endblock %}" {% block RowData %}{% endblock %}>
                     {% block Row %}{% endblock %}
                 </tr>
             {% endfor %}
             </tbody>
             </table>
         {% endblock %}
+
+	    {% block BelowResultPagination %}{% include '_extend/pagination.twig' with { "Top": false }  %}{% endblock %}
+
     {% endif %}
 
-    {% block BelowResultTable %}{% endblock %}
+
+	{% block BelowResultTable %}{% endblock %}
 
 {% endspaceless %}

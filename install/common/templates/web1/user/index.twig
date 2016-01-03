@@ -1,49 +1,30 @@
-{% set PageTitle = 'Users' %}
-{% set SearchTitle = 'Manage Users' %}
-{% set DataPath = "user" %}
-{# set jsObject = "UserSearchManager" #}
-
-{% extends IsManager ? "_search/manage.twig" : "_search/base_search_body.twig" %}
+{% set Options = {
+DataPath: "user/",
+SearchText: "User",
+jsManageObject: "web1/user/user_manager",
+ObjectId: user.getId
+} %}
+{% extends manage_page ? "_extend/base_manage.twig" : "_extend/base_search.twig" %}
 
 {% block SearchOptions %}
-	<div class="SearchOptions">
-		<p>
-			<label for="SearchUserName">User</label>
-			<input type='text' name='SearchUserName' id='SearchUserName' />
-		</p>
-	</div>
-{% endblock %}
+	{% embed "_generic/manage_panel.twig" %}
+		{% block PanelTitle %}
+		{% endblock %}
 
-{% block SearchButtons %}
-	<div class="SearchButtons">
-		<p><input type='button' class='btnSearch button' value='User Search'/></p>
-		<p><input type='button' class='btnAddItem button' value='Add User'/></p>
-	</div>
+		{% block PanelBody %}
+			{% include "_generic/frm_input.twig" with { "Label": "Name", "Name": "SearchUserName" } %}
+		{% endblock %}
+	{% endembed %}
 {% endblock %}
 
 {% block ManageContents %}
-	<div class="panel_content">
-		<form id="form_user">
-			<div class="ui-widget-content ui-corner-all" style="padding: 10px;">
-				<input type='hidden' name='UserId' class='UserDetailsId' value='{{user.getId}}'>
+	{% embed "_generic/manage_panel.twig" %}
+		{% block PanelTitle %}
+		{% endblock %}
 
-				<p>
-				  <label class='Caption'>Forename</label>
-				  <input type='text' name='Forname' class='UserDetailsForename required' value='{{user.getForename}}'>
-				</p>
-				<p>
-				  <label class='Caption'>Surname</label>
-				  <input type='text' name='Surname' class='UserDetailsSurname required' value='{{user.getSurname}}'>
-				</p>
-				<p>
-				  <label class='Caption'>E-Mail Address</label>
-				  <input type='text' name='EmailAddress' class='UserDetailsEmail required' value='{{user.getEmailAddress}}'>
-				</p>
-				<p>
-				  <label class='Caption'>New Password</label>
-				  <input type='password' name='Password' class='UserDetailsPassword'>
-				</p>
-			</div>
-		</form>
-	</div>
+		{% block PanelBody %}
+			{% include "_generic/frm_input.twig" with { "Label": "Forename", "Name": "UserForename", "Value": user.getForename } %}
+			{% include "_generic/frm_input.twig" with { "Label": "Surname", "Name": "UserSurname", "Value": user.getSurname } %}
+		{% endblock %}
+	{% endembed %}
 {% endblock %}

@@ -117,6 +117,23 @@ class CoreController extends \Trunk\Wibbler\WibblerController {
 	}
 
 	/**
+	 * Outputs the message as part of a JSON array, setting status to OK and exiting
+	 * @param string $message
+	 * @param array $extras
+	 */
+	function ShowJSONSuccess( $message = "", $extras = null ) {
+
+		if ( $extras == null )
+			$extras = array();
+
+		$extras[ 'status' ] = 'OK';
+		$extras[ 'notes' ] = $message;
+
+		$this->ShowJSON( $extras );
+		exit();
+	}
+
+	/**
 	 * Generate an excel file to the screen
 	 * @param type $template_file
 	 * @param type $data
