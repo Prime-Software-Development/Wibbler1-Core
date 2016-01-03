@@ -4,16 +4,18 @@
 {% set web1_js_files = { "secured" : [ 'script.js', 'search.js', 'manage.js' ] } | merge( web1_js_files ) %}
 
 {% block Body %}
-	{% block Navigation %}
-		{% include "navigation.twig" %}
-	{% endblock %}
+	<div class="container-fluid page_content">
+		{% block Navigation %}
+			{% include "navigation.twig" %}
+		{% endblock %}
 
-	<div id='MainContent'>
-		{% block MainContentBlock %}
+		<div id='MainContent'>
+			{% block MainContentBlock %}
+			{% endblock %}
+		</div>
+
+		{% block Footer %}
+			{% include "footer.twig" %}
 		{% endblock %}
 	</div>
-
-	{% block Footer %}
-		{% include "footer.twig" %}
-	{% endblock %}
 {% endblock %}

@@ -12,5 +12,9 @@ class BaseController extends \Trunk\Tinc\CoreController {
 
 		parent::__construct( $dependencies );
 
+		if ( isset( $_SESSION[ 'user_id' ] ) ) {
+			$this->current_user = \Database\UserQuery::create()->findPk($_SESSION['user_id']);
+		}
+
 	}
 }

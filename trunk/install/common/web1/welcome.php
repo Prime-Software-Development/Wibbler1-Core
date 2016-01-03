@@ -6,10 +6,6 @@ $_ns = '\\Trunk\\Tinc';
 
 class Welcome extends \Trunk\Tinc\BaseController {
 
-	var $users = array(
-		array("id" => 1, "username" => "admin", "password" => "password")
-	);
-
 	var $bl_bypass_security = true;
 
 	function index() {
@@ -17,30 +13,41 @@ class Welcome extends \Trunk\Tinc\BaseController {
 		$action = $this->input->post('login_action');
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		if ($action == '')
+			$action = $this->input->get( 'login_action' );
 
 		$this->data = array();
 
 		switch ($action) {
 			case 'login':
 
-				foreach ($this->users as $user) {
-					if ($username == $user["username"] && $password = $user["password"]) {
-						$_SESSION["user_id"] = $user["id"];
+				$user = \Database\UserQuery::create()
+					->filterByUserType( "Admin" )
+					->useContactDetailRelatedByEmailContactDetailIdQuery()
+						->filterByContactDetail( $username )
+					->endUse()
+					->filterByUserpassword( md5( $password ) );
+				$user = $user->findOne();
 
-						// Set the default redirect path
-						$redirect_path = '/rad_search/';
-						// If there is a session variable with the calling url in it
-						if (isset($_SESSION['calling_url'])) {
-							// Change where to redirect to so the user gets to where they wanted
-							$redirect_path = '/' . $_SESSION['calling_url'];
-							// Clear the session variable
-							unset($_SESSION['calling_url']);
-						}
+				if (isset($user)) {
+					$_SESSION["user_id"] = $user->getId();
+					// Update the session expiration time
+					$expires = new \DateTime("now +" . $this->session_length . " mins");
+					$_SESSION['expires'] = $expires;
 
-						// Redirect to the home page or the calling url
-						$this->urls->redirect($redirect_path);
-						exit();
+					// Set the default redirect path
+					$redirect_path = 'user/';
+					// If there is a session variable with the calling url in it
+					if (isset($_SESSION['calling_url'])) {
+						// Change where to redirect to so the user gets to where they wanted
+						$redirect_path = '/' . $_SESSION['calling_url'];
+						// Clear the session variable
+						unset($_SESSION['calling_url']);
 					}
+
+					// Redirect to the home page or the calling url
+					$this->urls->redirect($redirect_path);
+					exit();
 				}
 
 				$this->data['message'] = 'Your username or password did not match any existing records.';
