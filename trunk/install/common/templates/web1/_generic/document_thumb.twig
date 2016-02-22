@@ -5,7 +5,7 @@
 
         <div class="Thumb">
             {% if document.getFileExtension in ['pdf','jpg','jpeg','gif','png'] %}
-                <a class="DocumentImage ViewBoxItem" href="/files/read_document/{{ document.getId }}/?view=inline"
+                <a class="ViewBoxItem" href="/files/read_document/{{ document.getId }}/?view=inline"
                    data-file_type="{{ document.getFileExtension }}" target="_blank">
                     {{ get_thumb( document ) }}
                 </a>
