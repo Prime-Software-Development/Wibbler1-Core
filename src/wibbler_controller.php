@@ -62,6 +62,13 @@ class WibblerController {
 	}
 
 	/**
+	 * Function called after the constructor, but before the main method
+	 * This function will know the method being called and it's doc block
+	 */
+	public function pre_function_call( $method, $docblock = null ) {
+	}
+
+	/**
 	 * Load a user module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
 	 */

@@ -33,6 +33,11 @@ class WibblerLoader {
 	 */
 	var $class_method = null;
 	/**
+	 * Docblock of the method being called
+	 * @var null
+	 */
+	public $method_docblock = null;
+	/**
 	 * The method to call within the class
 	 * if $class_method does not exist
 	 * @var string
@@ -278,6 +283,8 @@ class WibblerLoader {
 			$method = $class->getMethod( $method );
 			// Find the number of required parameters
 			$required_params = $method->getNumberOfRequiredParameters();
+			// Get the doc block
+			$this->method_docblock = $method->getDocComment();
 
 			// If the number of required parameters is greater than the number given
 			if ( $required_params > count( $this->url_parts ) ) {
