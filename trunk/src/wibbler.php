@@ -22,6 +22,7 @@ class Wibbler {
 				$this->Show404( $wibbler_loader->error );
 			}
 
+			call_user_func_array( array( $main_controller, "pre_function_call" ), [ $wibbler_loader->class_method, $wibbler_loader->method_docblock ] );
 			call_user_func_array( array( $main_controller, $wibbler_loader->class_method ), $wibbler_loader->url_parts );
 		} catch ( \Exception $ex ) {
 			echo $ex->getMessage();
