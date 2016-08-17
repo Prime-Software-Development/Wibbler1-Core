@@ -22,7 +22,12 @@ class twig extends base {
 			'cache' => $this->_cache_dir,
 			'debug' => true,
 		));
-		
+
+		if( 'development' === ENVIRONMENT ) {
+			$this->_twig->addExtension(new \Twig_Extension_Debug());
+
+			$this->_twig->addExtension( new TwigExtensions() );
+		}
 	}
 
 	public function render($template, $data = array()) {
@@ -54,4 +59,18 @@ class twig extends base {
     public function add_global( $name, $value ) {
         $this->_twig->addGlobal( $name, $value );
     }
+}
+
+class TwigExtensions extends \Twig_Extension {
+	public function getFilters() {
+		return array(
+			new \Twig_SimpleFilter('file_exists', function($file){
+				return file_exists( $file );
+			})
+		);
+	}
+
+	public function getName() {
+		return 'trunk_software_extension';
+	}
 }
