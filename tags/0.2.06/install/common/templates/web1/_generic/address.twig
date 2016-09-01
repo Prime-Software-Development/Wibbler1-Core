@@ -1,0 +1,16 @@
+<div class="{% include "_generic/panel_class.twig" %}">
+	{% include "_generic/frm_input.twig" with { "Label": "Address 1", "Name": "Address1", "Value": address.getAddress1 } %}
+
+	{% include "_generic/frm_input.twig" with { "Label": "Address 2", "Name": "Address2", "Value": address.getAddress2 } %}
+
+	{% include "_generic/frm_input.twig" with { "Label": "Address 3", "Name": "Address3", "Value": address.getAddress3 } %}
+
+	{% include "_generic/frm_input.twig" with { "Label": "Town", "Name": "Town", "Value": address.getTown } %}
+</div>
+<div class="{% include "_generic/panel_class.twig" %}">
+	{% include "_generic/frm_dropdown.twig" with { "Label": "County", "Name": "CountyId", "Value": address.getCountyId , "readonly_text": "data-dropdown=countie"  } %}
+
+	{% include "_generic/frm_input.twig" with { "Label": "Postcode", "Name": "Postcode", "Value": address.getPostcode } %}
+
+	{% include "_generic/frm_dropdown.twig" with { "Label": "Country", "Name": "CountryId", "Value": address.getCountryId, "readonly_text": "data-dropdown=countrie" } %}
+</div>
