@@ -6,6 +6,7 @@ class twig extends base {
 	private $_twig;
 	private $_template_dir;
 	private $_cache_dir;
+	private $loaded_filters = [];
 
 	function __construct( )
 	{
@@ -49,6 +50,14 @@ class twig extends base {
 	 * @param type $filter Function to call
 	 */
 	public function add_filter($name, $filter) {
+		// If the filter is already loaded
+		if ( in_array( $name, $this->loaded_filters ) ) {
+			// Return
+			return;
+		}
+		// Note the filter has been loaded
+		$this->loaded_filters[] = $name;
+		// Load the filter
 		$this->_twig->addFilter($name, new \Twig_Filter_Function($filter));
 	}
 
