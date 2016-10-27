@@ -31,6 +31,10 @@ class twig extends base {
 		}
 	}
 
+	public function addExtension( $extension ) {
+		$this->_twig->addExtension( $extension );
+	}
+
 	public function render($template, $data = array()) {
 
 		$template = $this->_twig->loadTemplate($template);
