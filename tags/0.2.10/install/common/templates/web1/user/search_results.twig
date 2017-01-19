@@ -1,0 +1,11 @@
+{% extends "_extend/base_search_results.twig" %}
+
+{% block Header %}
+	<th>Name</th>
+	<th>EMail Address</th>
+{% endblock %}
+
+{% block Row %}
+	<td class="itemSelector">{{ Row.getForename }} {{ Row.getSurname }}</td>
+	<td>{{ Row.getEmailAddress }}</td>
+{% endblock %}
