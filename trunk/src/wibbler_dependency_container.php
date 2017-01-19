@@ -144,21 +144,42 @@ final class WibblerDependencyContainer {
 	}
 
 	/**
+	 * Set services config
+	 *
 	 * @param array $config
 	 * @throws \Exception
 	 */
 	public function setServiceConfig(array $config)
 	{
-		$counts = array();
+		$this->_setServiceConfig($config, array());
+	}
+
+	/**
+	 * Merge existing services config with the given config
+	 *
+	 * @param array $config
+	 *
+	 * @throws \Exception
+	 */
+	public function addServiceConfig(array $config)
+	{
+		$this->_setServiceConfig($config, $this->services_config);
+	}
+
+	protected function _setServiceConfig(array $config, array $services)
+	{
 		// check for duplicate service ids
-		foreach($config as $id=>$service){
-			if(isset($counts[$id])){
+		foreach($config as $service){
+			$service_id = $service['id'];
+			$service_class = $service['class'];
+
+			if(isset($services[$service_id])){
 				throw new \Exception("Duplicate Service Id found while loading Service config");
 			}
 
-			$counts[$id] = true;
+			$services[$service_id] = $service_class;
 		}
 
-		$this->services_config = $config;
+		$this->services_config = $services;
 	}
 }
