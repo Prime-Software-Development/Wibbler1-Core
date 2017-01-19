@@ -15,6 +15,13 @@ final class WibblerDependencyContainer {
 	private $_modules = array();
 
 	/**
+	 * Cache of services which have been loaded
+	 * @var array
+	 */
+	private $services;
+	private $services_config;
+
+	/**
 	 * The instance of this object
 	 * @var null
 	 */
@@ -24,6 +31,8 @@ final class WibblerDependencyContainer {
 	 * Private constructor - stops creation of this without using Instance (below)
 	 */
 	private function __construct() {
+		$this->services = array();
+		$this->services_config = array();
 	}
 
 	public static function Instance() {
@@ -54,6 +63,9 @@ final class WibblerDependencyContainer {
 	/**
 	 * Actually load the module - the file name and the class name must be identical
 	 * @param string $module Name of the module to load
+	 * @param null   $namespace
+	 * @param null   $option
+	 * @return bool
 	 */
 	private function _load_module( $module, $namespace = null, $option = null ) {
 		if ( $namespace == null )
@@ -108,4 +120,45 @@ final class WibblerDependencyContainer {
 		}
 	}
 
+	/**
+	 * @param $service_id
+	 * @return bool
+	 */
+	public function getService($service_id)
+	{
+		// service not yet loaded
+		if(!isset($this->services[$service_id])){
+			// service doesn't exists in the config
+			if(!isset($this->services_config[$service_id])) {
+				return false;
+			}
+
+			// service class
+			$Service = $this->services_config[ $service_id ];
+
+			// instantiate service
+			$this->services[ $service_id ] = new $Service();
+		}
+
+		return $this->services[$service_id];
+	}
+
+	/**
+	 * @param array $config
+	 * @throws \Exception
+	 */
+	public function setServiceConfig(array $config)
+	{
+		$counts = array();
+		// check for duplicate service ids
+		foreach($config as $id=>$service){
+			if(isset($counts[$id])){
+				throw new \Exception("Duplicate Service Id found while loading Service config");
+			}
+
+			$counts[$id] = true;
+		}
+
+		$this->services_config = $config;
+	}
 }
