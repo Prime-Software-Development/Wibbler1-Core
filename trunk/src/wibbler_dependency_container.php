@@ -134,10 +134,18 @@ final class WibblerDependencyContainer {
 			}
 
 			// service class
-			$Service = $this->services_config[ $service_id ];
+			$data = $this->services_config[ $service_id ];
+			$arguments = isset($data['args']) ? $data['args'] : null;
+			$reflect = new \ReflectionClass($data['class']);
+
+			if($arguments) {
+				$service = $reflect->newInstance($arguments);
+			} else {
+				$service = $reflect->newInstance();
+			}
 
 			// instantiate service
-			$this->services[ $service_id ] = new $Service();
+			$this->services[ $service_id ] = $service;
 		}
 
 		return $this->services[$service_id];
@@ -171,13 +179,12 @@ final class WibblerDependencyContainer {
 		// check for duplicate service ids
 		foreach($config as $service){
 			$service_id = $service['id'];
-			$service_class = $service['class'];
 
 			if(isset($services[$service_id])){
 				throw new \Exception("Duplicate Service Id found while loading Service config");
 			}
 
-			$services[$service_id] = $service_class;
+			$services[$service_id] = $service;
 		}
 
 		$this->services_config = $services;
