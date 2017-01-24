@@ -2,12 +2,13 @@
 namespace Trunk\Wibbler\Modules;
 
 use Twig_Loader_Filesystem;
+use Twig_Extension_Debug;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFilter;
 use Twig_Filter;
 
-class twig extends base {
+class twig2 extends base {
 
 	private $_twig;
 	private $_template_dir;
@@ -31,9 +32,9 @@ class twig extends base {
 		));
 
 		if( 'development' === ENVIRONMENT ) {
-			$this->_twig->addExtension(new \Twig_Extension_Debug());
+			$this->_twig->addExtension(new Twig_Extension_Debug());
 
-			$this->_twig->addExtension( new TwigExtensions() );
+			$this->_twig->addExtension( new Twig2Extensions() );
 		}
 	}
 
@@ -47,7 +48,7 @@ class twig extends base {
 
 		return $template->render($data);
 	}
-	
+
 	public function display($template, $data = array()) {
 
 		$template = $this->_twig->loadTemplate($template);
@@ -75,12 +76,12 @@ class twig extends base {
 		$this->_twig->getExtension('Twig_Extension_Core')->setNumberFormat($decimal_places, $decimal_point_char, $thousand_seperator);
 	}
 
-    public function add_global( $name, $value ) {
-        $this->_twig->addGlobal( $name, $value );
-    }
+	public function add_global( $name, $value ) {
+		$this->_twig->addGlobal( $name, $value );
+	}
 }
 
-class TwigExtensions extends Twig_Extension {
+class Twig2Extensions extends Twig_Extension {
 	public function getFilters() {
 		return array(
 			new Twig_SimpleFilter('file_exists', function($file){
