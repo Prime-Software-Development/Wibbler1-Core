@@ -59,6 +59,20 @@ class WibblerController {
 				$this->load_helper( $helper );
 			}
 		}
+
+		// if there are any services registered in the config
+		// add them to the dependency container
+		if ( isset( $this->_autoload[ 'services' ] ) ) {
+			$services = $this->_autoload[ 'services' ];
+			$this->_dependencies->setServiceConfig( $services );
+
+			if ( isset( $this->_autoload[ 'autoload_services' ] ) ) {
+				$autoload_services = $this->_autoload[ 'autoload_services' ];
+				foreach( $autoload_services as $service_name ) {
+					$this->$service_name = $this->_dependencies->getService( $service_name );
+				}
+			}
+		}
 	}
 
 	/**
