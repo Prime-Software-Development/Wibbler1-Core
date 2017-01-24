@@ -24,8 +24,8 @@ class twig extends base {
 
 		#\Twig_Autoloader::register();
 
-		$loader = new \Twig_Loader_Filesystem($this->_template_dir);
-		$this->_twig = new \Twig_Environment($loader, array(
+		$loader = new Twig_Loader_Filesystem($this->_template_dir);
+		$this->_twig = new Twig_Environment($loader, array(
 			'cache' => $this->_cache_dir,
 			'debug' => true,
 		));
@@ -68,7 +68,7 @@ class twig extends base {
 		// Note the filter has been loaded
 		$this->loaded_filters[] = $name;
 		// Load the filter
-		$this->_twig->addFilter(new \Twig_Filter($name, $filter));
+		$this->_twig->addFilter(new Twig_Filter($name, $filter));
 	}
 
 	public function set_number_format($decimal_places = 0, $decimal_point_char = ".", $thousand_seperator = ",") {
@@ -80,10 +80,10 @@ class twig extends base {
     }
 }
 
-class TwigExtensions extends \Twig_Extension {
+class TwigExtensions extends Twig_Extension {
 	public function getFilters() {
 		return array(
-			new \Twig_SimpleFilter('file_exists', function($file){
+			new Twig_SimpleFilter('file_exists', function($file){
 				return file_exists( $file );
 			})
 		);
