@@ -1,9 +1,0 @@
-{
-	"name": "Trunk/Wibbler",
-	"require": {
-		"twig/twig": ">= 1.31.*"
-	},
-	"autoload":{
-		"classmap": ["/src/"]
-	}
-}

@@ -1,8 +1,0 @@
-{% set Type = 'text' %}
-{% set Value = Value|string_to_date( "d-m-Y" ) %}
-{% extends "_generic/base_form_element.twig" %}
-{% set UsePreAddon = true %}
-
-{% block PreAddon %}<span class="input-group-addon" id="date-addon1"><i class="fa fa-calendar"></i></span>{% endblock %}
-{% block Tags %}data-provide="datepicker"{% endblock %}
-{% set Classes = Classes ~ " datepicker" %}

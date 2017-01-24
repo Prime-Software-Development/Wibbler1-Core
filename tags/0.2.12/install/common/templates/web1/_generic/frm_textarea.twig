@@ -1,7 +1,0 @@
-{% extends "_generic/base_form_element.twig" %}
-
-{% block InputElement %}
-	{% spaceless %}
-	<textarea name="{{ Name }}" class="form-control input-sm" {% if IsRequired %}required{% endif %} {% if Readonly %}readonly="readonly" disabled="disabled"{% endif %} {% if Id %}id="{{ Id }}"{% endif %} >{{ Value ? Value : Answer.getValue }}</textarea>
-	{% endspaceless %}
-{% endblock %}

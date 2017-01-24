@@ -1,8 +1,0 @@
-{% set Type = "text" %}
-
-{% extends "_generic/base_form_element.twig" %}
-
-{% block InputElement %}
-	<input type="{{ Type }}" name="{{ Name }}From" value="{{ FromValue }}" class="form-control input-sm" autocomplete="off" {% if IsRequired %}required{% endif %} {% if Readonly %}readonly="readonly" disabled="disabled"{% endif %} style="display:inline-block;width:45%;" />
-	<input type="{{ Type }}" name="{{ Name }}To" value="{{ ToValue }}" class="form-control input-sm" autocomplete="off" {% if IsRequired %}required{% endif %} {% if Readonly %}readonly="readonly" disabled="disabled"{% endif %} style="display:inline-block;width:45%;" />
-{% endblock %}
