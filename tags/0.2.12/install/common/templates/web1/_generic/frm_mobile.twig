@@ -1,0 +1,6 @@
+{% set Type = 'text' %}
+{% extends "_generic/base_form_element.twig" %}
+{% set UsePreAddon = true %}
+
+{% block PreAddon %}<span class="input-group-addon" id="date-addon1"><span class="glyphicon glyphicon-phone"></span></span>{% endblock %}
+{% block Tags %}pattern="07[0-9]{3} [0-9]{6}" data-minlength="11" data-error="Mobile number format is 07### ######"{% endblock %}
