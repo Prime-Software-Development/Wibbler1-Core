@@ -13,7 +13,16 @@ class twig2 extends base {
 	private $_twig;
 	private $_template_dir;
 	private $_cache_dir;
+	/**
+	 * Holds a list of the filters already loaded
+	 * @var array
+	 */
 	private $loaded_filters = [];
+	/**
+	 * Holds a list of the extensions already loaded
+	 * @var array
+	 */
+	private $loaded_extensions = [];
 
 	function __construct( )
 	{
@@ -38,10 +47,6 @@ class twig2 extends base {
 		}
 	}
 
-	public function addExtension( $extension ) {
-		$this->_twig->addExtension( $extension );
-	}
-
 	public function render($template, $data = array()) {
 
 		$template = $this->_twig->loadTemplate($template);
@@ -55,6 +60,26 @@ class twig2 extends base {
 
 		$template->display($data);
 	}
+
+	/**
+	 * Adds a new extension to the twig environment
+	 * @param $extension
+	 */
+	public function addExtension( $extension ) {
+		// Get the class of the extension
+		$extension_class = get_class( $extension );
+
+		// If the class is already loaded
+		if ( in_array( $extension_class, $this->loaded_extensions ) ) {
+			// Return
+			return;
+		}
+		// Note the extension has been loaded
+		$this->loaded_extensions[ ] = $extension_class;
+		// Add the extension
+		$this->_twig->addExtension( $extension );
+	}
+
 	/**
 	 * Adds a new filter function to the twig environment
 	 * @param type $name Name of the filter
@@ -72,6 +97,12 @@ class twig2 extends base {
 		$this->_twig->addFilter(new Twig_Filter($name, $filter));
 	}
 
+	/**
+	 * Sets the default number format for the number_filter extension
+	 * @param int    $decimal_places
+	 * @param string $decimal_point_char
+	 * @param string $thousand_seperator
+	 */
 	public function set_number_format($decimal_places = 0, $decimal_point_char = ".", $thousand_seperator = ",") {
 		$this->_twig->getExtension('Twig_Extension_Core')->setNumberFormat($decimal_places, $decimal_point_char, $thousand_seperator);
 	}
