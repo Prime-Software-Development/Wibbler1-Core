@@ -7,12 +7,23 @@ use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFilter;
 use Twig_Filter;
+use Twig_FactoryRuntimeLoader;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Component\Form\Forms;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
 
 class twig2 extends base {
 
 	private $_twig;
 	private $_template_dir;
 	private $_cache_dir;
+
+	/**
+	 * @var \Twig_Loader_Filesystem
+	 */
+	private $twig_loader;
+
 	/**
 	 * Holds a list of the filters already loaded
 	 * @var array
@@ -32,10 +43,11 @@ class twig2 extends base {
 		$this->_template_dir = $this->_config['template_dir'];
 		$this->_cache_dir = $this->_config['cache_dir'];
 
-		#\Twig_Autoloader::register();
+		// Create a new loader with the template directories
+		$this->twig_loader = new Twig_Loader_Filesystem($this->_template_dir);
 
-		$loader = new Twig_Loader_Filesystem($this->_template_dir);
-		$this->_twig = new Twig_Environment($loader, array(
+		// Start the twig environment
+		$this->_twig = new Twig_Environment($this->twig_loader, array(
 			'cache' => $this->_cache_dir,
 			'debug' => true,
 		));
@@ -59,6 +71,21 @@ class twig2 extends base {
 		$template = $this->_twig->loadTemplate($template);
 
 		$template->display($data);
+	}
+
+	/**
+	 * Adds a runtime loader to the twig environment - allowing uses of themes
+	 * @param $form_theme string
+	 */
+	public function add_runtime_loader( $form_theme ) {
+		$twig = $this->_twig;
+
+		$formEngine = new TwigRendererEngine(array($form_theme), $twig);
+		$twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
+			TwigRenderer::class => function () use ($formEngine) {
+				return new TwigRenderer($formEngine);
+			},
+		)));
 	}
 
 	/**
@@ -95,6 +122,14 @@ class twig2 extends base {
 		$this->loaded_filters[] = $name;
 		// Load the filter
 		$this->_twig->addFilter(new Twig_Filter($name, $filter));
+	}
+
+	/**
+	 * Add the path to the list of template paths
+	 * @param $path
+	 */
+	public function add_template_path( $path ) {
+		$this->twig_loader->addPath( $path );
 	}
 
 	/**
