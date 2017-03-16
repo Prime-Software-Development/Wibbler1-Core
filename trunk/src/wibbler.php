@@ -10,12 +10,10 @@ class Wibbler {
 	const CORE = 'CORE';
 	const USER = 'USER';
 
-	function __construct() {
-		/*global $load_modules;
-		global $load_helpers;*/
+	function __construct( $additional_config = null ) {
 
 		try {
-			$wibbler_loader = WibblerLoader::Instance();
+			$wibbler_loader = WibblerLoader::Instance( $additional_config );
 			$main_controller = $wibbler_loader->controller;
 
 			if ( $wibbler_loader->error !== false || $main_controller === null ) {

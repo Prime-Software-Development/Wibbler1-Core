@@ -71,12 +71,20 @@ class WibblerLoader {
 	private static $_instance = null;
 
 	/**
+	 * Holds the additional configuration
+	 * @var array
+	 */
+	private $additional_config = [];
+
+	/**
 	 * @return WibblerLoader
 	 */
-	public static function Instance() {
+	public static function Instance( $additional_config ) {
 		if ( self::$_instance === null ) {
 			self::$_instance = new WibblerLoader();
-			self::$_instance->post_construct();
+			// Store the base config
+			self::$_instance->additional_config = $additional_config;
+			self::$_instance->post_construct(  );
 		}
 		return self::$_instance;
 	}
@@ -110,7 +118,7 @@ class WibblerLoader {
 		}
 
 		// Set the path to the controller within the controller
-		$this->controller->_set_controller_details( $this->controller_path, $this->class_path );
+		$this->controller->_set_controller_details( $this->additional_config, $this->controller_path, $this->class_path );
 
 		// Check the method exists within the controller
 		if ( $this->check_method() === false )
