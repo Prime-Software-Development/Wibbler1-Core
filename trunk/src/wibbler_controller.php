@@ -38,6 +38,7 @@ class WibblerController {
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
+		$this->_load_configs();
 	}
 
 	/**
@@ -73,8 +74,6 @@ class WibblerController {
 		$this->additional_config = $additional_config;
 		$this->controller_path = $controller_path;
 		$this->controller_path_parts = $controller_path_parts;
-
-		$this->_load_configs();
 	}
 
 	private function _load_configs() {
