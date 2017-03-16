@@ -9,11 +9,6 @@ if ( defined( "PROPEL_INC" ) ) {
 }
 
 class WibblerController {
-
-	/**
-	 * Holds the dependency container
-	 * @var null|WibblerDependencyContainer
-	 */
 	private $_dependencies;
 
 	/**
@@ -34,76 +29,15 @@ class WibblerController {
 	protected $config;
 
 	/**
+	 * Stores the additional configuration
+	 * @var array
+	 */
+	private $additional_config;
+
+	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
-
-		// Keep a note of the dependency manager
-		$this->_dependencies = WibblerDependencyContainer::Instance();
-
-		// Load the configuration loading module
-		$this->load_module( "config" );
-
-		// Get the autoload config
-		$_config_autoload = $this->config->load( 'autoload' );// $this->_dependencies->getConfig( 'autoload' );
-		// Get the services config
-		$_config_services = $this->config->load( 'services' );
-
-
-		// If there are no services defined in the services config file
-		if ( $_config_services == [] ) {
-			// If there are services in the autoload config file
-			if ( $_config_autoload[ 'services' ] ) {
-				// Use the services in the autoload config file
-				$_config_services = [ 'services' => $_config_autoload[ 'services' ] ];
-				// If there are auto-load services
-				if ( isset( $_config_autoload[ 'autoload_services' ] ) ) {
-					// Use the auto-load services
-					$_autoload_services = $_config_autoload[ 'autoload_services' ];
-				}
-			}
-		}
-		else {
-			// If there are auto-load services
-			if ( isset( $_config_autoload[ 'services' ] ) ) {
-				// Use the auto-load services
-				$_autoload_services = $_config_autoload[ 'services' ];
-			}
-		}
-
-		// If there are any services configured
-		if ( isset( $_config_services[ 'services' ] ) ) {
-			$services = $_config_services[ 'services' ];
-			// Set the services config
-			$this->_dependencies->setServiceConfig( $services );
-
-			// If there are auto-load services
-			if ( isset( $_autoload_services ) ) {
-				// Iterate over them
-				foreach( $_autoload_services as $service_name ) {
-					// Get the service
-					$this->$service_name = $this->_dependencies->getService( $service_name );
-				}
-			}
-		}
-
-		// If there are modules to load
-		if ( isset( $_config_autoload[ 'modules' ] ) ) {
-			// Go through the modules to autoload
-			foreach ( $_config_autoload[ 'modules' ] as $module ) {
-				// And load them (default namespace)
-				$this->load_module( $module );
-			}
-		}
-
-		// If there are helpers to load
-		if ( isset( $_config_autoload[ 'helpers' ] ) ) {
-			// Go through the helpers to autoload
-			foreach ( $_config_autoload[ 'helpers' ] as $helper ) {
-				// And load them
-				$this->load_helper( $helper );
-			}
-		}
 	}
 
 	/**
@@ -131,11 +65,112 @@ class WibblerController {
 
 	/**
 	 * Sets the path and parts of the path to the controller
+	 * @param $additional_config
 	 * @param $controller_path
 	 * @param $controller_path_parts
 	 */
-	public function _set_controller_details( $controller_path, $controller_path_parts ) {
+	public function _set_controller_details( $additional_config, $controller_path, $controller_path_parts ) {
+		$this->additional_config = $additional_config;
 		$this->controller_path = $controller_path;
 		$this->controller_path_parts = $controller_path_parts;
+
+		$this->_load_configs();
+	}
+
+	private function _load_configs() {
+
+		// Keep a note of the dependency manager
+		$this->_dependencies = WibblerDependencyContainer::Instance();
+
+		// Load the configuration loading module
+		$this->load_module( "config" );
+
+		if ( $this->additional_config ) {
+			// Get the autoload config
+			$loaded_config = $this->config->load( 'config' );
+
+			foreach( $loaded_config[ 'services' ] as $service_id => $service ) {
+
+				if ( isset( $this->additional_config[ 'config' ][ $service_id ] ) ) {
+					$loaded_config[ 'services' ][ $service_id ][ 'args' ] = $this->additional_config[ 'config' ][ $service_id ];
+				}
+			}
+
+			if ( isset( $this->_config[ 'modules' ] ) ) {
+				$this->___load_modules( $this->_autoload[ 'modules' ] );
+			}
+			// If there are helpers to load
+			if ( isset( $this->_config[ 'helpers' ] ) ) {
+				$this->__load_helpers( $this->_config[ 'helpers' ] );
+			}
+
+			// if there are any services registered in the config
+			// add them to the dependency container
+			if ( isset( $this->_config[ 'services' ] ) ) {
+				$this->_dependencies->setAdvancedServiceConfig( $this->_config[ 'services' ] );
+
+				if ( isset( $this->_config[ 'autoload_services' ] ) ) {
+					$this->__load_services( $this->_config[ 'autoload_services' ] );
+				}
+			}
+		}
+		else {
+			// Get the autoload config
+			$this->_autoload = $this->config->load( 'autoload' );
+
+			// If there are modules to load
+			if ( isset( $this->_autoload[ 'modules' ] ) ) {
+				$this->___load_modules( $this->_autoload[ 'modules' ] );
+			}
+
+			// If there are helpers to load
+			if ( isset( $this->_autoload[ 'helpers' ] ) ) {
+				$this->__load_helpers( $this->_autoload[ 'helpers' ] );
+			}
+
+			// if there are any services registered in the config
+			// add them to the dependency container
+			if ( isset( $this->_autoload[ 'services' ] ) ) {
+				$this->_dependencies->setServiceConfig( $this->_autoload[ 'services' ] );
+
+				if ( isset( $this->_autoload[ 'autoload_services' ] ) ) {
+					$this->__load_services( $this->_autoload[ 'autoload_services' ] );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Load the required helpers
+	 * @param $helpers
+	 */
+	private function __load_helpers( $helpers ) {
+		// Go through the helpers to autoload
+		foreach ( $helpers as $helper ) {
+			// And load them
+			$this->load_helper( $helper );
+		}
+	}
+
+	/**
+	 * Load the required modules
+	 * @param $modules
+	 */
+	private function ___load_modules( $modules ) {
+		// Go through the modules to autoload
+		foreach ( $modules as $module ) {
+			// And load them (default namespace)
+			$this->load_module( $module );
+		}
+	}
+
+	/**
+	 * Load the required services
+	 * @param $services
+	 */
+	private function __load_services( $services ) {
+		foreach ( $services as $service_name ) {
+			$this->$service_name = $this->_dependencies->getService( $service_name );
+		}
 	}
 }
