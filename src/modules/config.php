@@ -14,17 +14,22 @@ class config extends base {
 
 	/**
 	 * Loads the config for the given module
-	 * @param $module
+	 * @param      $module
+	 * @param bool $exception_on_fail Whether to emit an exception (true) or return an empty array (false) if the config can't be found
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function load( $module ) {
+	public function load( $module, $exception_on_fail = true ) {
 
 		$file = COMMONPATH . 'config/' . $module . '.php';
 
 		if ( !file_exists( $file ) ) {
-			throw new \Exception( 'Config file not found' );
-			return false;
+			if ( $exception_on_fail ) {
+				throw new \Exception( 'Config file not found' );
+			}
+			else {
+				return [];
+			}
 		}
 
 		// Create a new emtpy config variable
