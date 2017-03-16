@@ -79,7 +79,7 @@ class WibblerLoader {
 	/**
 	 * @return WibblerLoader
 	 */
-	public static function Instance( $additional_config ) {
+	public static function Instance( $additional_config = null ) {
 		if ( self::$_instance === null ) {
 			self::$_instance = new WibblerLoader();
 			// Store the base config
