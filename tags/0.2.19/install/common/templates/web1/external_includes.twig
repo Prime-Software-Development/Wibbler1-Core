@@ -1,0 +1,24 @@
+<script>
+	var path_root = '{{ system.paths.controller }}';
+	var path_resources = '{{ system.paths.resources }}';
+	var path_js = '{{ system.paths.jscript }}';
+	var path_include = "{{ system.paths.controller }}";
+</script>
+
+{# Font Awesome icons ( bootstrap 4 ) #}
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
+{#<script data-main="/jscss/js/web1/common" src="/jscss/js/web1/libs/require.js"></script>#}
+<script data-main="/jscss/common/js/libs" src="/jscss/common/js/libs/requirejs-2.1.20/require.js"></script>
+
+{# jquery / jquery ui includes #}
+<link rel="stylesheet" type="text/css" href="/jscss/common/js/libs/external/jquery-ui/themes/redmond/jquery-ui.css" />
+
+{# Bootstrap bundle #}
+<link rel="stylesheet" type="text/css" href="/jscss/common/js/libs/external/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/jscss/common/js/libs/external/bootstrap/css/bootstrap-theme.min.css" />
+{# Bootstrap sweet alert functionality #}
+<link rel="stylesheet" type="text/css" href="//cdn.trunknetworks.com/bootstrap-sweetalert/0.4.5/lib/sweet-alert.css">
+{# Bootstrap date picker #}
+<link rel="stylesheet" href="/jscss/common/js/libs/external/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
