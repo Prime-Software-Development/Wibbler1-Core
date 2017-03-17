@@ -29,12 +29,6 @@ class WibblerController {
 	protected $config;
 
 	/**
-	 * Stores the additional configuration
-	 * @var array
-	 */
-	private $additional_config;
-
-	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
@@ -70,8 +64,7 @@ class WibblerController {
 	 * @param $controller_path
 	 * @param $controller_path_parts
 	 */
-	public function _set_controller_details( $additional_config, $controller_path, $controller_path_parts ) {
-		$this->additional_config = $additional_config;
+	public function _set_controller_details( $controller_path, $controller_path_parts ) {
 		$this->controller_path = $controller_path;
 		$this->controller_path_parts = $controller_path_parts;
 	}
@@ -84,38 +77,32 @@ class WibblerController {
 		// Load the configuration loading module
 		$this->load_module( "config" );
 
-		if ( $this->additional_config ) {
+		if ( $this->config->item( 'additional_configs' ) ) {
 			// Get the autoload config
-			$loaded_config = $this->config->load( 'config' );
+			$loaded_config = $this->config->getConfig( 'config' );
 
-			foreach( $loaded_config[ 'services' ] as $service_id => $service ) {
-
-				if ( isset( $this->additional_config[ 'config' ][ $service_id ] ) ) {
-					$loaded_config[ 'services' ][ $service_id ][ 'args' ] = $this->additional_config[ 'config' ][ $service_id ];
-				}
-			}
-
-			if ( isset( $this->_config[ 'modules' ] ) ) {
-				$this->___load_modules( $this->_autoload[ 'modules' ] );
+			// If there are modules to load
+			if ( isset( $loaded_config[ 'autoload' ][ 'modules' ] ) ) {
+				$this->___load_modules( $loaded_config[ 'autoload' ][ 'modules' ] );
 			}
 			// If there are helpers to load
-			if ( isset( $this->_config[ 'helpers' ] ) ) {
-				$this->__load_helpers( $this->_config[ 'helpers' ] );
+			if ( isset( $loaded_config[ 'helpers' ] ) ) {
+				$this->__load_helpers( $loaded_config[ 'helpers' ] );
 			}
 
 			// if there are any services registered in the config
 			// add them to the dependency container
-			if ( isset( $this->_config[ 'services' ] ) ) {
-				$this->_dependencies->setAdvancedServiceConfig( $this->_config[ 'services' ] );
+			if ( isset( $loaded_config[ 'services' ] ) ) {
+				$this->_dependencies->setAdvancedServiceConfig( $loaded_config[ 'services' ] );
 
-				if ( isset( $this->_config[ 'autoload_services' ] ) ) {
-					$this->__load_services( $this->_config[ 'autoload_services' ] );
+				if ( isset( $loaded_config[ 'autoload' ]['services' ] ) ) {
+					$this->__load_services( $loaded_config[ 'autoload']['services' ] );
 				}
 			}
 		}
 		else {
 			// Get the autoload config
-			$this->_autoload = $this->config->load( 'autoload' );
+			$this->_autoload = $this->config->getConfig( 'autoload' );
 
 			// If there are modules to load
 			if ( isset( $this->_autoload[ 'modules' ] ) ) {

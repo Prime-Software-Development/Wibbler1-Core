@@ -7,7 +7,7 @@ class config extends base {
 	 * All of the config parameters loaded so far
 	 * @var array
 	 */
-	var $config_params = [];
+	var $config_params = [ "config" => [] ];
 
 	function __construct() {
 	}
@@ -44,6 +44,23 @@ class config extends base {
 		return $config;
 	}
 
+	/**
+	 * @param array  $config_options
+	 * @param string $array_key
+	 */
+	public function add_from_array( $config_options, $array_key = "config" ) {
+		// If some config options have been passed in
+		if ( $config_options !== null ) {
+			// Merge the config arrays
+			$this->config_params[ $array_key ] = array_merge_recursive( $this->config_params[ $array_key ], $config_options );
+		}
+	}
+
+	public function getConfig( $module ) {
+		if ( isset( $this->config_params[ $module ] ) ) {
+			return $this->config_params[ $module ];
+		}
+	}
 	/**
 	 * Retrieves the requrested parameter from the loaded configs
 	 * @param string $item_name

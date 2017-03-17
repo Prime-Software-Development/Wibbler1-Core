@@ -35,10 +35,15 @@ class twig2 extends base {
 	 */
 	private $loaded_extensions = [];
 
-	function __construct( )
+	function __construct( array $options = null )
 	{
-		global $twig_options;
-		$this->_config = $twig_options;
+		if ( $options === null ) {
+			global $twig_options;
+			$this->_config = $twig_options;
+		}
+		else {
+			$this->_config = $options;
+		}
 
 		$this->_template_dir = $this->_config['template_dir'];
 		$this->_cache_dir = $this->_config['cache_dir'];

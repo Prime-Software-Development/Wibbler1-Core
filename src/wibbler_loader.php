@@ -71,19 +71,11 @@ class WibblerLoader {
 	private static $_instance = null;
 
 	/**
-	 * Holds the additional configuration
-	 * @var array
-	 */
-	private $additional_config = [];
-
-	/**
 	 * @return WibblerLoader
 	 */
-	public static function Instance( $additional_config = null ) {
+	public static function Instance( ) {
 		if ( self::$_instance === null ) {
 			self::$_instance = new WibblerLoader();
-			// Store the base config
-			self::$_instance->additional_config = $additional_config;
 			self::$_instance->post_construct(  );
 		}
 		return self::$_instance;
@@ -118,7 +110,7 @@ class WibblerLoader {
 		}
 
 		// Set the path to the controller within the controller
-		$this->controller->_set_controller_details( $this->additional_config, $this->controller_path, $this->class_path );
+		$this->controller->_set_controller_details( $this->controller_path, $this->class_path );
 
 		// Check the method exists within the controller
 		if ( $this->check_method() === false )
@@ -271,7 +263,6 @@ class WibblerLoader {
 		} else
 			$this->class_method = $index_method;
 		$method = $this->class_method;
-//echo "<strong>" . $method . "</strong><br/>";
 
 		// If the method name begins with an underscore
 		if ( substr( $method, 0, 1 ) == "_" ) {
