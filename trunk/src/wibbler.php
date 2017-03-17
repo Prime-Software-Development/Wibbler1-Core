@@ -1,5 +1,7 @@
 <?php
 namespace Trunk\Wibbler;
+use Trunk\Wibbler\Modules\config;
+
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 /**
@@ -10,10 +12,35 @@ class Wibbler {
 	const CORE = 'CORE';
 	const USER = 'USER';
 
+	/**
+	 * @var null|WibblerDependencyContainer
+	 */
+	private $dependency_manager;
+
+	/**
+	 * @var config
+	 */
+	private $config;
+
 	function __construct( $additional_config = null ) {
 
 		try {
-			$wibbler_loader = WibblerLoader::Instance( $additional_config );
+			#region Load the configuration here, before creating the controller
+			// Keep a note of the dependency manager
+			$this->dependency_manager = WibblerDependencyContainer::Instance();
+			// Load the configuration loading module
+			$this->config = $this->dependency_manager->getModule( "config" );
+
+			$config_file = $additional_config === null ? "autoload" : "config";
+			// Get the main config file
+			$this->config->load( $config_file );
+			// Add the additional configuration options (if set)
+			$this->config->add_from_array( $additional_config );
+			$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
+			#endregion
+
+			// Create a WibblerLoader which loads the actual controller
+			$wibbler_loader = WibblerLoader::Instance();
 			$main_controller = $wibbler_loader->controller;
 
 			if ( $wibbler_loader->error !== false || $main_controller === null ) {
@@ -22,7 +49,8 @@ class Wibbler {
 
 			call_user_func_array( array( $main_controller, "pre_function_call" ), [ $wibbler_loader->class_method, $wibbler_loader->method_docblock ] );
 			call_user_func_array( array( $main_controller, $wibbler_loader->class_method ), $wibbler_loader->url_parts );
-		} catch ( \Exception $ex ) {
+		}
+		catch ( \Exception $ex ) {
 			echo $ex->getMessage();
 		}
 	}
