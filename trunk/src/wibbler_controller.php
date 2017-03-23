@@ -59,6 +59,14 @@ class WibblerController {
 	}
 
 	/**
+	 * Load a user service
+	 * @param $service_name
+	 * @return mixed
+	 */
+	public function load_service( $service_name ) {
+		return $this->_dependencies->getService( $service_name );
+	}
+	/**
 	 * Sets the path and parts of the path to the controller
 	 * @param $additional_config
 	 * @param $controller_path
