@@ -66,6 +66,7 @@ class WibblerController {
 	public function load_service( $service_name ) {
 		return $this->_dependencies->getService( $service_name );
 	}
+
 	/**
 	 * Sets the path and parts of the path to the controller
 	 * @param $additional_config
@@ -77,6 +78,9 @@ class WibblerController {
 		$this->controller_path_parts = $controller_path_parts;
 	}
 
+	/**
+	 * Uses the loaded config to autoload modules, helpers and services as required
+	 */
 	private function _load_configs() {
 
 		// Keep a note of the dependency manager
@@ -85,52 +89,21 @@ class WibblerController {
 		// Load the configuration loading module
 		$this->load_module( "config" );
 
-		if ( $this->config->item( 'additional_configs' ) ) {
-			// Get the autoload config
-			$loaded_config = $this->config->getConfig( 'config' );
+		// Get the autoload config
+		$loaded_config = $this->config->getConfig( 'config' );
 
-			// If there are modules to load
-			if ( isset( $loaded_config[ 'autoload' ][ 'modules' ] ) ) {
-				$this->___load_modules( $loaded_config[ 'autoload' ][ 'modules' ] );
-			}
-			// If there are helpers to load
-			if ( isset( $loaded_config[ 'helpers' ] ) ) {
-				$this->__load_helpers( $loaded_config[ 'helpers' ] );
-			}
-
-			// if there are any services registered in the config
-			// add them to the dependency container
-			if ( isset( $loaded_config[ 'services' ] ) ) {
-				$this->_dependencies->setAdvancedServiceConfig( $loaded_config[ 'services' ] );
-
-				if ( isset( $loaded_config[ 'autoload' ]['services' ] ) ) {
-					$this->__load_services( $loaded_config[ 'autoload']['services' ] );
-				}
-			}
+		// If there are modules to load
+		if ( isset( $loaded_config[ 'autoload' ][ 'modules' ] ) ) {
+			$this->___load_modules( $loaded_config[ 'autoload' ][ 'modules' ] );
 		}
-		else {
-			// Get the autoload config
-			$this->_autoload = $this->config->getConfig( 'autoload' );
+		// If there are helpers to load
+		if ( isset( $loaded_config[ 'helpers' ] ) ) {
+			$this->__load_helpers( $loaded_config[ 'helpers' ] );
+		}
 
-			// If there are modules to load
-			if ( isset( $this->_autoload[ 'modules' ] ) ) {
-				$this->___load_modules( $this->_autoload[ 'modules' ] );
-			}
-
-			// If there are helpers to load
-			if ( isset( $this->_autoload[ 'helpers' ] ) ) {
-				$this->__load_helpers( $this->_autoload[ 'helpers' ] );
-			}
-
-			// if there are any services registered in the config
-			// add them to the dependency container
-			if ( isset( $this->_autoload[ 'services' ] ) ) {
-				$this->_dependencies->setServiceConfig( $this->_autoload[ 'services' ] );
-
-				if ( isset( $this->_autoload[ 'autoload_services' ] ) ) {
-					$this->__load_services( $this->_autoload[ 'autoload_services' ] );
-				}
-			}
+		// If there are modules to load
+		if ( isset( $loaded_config[ 'autoload' ][ 'services' ] ) ) {
+			$this->__load_services( $loaded_config[ 'autoload' ][ 'services' ] );
 		}
 	}
 

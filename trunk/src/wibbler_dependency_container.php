@@ -30,18 +30,47 @@ final class WibblerDependencyContainer {
 	/**
 	 * Private constructor - stops creation of this without using Instance (below)
 	 */
-	private function __construct() {
+	private function __construct( $additional_config = null ) {
 		$this->services = array();
 		$this->services_config = array();
+
+		// Load the configuration loading module
+		$this->config = $this->getModule( "config" );
+
+		$config_file = "config";
+
+		// Get the main config file
+		$this->config->load( $config_file );
+
+		// Add the additional configuration options (if set)
+		$this->config->add_from_array( $additional_config );
+		$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
+
+		// Get the autoload config
+		$loaded_config = $this->config->getConfig( 'config' );
+		if ( isset( $loaded_config[ 'services' ] ) ) {
+			$this->setAdvancedServiceConfig( $loaded_config[ 'services' ] );
+		}
 	}
 
-	public static function Instance() {
+	/**
+	 * @param null $additional_config
+	 * @return null|WibblerDependencyContainer
+	 */
+	public static function Instance( $additional_config = null ) {
 		if ( self::$_instance === null ) {
-			self::$_instance = new WibblerDependencyContainer();
+			self::$_instance = new WibblerDependencyContainer( $additional_config );
 		}
 		return self::$_instance;
 	}
 
+	/**
+	 * Returns the module or attempts to load if not already loaded
+	 * @param      $module
+	 * @param null $namespace
+	 * @param null $option
+	 * @return mixed
+	 */
 	public function getModule( $module, $namespace = null, $option = null ) {
 
 		if ( isset( $this->_modules[ $module ] ) )
@@ -51,6 +80,11 @@ final class WibblerDependencyContainer {
 		return $this->_modules[ $module ];
 	}
 
+	/**
+	 * Returns the helper or attempts to load if not already loaded
+	 * @param $helper
+	 * @return mixed
+	 */
 	public function getHelper( $helper ) {
 
 		if ( isset( $this->_modules[ $helper ] ) )
@@ -124,23 +158,23 @@ final class WibblerDependencyContainer {
 	 * @param $service_id
 	 * @return bool
 	 */
-	public function getService($service_id)
-	{
+	public function getService( $service_id ) {
 		// service not yet loaded
-		if(!isset($this->services[$service_id])){
+		if ( !isset( $this->services[ $service_id ] ) ) {
 			// service doesn't exists in the config
-			if(!isset($this->services_config[$service_id])) {
+			if ( !isset( $this->services_config[ $service_id ] ) ) {
 				return false;
 			}
 
 			// service class
 			$data = $this->services_config[ $service_id ];
-			$arguments = isset($data['args']) ? $data['args'] : null;
-			$reflect = new \ReflectionClass($data['class']);
+			$arguments = isset( $data[ 'args' ] ) ? $data[ 'args' ] : null;
+			$reflect = new \ReflectionClass( $data[ 'class' ] );
 
-			if($arguments) {
-				$service = $reflect->newInstance($arguments);
-			} else {
+			if ( $arguments ) {
+				$service = $reflect->newInstance( $arguments );
+			}
+			else {
 				$service = $reflect->newInstance();
 			}
 
@@ -148,7 +182,7 @@ final class WibblerDependencyContainer {
 			$this->services[ $service_id ] = $service;
 		}
 
-		return $this->services[$service_id];
+		return $this->services[ $service_id ];
 	}
 
 	/**
@@ -157,9 +191,8 @@ final class WibblerDependencyContainer {
 	 * @param array $config
 	 * @throws \Exception
 	 */
-	public function setServiceConfig(array $config)
-	{
-		$this->_setServiceConfig($config, array());
+	public function setServiceConfig( array $config ) {
+		$this->_setServiceConfig( $config, array() );
 	}
 
 	/**
@@ -169,41 +202,38 @@ final class WibblerDependencyContainer {
 	 *
 	 * @throws \Exception
 	 */
-	public function addServiceConfig(array $config)
-	{
-		$this->_setServiceConfig($config, $this->services_config);
+	public function addServiceConfig( array $config ) {
+		$this->_setServiceConfig( $config, $this->services_config );
 	}
 
-	protected function _setServiceConfig(array $config, array $services)
-	{
+	protected function _setServiceConfig( array $config, array $services ) {
 		// check for duplicate service ids
-		foreach($config as $service){
-			$service_id = $service['id'];
+		foreach ( $config as $service ) {
+			$service_id = $service[ 'id' ];
 
-			if(isset($services[$service_id])){
-				throw new \Exception("Duplicate Service Id found while loading Service config");
+			if ( isset( $services[ $service_id ] ) ) {
+				throw new \Exception( "Duplicate Service Id found while loading Service config" );
 			}
 
-			$services[$service_id] = $service;
+			$services[ $service_id ] = $service;
 		}
 
 		$this->services_config = $services;
 	}
 
 	public function setAdvancedServiceConfig( array $config ) {
-		$this->_setAdvancedServiceConfig($config, array());
+		$this->_setAdvancedServiceConfig( $config, array() );
 	}
 
-	protected function _setAdvancedServiceConfig(array $config, array $services)
-	{
+	protected function _setAdvancedServiceConfig( array $config, array $services ) {
 		// check for duplicate service ids
-		foreach($config as $service_id => $service){
+		foreach ( $config as $service_id => $service ) {
 
-			if(isset($services[$service_id])){
-				throw new \Exception("Duplicate Service Id found while loading Service config");
+			if ( isset( $services[ $service_id ] ) ) {
+				throw new \Exception( "Duplicate Service Id found while loading Service config" );
 			}
 
-			$services[$service_id] = $service;
+			$services[ $service_id ] = $service;
 		}
 
 		$this->services_config = $services;

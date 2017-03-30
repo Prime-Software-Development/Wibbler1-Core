@@ -1,6 +1,8 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
+use Symfony\Component\Yaml\Yaml;
+
 class config extends base {
 
 	/**
@@ -21,15 +23,49 @@ class config extends base {
 	 */
 	public function load( $module, $exception_on_fail = true ) {
 
+		$config = $this->_load_from_yaml($module );
+		if ( $config === false ) {
+			$config = $this->_load_from_php( $module );
+			if ( $config === false ) {
+				if ( $exception_on_fail ) {
+					throw new \Exception( 'Config file not found' );
+				}
+			}
+		}
+		return $config;
+	}
+
+	/**
+	 * Load the config from a yaml file
+	 * @param $module
+	 * @return bool|mixed
+	 */
+	private function _load_from_yaml( $module ) {
+		$file = COMMONPATH . 'config/' . $module . '.yml';
+
+		if ( !file_exists( $file ) ) {
+			return false;
+		}
+
+		// Parse the config file
+		$config = Yaml::parse(file_get_contents( $file));
+
+		// Merge the new parameters into the config
+		$this->config_params[ $module ] = $config;
+
+		return $config;
+	}
+
+	/**
+	 * Loads the config from a php file
+	 * @param $module
+	 * @return array|bool
+	 */
+	private function _load_from_php( $module ) {
 		$file = COMMONPATH . 'config/' . $module . '.php';
 
 		if ( !file_exists( $file ) ) {
-			if ( $exception_on_fail ) {
-				throw new \Exception( 'Config file not found' );
-			}
-			else {
-				return [];
-			}
+			return false;
 		}
 
 		// Create a new emtpy config variable
