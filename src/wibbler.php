@@ -25,19 +25,9 @@ class Wibbler {
 	function __construct( $additional_config = null ) {
 
 		try {
-			#region Load the configuration here, before creating the controller
 			// Keep a note of the dependency manager
-			$this->dependency_manager = WibblerDependencyContainer::Instance();
-			// Load the configuration loading module
-			$this->config = $this->dependency_manager->getModule( "config" );
-
-			$config_file = $additional_config === null ? "autoload" : "config";
-			// Get the main config file
-			$this->config->load( $config_file );
-			// Add the additional configuration options (if set)
-			$this->config->add_from_array( $additional_config );
-			$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
-			#endregion
+			// Dependency manager now auto-loads the config from config.php file
+			$this->dependency_manager = WibblerDependencyContainer::Instance( $additional_config );
 
 			// Create a WibblerLoader which loads the actual controller
 			$wibbler_loader = WibblerLoader::Instance();

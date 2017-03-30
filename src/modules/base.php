@@ -5,8 +5,8 @@ abstract class base {
 
 	protected $dependencies;
 
-	function __construct() {
-		$this->dependencies = \Trunk\Wibbler\WibblerDependencyContainer::Instance();
+	function __construct($additional_config = null) {
+		$this->dependencies = \Trunk\Wibbler\WibblerDependencyContainer::Instance($additional_config);
 	}
 
 	static $instances = array();
