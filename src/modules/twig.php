@@ -74,6 +74,18 @@ class twig extends base
 	}
 
 	/**
+	 * @param string $template_string
+	 *
+	 * @return \Twig_Template
+	 * @throws \Exception
+	 * @throws \Throwable
+	 */
+	public function createTemplate($template_string)
+	{
+		return $this->_twig->createTemplate($template_string);
+	}
+
+	/**
 	 * Adds a runtime loader to the twig environment - allowing uses of themes
 	 * @param $form_theme string
 	 */
