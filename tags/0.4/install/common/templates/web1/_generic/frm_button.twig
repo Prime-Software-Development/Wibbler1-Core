@@ -1,7 +1,0 @@
-{# if there is no offset, default it to 2 #}
-{% if Offset is not defined %}
-	{% set Offset = 2 %}
-{% endif %}
-<div class="col-sm-offset-{{ Offset }} col-sm-{{ 12 - Offset }}">
-	<button type="button" id="{{ Id }}" class="btn btn-{{ Style ? Style : "default" }} {{ Class }}" {% if CollapseTarget is defined %}data-toggle="collapse" data-target="#{{ CollapseTarget }}" aria-expanded="false" aria-controls="{{ CollapseTarget }}"{% endif %} {% if ToggleTarget is defined %}data-toggle="modal" data-target="#{{ ToggleTarget }}"{% endif %} >{{ Value }}</button>
-</div>
