@@ -1,0 +1,43 @@
+{#
+* Prints img element with appropriate thumbnail
+*@doc - document object
+#}
+{% macro get_thumb( doc, size ) %}
+	{% spaceless %}
+	{% set fileExt = doc.getFileExtension %}
+		{% set resources = system.paths.resources %}
+	{% set icon = {
+		'xls' : resources ~ 'images/icons/icon_xls.png',
+		'xlsx': resources ~ 'images/icons/icon_xls.png',
+		'pdf' : resources ~ 'images/icons/icon_pdf.jpg',
+		'doc' : resources ~ 'images/icons/icon_doc.png',
+		'docx': resources ~ 'images/icons/icon_doc.png'
+	 } %}
+	{% if doc %}
+		{% if fileExt in ['jpg', 'jpeg', 'png', 'gif'] %}
+			<img src="/files/read_document/{{ doc.getId }}/?thumb={{ size | default('standard') }}">
+		{% else %}
+			<img src="/{{ icon[ fileExt ] }}">
+		{% endif %}
+	{% endif %}
+		{% endspaceless %}
+{% endmacro %}
+
+{# 
+This macro inserts One Click Help Icon
+@template - template name or identifier
+@PageBreadcrumb - Options.PageBreadcrumb
+#}
+{% macro help() %}
+	<div class="OneClickHelp">
+		<img title="One Click Help" src="/images/icons/help.png" />
+	</div>
+{% endmacro %}
+
+{#
+This macro adds the relevant parts to the header of search results
+#}
+{% macro sortheader( sortfield, sort_order, sort_dir ) %}
+	{% set ShowSortOrder = sort_order == sortfield ? ( sort_dir == 'asc' ? 'desc' : 'asc' ) : 'asc' %}
+	data-sort="{{ sortfield }}" data-sort-dir="{{ ShowSortOrder }}" {{ sort_order == sortfield ? "class=sort-" ~ ShowSortOrder : "" }}
+{% endmacro %}
