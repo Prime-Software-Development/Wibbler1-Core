@@ -1,11 +1,11 @@
 <?php
-namespace Trunk\Wibbler;
+namespace Trunk\Wibbler\Services;
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 /**
  * Try to find and create the user's controller
  */
-class WibblerLoader {
+class CoreRouter extends RouterBase{
 
 	/**
 	 * The path to the class file
@@ -43,21 +43,12 @@ class WibblerLoader {
 	 * @var string
 	 */
 	var $remap_method = '_remap';
-	/**
-	 * Any fatal error found when trying to load the class / method or false if all is ok
-	 * @var mixed
-	 */
-	var $error = false;
+
 	/**
 	 * The parts of the url which need passing to the method
 	 * @var array
 	 */
 	var $url_parts = array();
-	/**
-	 * The controller which matches the given path
-	 * @var WibblerController
-	 */
-	var $controller = null;
 
 	/**
 	 * The path to the controller
@@ -71,21 +62,17 @@ class WibblerLoader {
 	private static $_instance = null;
 
 	/**
-	 * @return WibblerLoader
+	 * @return CoreRouter
 	 */
 	public static function Instance( ) {
 		if ( self::$_instance === null ) {
-			self::$_instance = new WibblerLoader();
-			self::$_instance->post_construct(  );
+			self::$_instance = new CoreRouter();
 		}
 		return self::$_instance;
 	}
 
 	function __construct()
 	{
-	}
-
-	private function post_construct() {
 		$path_parts = $this->init();
 
 		$initial_path = CONTROLLERPATH;
@@ -232,8 +219,7 @@ class WibblerLoader {
 	 */
 	private function check_class() {
 
-		include $this->class_file;
-
+		include_once $this->class_file;
 		if ( !isset( $_ns ) )
 			$_ns = '\\Wibbler\\User\\Modules';
 		$this->full_class_name = $_ns . "\\" . $this->class_name;

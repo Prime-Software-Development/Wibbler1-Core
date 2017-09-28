@@ -47,8 +47,14 @@ class config extends base {
 			return false;
 		}
 
-		// Parse the config file
-		$config = Yaml::parse(file_get_contents( $file));
+		try {
+			// Parse the config file
+			$config = Yaml::parse( file_get_contents( $file ) );
+		}
+		catch(\Exception $e ) {
+			printf("Unable to parse the YAML string: %s", $e->getMessage());
+			die();
+		}
 
 		// Merge the new parameters into the config
 		$this->config_params[ $module ] = $config;

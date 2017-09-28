@@ -1,7 +1,8 @@
 <?php
 namespace Trunk\Wibbler\Modules;
-require_once __dir__ . "/../wibbler_loader.php";
-class urls extends base {
+
+class urls extends base
+{
 
 	/**
 	 * @var string Request type (http or https)
@@ -25,30 +26,33 @@ class urls extends base {
 	var $is_cli = false;
 
 	/**
-	 * @var \Trunk\Wibbler\WibblerLoader
+	 * @var \Trunk\Wibbler\Services\CoreRouter
 	 */
 	private $wibbler_loader = null;
 
 	// Constructor of the core urls module
-	function __construct() {
+	function __construct( $additional_config = null )
+	{
 
 		// If PHP_SAPI == 'cli' we have been called from the command line
 		if ( PHP_SAPI == 'cli' ) {
 			$this->is_cli = true;
 		} else {
-			$this->http = isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? $_SERVER[ 'REQUEST_SCHEME' ] : ( isset($_SERVER[ 'HTTPS' ]) ? 'https' : 'http' );
+			$this->http = isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? $_SERVER[ 'REQUEST_SCHEME' ] : ( isset( $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http' );
 			$this->server_name = $_SERVER[ 'HTTP_HOST' ];
 			$this->root_url = $this->_get_current_root_url();
 		}
 
-		$this->wibbler_loader = \Trunk\Wibbler\WibblerLoader::Instance();
+		parent::__construct( $additional_config );
+		$this->wibbler_loader = $this->load_service( 'wibbler.loader' );
 	}
 
 	/**
 	 * Gets the current url for the root of the system
 	 * @return string
 	 */
-	private function _get_current_root_url() {
+	private function _get_current_root_url()
+	{
 		$requested = $_SERVER[ 'REQUEST_URI' ];
 		$script = $_SERVER[ 'SCRIPT_NAME' ];
 		$result = '';
@@ -86,11 +90,13 @@ class urls extends base {
 		return $result;
 	}
 
-	public function get_full_url() {
+	public function get_full_url()
+	{
 		return $this->http . '://' . $this->server_name . $this->root_url;
 	}
 
-	public function get_requested_url() {
+	public function get_requested_url()
+	{
 		$requested_uri = $_SERVER[ 'REQUEST_URI' ];
 		if ( strpos( $requested_uri, '/' ) === 0 ) {
 			$requested_uri = substr( $requested_uri, 1 );
@@ -98,11 +104,13 @@ class urls extends base {
 		return $requested_uri;
 	}
 
-	public function redirect( $url = "" ) {
+	public function redirect( $url = "" )
+	{
 		header( 'Location: ' . $this->get_full_url() . $url );
 	}
 
-	public function get_controller_path() {
+	public function get_controller_path()
+	{
 		return $this->wibbler_loader->controller_path;
 	}
 }
