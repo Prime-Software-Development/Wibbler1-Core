@@ -1,0 +1,19 @@
+{% extends subpage ? "_extend/empty.twig" : "secured.twig" %}
+
+{% block MainContentBlock %}
+
+	<div {% include "_extend/settings.twig" %} data-breadcrumb="{{ breadcrumb }}">
+
+		<div class="this_page">
+			{% block RealContentBlock %}
+			{% endblock %}
+
+            {% block PageDialogs %}
+            {% endblock %}
+        </div>
+
+		<div class="next_page"></div>
+        
+    </div>
+
+{% endblock %}
