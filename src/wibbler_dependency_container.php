@@ -31,8 +31,8 @@ final class WibblerDependencyContainer {
 	 * Private constructor - stops creation of this without using Instance (below)
 	 */
 	private function __construct( $additional_config = null ) {
-		$this->services = array();
-		$this->services_config = array();
+		$this->services = [];
+		$this->services_config = [];
 
 		// Load the configuration loading module
 		$this->config = $this->getModule( "config" );
@@ -45,6 +45,7 @@ final class WibblerDependencyContainer {
 		// Add the additional configuration options (if set)
 		$this->config->add_from_array( $additional_config );
 		$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
+		$this->config->add_from_array( [ "services" => [ 'wibbler.loader' => [ 'class' => '\Trunk\Wibbler\Services\CoreRouter' ] ] ] );
 
 		// Get the autoload config
 		$loaded_config = $this->config->getConfig( 'config' );
