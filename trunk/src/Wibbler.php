@@ -1,6 +1,7 @@
 <?php
 namespace Trunk\Wibbler;
 use Trunk\Wibbler\Modules\config;
+use TrunkSoftware\Component\Http\Request;
 
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
@@ -33,28 +34,43 @@ class Wibbler {
 			/**
 			 * @var $config_module \Trunk\Wibbler\Modules\config
 			 */
-			$config_module = $this->dependency_manager->getModule( "config" );
-			$config_config = $config_module->getConfig( "config" );
-			$router_service = 'wibbler.loader';
-			if ( isset( $config_config[ 'router' ] ) ) {
-				if ( isset( $config_config[ 'router' ][ 'service' ] ) ) {
-					$router_service = $config_config[ 'router' ][ 'service' ];
-				}
-			}
+			$this->dependency_manager->getModule( "config" );
 
 			// Create a WibblerLoader which loads the actual controller
-			$wibbler_loader = $this->dependency_manager->getService( $router_service );
-			$main_controller = $wibbler_loader->getController();
-
-			if ( $wibbler_loader->getError() !== false || $main_controller === null ) {
-				$this->Show404( $wibbler_loader->error );
+			$wibbler_loader = $this->dependency_manager->getService( 'router.service' );
+			if ( $wibbler_loader === false ) {
+				$this->Show404( "Please specify a router service under router.service in the config file" );
+				die();
 			}
+			$response = $wibbler_loader->handleRequest( $this->getRequest(), [] );
 
-			call_user_func_array( array( $main_controller, "pre_function_call" ), [ $wibbler_loader->class_method, $wibbler_loader->method_docblock ] );
-			call_user_func_array( array( $main_controller, $wibbler_loader->class_method ), $wibbler_loader->url_parts );
+			if ( $response !== false ) {
+
+			}
 		} catch ( \Exception $ex ) {
 			echo $ex->getMessage();
 		}
+	}
+
+	/**
+	 * Gets a request object
+	 * @return Request
+	 */
+	public function getRequest() {
+		$post_array = $_POST;
+		// If there are no posted variables
+		if ( $post_array == [] ) {
+			// Get the contents of the php input stream (this will contain any raw data)
+			$request_body = file_get_contents('php://input');
+
+			// If there is some content
+			if ( !empty($request_body) ) {
+				// JSON decode it
+				$post_array = json_decode($request_body, true);
+			}
+		}
+
+		return new Request($_GET, $post_array, []);
 	}
 
 	function Show404( $message = null ) {

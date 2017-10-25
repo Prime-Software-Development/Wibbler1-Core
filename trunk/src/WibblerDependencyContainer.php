@@ -44,7 +44,7 @@ final class WibblerDependencyContainer {
 		// Add the additional configuration options (if set)
 		$this->config->add_from_array( $additional_config );
 		$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
-		$this->config->add_from_array( [ "services" => [ 'wibbler.loader' => [ 'class' => '\Trunk\Wibbler\Services\CoreRouter' ] ] ] );
+		//$this->config->add_from_array( [ "services" => [ 'wibbler.loader' => [ 'class' => '\Trunk\Wibbler\Services\CoreRouter' ] ] ] );
 
 		// Get the autoload config
 		$loaded_config = $this->config->getConfig( 'config' );
@@ -168,6 +168,9 @@ final class WibblerDependencyContainer {
 
 			// service class
 			$data = $this->services_config[ $service_id ];
+			if ($data[ 'class' ] == '' )
+				return false;
+
 			$arguments = isset( $data[ 'args' ] ) ? $data[ 'args' ] : null;
 			$reflect = new \ReflectionClass( $data[ 'class' ] );
 

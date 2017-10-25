@@ -1,5 +1,8 @@
 <?php
 namespace Trunk\Wibbler\Services;
+use TrunkSoftware\Component\Http\Response;
+use TrunkSoftware\Component\Http\Status;
+
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 /**
@@ -102,6 +105,26 @@ class CoreRouter extends RouterBase{
 		// Check the method exists within the controller
 		if ( $this->check_method() === false )
 			return;
+	}
+
+	/**
+	 * Actually handles the request
+	 * @param null $request
+	 * @param array $options
+	 * @return bool|Response
+	 */
+	public function handleRequest($request, $options = []) {
+		$main_controller = $this->controller;
+
+		if ( $this->getError() !== false || $main_controller === null ) {
+			$response = new Response([], Status::HTTP_NOT_FOUND );
+			return $response;
+		}
+
+		call_user_func_array( array( $main_controller, "pre_function_call" ), [ $this->class_method, $this->method_docblock ] );
+		call_user_func_array( array( $main_controller, $this->class_method ), $this->url_parts );
+
+		return false;
 	}
 
 	protected function init() {
