@@ -1,7 +1,9 @@
 <?php
 namespace Trunk\Wibbler\Services;
 
-abstract class RouterBase {
+use Trunk\Wibbler\Modules\base;
+
+abstract class RouterBase extends base {
 
 	/**
 	 * The controller which matches the given path
@@ -15,8 +17,8 @@ abstract class RouterBase {
 	 */
 	protected $error = false;
 
-	public function getController() {
-		return $this->controller;
+	public function handleRequest($request, $options = []) {
+
 	}
 
 	public function getError() {
