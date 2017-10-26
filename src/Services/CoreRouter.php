@@ -122,9 +122,11 @@ class CoreRouter extends RouterBase{
 		}
 
 		call_user_func_array( array( $main_controller, "pre_function_call" ), [ $this->class_method, $this->method_docblock ] );
-		call_user_func_array( array( $main_controller, $this->class_method ), $this->url_parts );
+		$result = call_user_func_array( array( $main_controller, $this->class_method ), $this->url_parts );
 
-		return false;
+		if ( $result === null )
+			return false;
+		return $result;
 	}
 
 	protected function init() {

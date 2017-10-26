@@ -18,11 +18,6 @@ class Wibbler {
 	 */
 	private $dependency_manager;
 
-	/**
-	 * @var array
-	 */
-	private $config;
-
 	function __construct( $additional_config = null )
 	{
 
@@ -31,18 +26,17 @@ class Wibbler {
 			// Dependency manager now auto-loads the config from config.yml file
 			$this->dependency_manager = WibblerDependencyContainer::Instance( $additional_config );
 
-			/**
-			 * @var $config_module \Trunk\Wibbler\Modules\config
-			 */
-			$this->dependency_manager->getModule( "config" );
+			// Create a router service which loads the actual controller
+			$router_service = $this->dependency_manager->getService( 'router.service' );
 
-			// Create a WibblerLoader which loads the actual controller
-			$wibbler_loader = $this->dependency_manager->getService( 'router.service' );
-			if ( $wibbler_loader === false ) {
+			// If there is no router service
+			if ( $router_service === false ) {
+				// Warn the user and exit
 				$this->Show404( "Please specify a router service under router.service in the config file" );
 				die();
 			}
-			$response = $wibbler_loader->handleRequest( $this->getRequest(), [] );
+			// Get the response from the router
+			$response = $router_service->handleRequest( $this->getRequest(), [] );
 
 			if ( $response !== false ) {
 
