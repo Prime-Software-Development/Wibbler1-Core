@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <propel> 
+    <datasources default="escscsql2">
+      <datasource id="escscsql2">
+        <adapter>mysql</adapter> <!-- sqlite, mysql, myssql, oracle, or pgsql -->
+        <connection>
+          <dsn>mysql:host=localhost;dbname=escscsql2</dsn>
+          <user>root</user>
+          <password>password</password>
+        </connection>
+      </datasource>
+    </datasources>
+  </propel>
+</config>

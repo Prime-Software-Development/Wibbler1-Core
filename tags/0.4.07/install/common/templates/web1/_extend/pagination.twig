@@ -1,0 +1,34 @@
+{% if pagination and pagination.needed %}
+	<div class="row">
+		<div class="col-md-10">
+			<ul class="pagination">
+				<li {% if pagination.pages[0] == 1 %}class="disabled"{% endif %}>
+					<a href="#" data-page_number="1" aria-label="Next">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				{% for page in pagination.pages %}
+					<li class="{% if pagination.active_page == page %}active{% endif %}">
+						<a href="#" data-page_number="{{ page }}">{{ page }}</a>
+					</li>
+				{% endfor %}
+				<li>
+					<a href="#" data-page_number="{{ pagination.last_page }}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		{% if Top == false %}
+			<div class="col-md-2" style="padding-top: 30px;">
+				<span>Showing {{ pagination.first_result }} to {{ pagination.last_result }} of {{ pagination.num_results }} entries</span>
+			</div>
+		{% endif %}
+	</div>
+{% else %}
+	{% if Top == false %}
+		<div class="col-md-offset-10 col-md-2">
+			<span>Showing 1 to {{ count }} of {{ count }} entries</span>
+		</div>
+	{% endif %}
+{% endif %}
