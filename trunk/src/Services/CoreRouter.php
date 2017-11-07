@@ -58,22 +58,6 @@ class CoreRouter extends RouterBase{
 	 */
 	public $controller_path;
 
-	/**
-	 * The instance of this object
-	 * @var null
-	 */
-	private static $_instance = null;
-
-	/**
-	 * @return CoreRouter
-	 */
-	public static function Instance( ) {
-		if ( self::$_instance === null ) {
-			self::$_instance = new CoreRouter();
-		}
-		return self::$_instance;
-	}
-
 	function __construct()
 	{
 		$path_parts = $this->init();
