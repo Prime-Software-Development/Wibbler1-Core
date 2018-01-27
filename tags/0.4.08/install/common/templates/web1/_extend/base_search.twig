@@ -1,0 +1,46 @@
+{% set IsSearchPage = true %}
+{% extends "_extend/base_extend.twig" %}
+
+{% block RealContentBlock %}
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="form form-search" data-toggle="validator">
+
+					{% block SearchForm %}
+					<input type="hidden" name="ExcelExport" class="ExcelExport" value="0"/>
+					<input type="hidden" name="ParentId" class="ParentId" value="{{ ParentObjectId }}"/>
+					<input type="hidden" name="ParentType" class="ParentType" value="{{ ParentObjectType }}"/>
+					<input type="hidden" name="PageNumber" class="PageNumber" value="1"/>
+					<input type="hidden" name="SortOrder" class="SortOrder" value=""/>
+					<input type="hidden" name="SortDirection" class="SortDirection" value="asc"/>
+
+					<div class="panel-body" style="position: relative">
+
+						{% block SearchOptions %}
+							{% embed "_generic/manage_panel.twig" %}
+							{% endembed %}
+						{% endblock %}
+
+						<div class="col-xs-12 col-sm-6 col-md-4 pull-right search-buttons-holder">
+							<button type="button" id=""
+							        class="btn btn-primary btn-sm btn-search">{{ Options.SearchText }}
+								Search
+							</button>
+							{% if Options.HideAdd is not defined or Options.HideAdd == false %}
+								<button type="button" id="" class="btn btn-success btn-sm btn-add">
+									Add {{ Options.SearchText }}</button>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+
+	<div class="ClearFix"></div>
+
+	<div class="search-results">
+	</div>
+{% endblock %}
