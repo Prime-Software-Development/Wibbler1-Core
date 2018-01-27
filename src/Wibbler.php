@@ -39,7 +39,7 @@ class Wibbler {
 			$response = $router_service->handleRequest( $this->getRequest(), [] );
 
 			if ( $response !== false ) {
-
+                $response->render_output();
 			}
 		} catch ( \Exception $ex ) {
 			echo $ex->getMessage();
