@@ -1,0 +1,29 @@
+{% if Offset is not defined %}
+	{% set Offset = 3 %}
+{% endif %}
+
+<div class="form-group clearfix">
+	{% set IsRequired = Required is defined ? Required == true : false %}
+	{% if Offset != 0 %}
+		<label class="col-sm-{{ Offset }} control-label {% if IsRequired %}required{% endif %}">{{ Label }}</label>
+	{% endif %}
+	<div class="col-sm-{{ 12 - Offset }}">
+		{% set UseInputGroup = UsePreAddon or IsRequired %}
+		{% if UseInputGroup %}
+			<div class="input-group">
+				{% block PreAddon %}{% endblock %}
+		{% endif %}
+
+		{% block InputElement %}
+			<input type="{{ Type }}" name="{{ Name }}" value="{{ Value }}" class="form-control input-sm {{ Classes }}" autocomplete="off" {% if Id %}id="{{ Id }}"{% endif %} {% if IsRequired %}required{% endif %} {% block Tags %}{% endblock %} {% if Readonly %}readonly="readonly" disabled="disabled"{% endif %} />
+		{% endblock %}
+
+		{% if UseInputGroup %}
+				{% if IsRequired %}
+					<span class="input-group-addon"><span class="glyphicon glyphicon-flash"></span></span>
+				{% endif %}
+			</div>
+		{% endif %}
+		<div class="help-block with-errors"></div>
+	</div>
+</div>
