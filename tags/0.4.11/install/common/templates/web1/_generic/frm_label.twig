@@ -1,0 +1,13 @@
+{% extends "_generic/base_form_element.twig" %}
+
+{% block InputElement %}
+	<label {% if Id is defined %}id="{{ Id }}"{% endif %}
+            {% if Title %}title="{{ Title }}"{% endif %}
+            {% if Attributes.Style %}style="{{ Attributes.Style }}"{% endif %}
+            {% if DataAttr %}{% for tag, value in DataAttr %}data-{{ tag }}="{{ value }}"{% endfor %}{% endif %}
+            {% if Classes %}class="{{ Classes }}"{% endif %}
+            >{% spaceless %}
+        {{ Value }}
+    {% endspaceless %}</label>
+{% endblock %}
+{% block Error %}{% endblock %}
