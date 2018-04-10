@@ -1,0 +1,10 @@
+{% extends "_generic/base_form_element.twig" %}
+
+{% block InputElement %}
+	<label class=" {{ Value == "1" ? "active" : "" }}">
+		<input type="radio" name="{{ Name }}" id="option1" autocomplete="off" value="1" {{ Value == "1" ? "checked" : "" }} {% if Readonly %}disabled{% endif %}> Yes
+	</label>
+	<label class=" {{ Value == "0" ? "active" : "" }}">
+		<input type="radio" name="{{ Name }}" id="option2" autocomplete="off" value="0" {{ Value == "0" ? "checked" : "" }} {% if Readonly %}disabled{% endif %}>No
+	</label>
+{% endblock %}
