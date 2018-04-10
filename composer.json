@@ -1,12 +1,21 @@
 {
-	"name": "Trunk/Wibbler",
-	"require": {
-		"twig/twig": ">=1.31",
-		"symfony/yaml": "4.*"
-	},
-	"autoload":{
-		"psr-4": {
-			"Trunk\\Wibbler\\": "src"
-		}
+  "name": "Trunk/Wibbler",
+  "type": "library",
+  "homepage": "http://www.trunknetworks.com/",
+  "authors": [
+	{
+	  "name": "Chris Weller",
+	  "email": "chris.weller@trunknetworks.com"
 	}
+  ],
+  "require": {
+	"php": ">=7",
+	"twig/twig": "4.*",
+	"symfony/yaml": "4.*"
+  },
+  "autoload": {
+	"psr-4": {
+	  "Trunk\\Wibbler\\": "src"
+	}
+  }
 }
