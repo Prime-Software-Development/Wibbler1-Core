@@ -10,7 +10,7 @@
   ],
   "require": {
 	"php": ">=7",
-	"twig/twig": "4.*",
+	"twig/twig": "2.*",
 	"symfony/yaml": "4.*"
   },
   "autoload": {
