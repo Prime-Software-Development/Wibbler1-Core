@@ -13,6 +13,10 @@
 	"twig/twig": "2.*",
 	"symfony/yaml": "4.*"
   },
+  "suggest": {
+	"doctrine/orm": "Allows connecting to databases via Doctrine",
+	"propel/propel": "Allows connecting to databases via Propel"
+  },
   "autoload": {
 	"psr-4": {
 	  "Trunk\\Wibbler\\": "src"
