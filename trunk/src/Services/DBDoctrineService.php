@@ -5,6 +5,12 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 class DBDoctrineService {
+
+	/**
+	 * @var EntityManager
+	 */
+	private $entity_manager;
+
 	public function __construct( $additional_config = null ) {
 
 		$dbParams = [
@@ -14,6 +20,10 @@ class DBDoctrineService {
 			'dbname' => $additional_config[ 'dbname' ],
 		];
 		$config = Setup::createAnnotationMetadataConfiguration([$additional_config[ 'path_to_entities' ]], ENVIRONMENT != "production" );
-		$entityManager = EntityManager::create( $dbParams, $config );
+		$this->entity_manager = EntityManager::create( $dbParams, $config );
+	}
+
+	public function getEntityManager() {
+		return $this->entity_manager;
 	}
 }
