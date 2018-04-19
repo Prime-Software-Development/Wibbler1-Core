@@ -20,18 +20,18 @@ class DBDoctrineService {
 			'dbname' => $additional_config[ 'dbname' ],
 			'host' => $additional_config[ 'host' ],
 		];
-		$config = Setup::createAnnotationMetadataConfiguration([$additional_config[ 'path_to_entities' ]], ENVIRONMENT != "production" );
+
+		// Setup the annotation reader
+		$config = Setup::createAnnotationMetadataConfiguration([$additional_config[ 'path_to_entities' ]], ENVIRONMENT != "production", null, null, false );
+		// Initiate a cache (in memory)
+		$config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache());
+
+		// Create the entity manager
 		$this->entity_manager = EntityManager::create( $dbParams, $config );
 
-		/*use Doctrine\Common\Annotations\AnnotationReader;
-		use Doctrine\Common\Annotations\AnnotationRegistry;
-
-			AnnotationRegistry::registerFile("/path/to/doctrine/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php");
-			AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", "/path/to/symfony/src");
-			AnnotationRegistry::registerAutoloadNamespace("MyProject\Annotations", "/path/to/myproject/src");
-
-			$reader = new AnnotationReader();
-			AnnotationReader::addGlobalIgnoredName('dummy');*/
+		// Register the enum type as a string
+		$platform = $this->entity_manager->getConnection()->getDatabasePlatform();
+		$platform->registerDoctrineTypeMapping('enum', 'string');
 	}
 
 	public function getEntityManager() {
