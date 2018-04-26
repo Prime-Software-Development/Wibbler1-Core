@@ -1,0 +1,25 @@
+{
+  "name": "Trunk/Wibbler",
+  "type": "library",
+  "homepage": "http://www.trunknetworks.com/",
+  "authors": [
+	{
+	  "name": "Chris Weller",
+	  "email": "chris.weller@trunknetworks.com"
+	}
+  ],
+  "require": {
+	"php": ">=7",
+	"twig/twig": "2.*",
+	"symfony/yaml": "4.*"
+  },
+  "suggest": {
+	"doctrine/orm": "Allows connecting to databases via Doctrine",
+	"propel/propel": "Allows connecting to databases via Propel"
+  },
+  "autoload": {
+	"psr-4": {
+	  "Trunk\\Wibbler\\": "src"
+	}
+  }
+}
