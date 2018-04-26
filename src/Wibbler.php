@@ -35,6 +35,7 @@ class Wibbler {
 				$this->Show404( "Please specify a router service under router.service in the config file" );
 				die();
 			}
+
 			// Get the response from the router
 			$response = $router_service->handleRequest( $this->getRequest(), [] );
 
