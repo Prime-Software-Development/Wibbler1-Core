@@ -143,7 +143,7 @@ class twig2 extends base
 		// Note the filter has been loaded
 		$this->loaded_filters[] = $name;
 		// Load the filter
-		$this->_twig->addFilter( new Twig_Filter( $name, $filter ) );
+		$this->_twig->addFilter( new Twig_SimpleFilter( $name, $filter ) );
 	}
 
 	/**
