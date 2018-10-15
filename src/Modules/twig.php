@@ -31,6 +31,8 @@ class twig extends base
 
 	function __construct( array $options = null )
 	{
+		parent::__construct( $options );
+
 		if ( $options === null ) {
 			global $twig_options;
 			$this->_config = $twig_options;
