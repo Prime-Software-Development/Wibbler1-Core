@@ -1,0 +1,48 @@
+{% set Options = {
+DataPath: "",
+jsManageObject: "login"
+} %}
+{% extends "base.twig" %}
+
+{% block Body %}
+
+	<div class="container page-holder"  data-session-check="false">
+
+		<div class="row" style="padding-top: 5em;">
+			<div class="col-xs-12 col-sm-8 col-md-10">
+				<h1>Trunk Software</h1>
+				Wibbler System
+			</div>
+
+			<div class="col-xs-12 col-sm-4 col-md-2">
+				<p style="text-align:center;">
+					<img width="150px" src="/logo.png" />
+				</p>
+			</div>
+		</div>
+
+		<div class="row"><br/></div>
+
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">Login</div>
+				<div class="panel-body">
+					<form class="form settings-element" id="form_signin" method="post" action="/welcome/index/" data-toggle="validator" {% include "_extend/settings.twig" %}>
+
+						<input type="hidden" name="login_action" value="login">
+
+						{% if message %}
+							<p class="bg-danger center-block" style="padding: 5px;">{{ message }}</p>
+						{% endif %}
+
+						{% include "_generic/frm_email.twig" with { "Label": "E-Mail Address", "Name": "username", "Required": true } %}
+						{% include "_generic/frm_password.twig" with { "Label": "Password", "Name": "password", "Required": true } %}
+
+						{% include "_generic/frm_button.twig" with { "Offset": 3, "Id": "btn_login", "Value": "Login", "Style": "success" } %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
