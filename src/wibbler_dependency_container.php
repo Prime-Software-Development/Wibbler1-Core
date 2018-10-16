@@ -1,6 +1,7 @@
 <?php
 namespace Trunk\Wibbler;
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
+include_once( __DIR__ . "/modules/base.php" );
 
 /**
  * Dependency container for dependency injection
@@ -30,8 +31,8 @@ final class WibblerDependencyContainer {
 	 * Private constructor - stops creation of this without using Instance (below)
 	 */
 	private function __construct( $additional_config = null ) {
-		$this->services = [];
-		$this->services_config = [];
+		$this->services = array();
+		$this->services_config = array();
 
 		// Load the configuration loading module
 		$this->config = $this->getModule( "config" );
@@ -44,7 +45,6 @@ final class WibblerDependencyContainer {
 		// Add the additional configuration options (if set)
 		$this->config->add_from_array( $additional_config );
 		$this->config->add_from_array( [ "additional_configs" => ( $additional_config !== null ) ] );
-		//$this->config->add_from_array( [ "services" => [ 'wibbler.loader' => [ 'class' => '\Trunk\Wibbler\Services\CoreRouter' ] ] ] );
 
 		// Get the autoload config
 		$loaded_config = $this->config->getConfig( 'config' );
@@ -168,9 +168,6 @@ final class WibblerDependencyContainer {
 
 			// service class
 			$data = $this->services_config[ $service_id ];
-			if ($data[ 'class' ] == '' )
-				return false;
-
 			$arguments = isset( $data[ 'args' ] ) ? $data[ 'args' ] : null;
 			$reflect = new \ReflectionClass( $data[ 'class' ] );
 

@@ -1,12 +1,19 @@
 <?php
 namespace Trunk\Wibbler\Modules;
 
+use Twig_Loader_Filesystem;
+use Twig_Extension_Debug;
+use Twig_Environment;
+use Twig_Extension;
+use Twig_SimpleFilter;
+use Twig_Filter;
+use Twig_FactoryRuntimeLoader;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Form\Forms;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 
-class twig extends base
+class twig2 extends base
 {
 
 	private $_twig;
@@ -31,8 +38,6 @@ class twig extends base
 
 	function __construct( array $options = null )
 	{
-		parent::__construct( $options );
-
 		if ( $options === null ) {
 			global $twig_options;
 			$this->_config = $twig_options;
@@ -44,18 +49,18 @@ class twig extends base
 		$this->_cache_dir = $this->_config[ 'cache_dir' ];
 
 		// Create a new loader with the template directories
-		$this->twig_loader = new \Twig_Loader_Filesystem( $this->_template_dir );
+		$this->twig_loader = new Twig_Loader_Filesystem( $this->_template_dir );
 
 		// Start the twig environment
-		$this->_twig = new \Twig_Environment( $this->twig_loader, array(
+		$this->_twig = new Twig_Environment( $this->twig_loader, array(
 			'cache' => $this->_cache_dir,
 			'debug' => true,
 		) );
 
 		if ( 'development' === ENVIRONMENT ) {
-			$this->_twig->addExtension( new \Twig_Extension_Debug() );
+			$this->_twig->addExtension( new Twig_Extension_Debug() );
 
-			$this->_twig->addExtension( new TwigExtensions() );
+			$this->_twig->addExtension( new Twig2Extensions() );
 		}
 	}
 
@@ -138,7 +143,7 @@ class twig extends base
 		// Note the filter has been loaded
 		$this->loaded_filters[] = $name;
 		// Load the filter
-		$this->_twig->addFilter( $name, new \Twig_Filter_Function( $filter ) );
+		$this->_twig->addFilter( new Twig_Filter( $name, $filter ) );
 	}
 
 	/**
@@ -151,7 +156,7 @@ class twig extends base
 	}
 
 	/**
-	 * Set the default number format
+	 * Sets the default number format for the number_filter extension
 	 * @param int $decimal_places
 	 * @param string $decimal_point_char
 	 * @param string $thousand_seperator
@@ -181,10 +186,10 @@ class twig extends base
 	}
 }
 
-class TwigExtensions extends \Twig_Extension {
+class Twig2Extensions extends Twig_Extension {
 	public function getFilters() {
 		return array(
-			new \Twig_SimpleFilter('file_exists', function($file){
+			new Twig_SimpleFilter('file_exists', function($file){
 				return file_exists( $file );
 			})
 		);

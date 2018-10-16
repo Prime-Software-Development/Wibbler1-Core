@@ -1,14 +1,11 @@
 <?php
-namespace Trunk\Wibbler\Services;
-use TrunkSoftware\Component\Http\Response;
-use TrunkSoftware\Component\Http\Status;
-
+namespace Trunk\Wibbler;
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 /**
  * Try to find and create the user's controller
  */
-class CoreRouter extends RouterBase{
+class WibblerLoader {
 
 	/**
 	 * The path to the class file
@@ -46,20 +43,49 @@ class CoreRouter extends RouterBase{
 	 * @var string
 	 */
 	var $remap_method = '_remap';
-
+	/**
+	 * Any fatal error found when trying to load the class / method or false if all is ok
+	 * @var mixed
+	 */
+	var $error = false;
 	/**
 	 * The parts of the url which need passing to the method
 	 * @var array
 	 */
 	var $url_parts = array();
+	/**
+	 * The controller which matches the given path
+	 * @var WibblerController
+	 */
+	var $controller = null;
 
 	/**
 	 * The path to the controller
 	 */
 	public $controller_path;
 
+	/**
+	 * The instance of this object
+	 * @var null
+	 */
+	private static $_instance = null;
+
+	/**
+	 * @return WibblerLoader
+	 */
+	public static function Instance( ) {
+		if ( self::$_instance === null ) {
+			self::$_instance = new WibblerLoader();
+			self::$_instance->post_construct(  );
+		}
+		return self::$_instance;
+	}
+
 	function __construct()
 	{
+	}
+
+	private function post_construct() {
 		$path_parts = $this->init();
 
 		$initial_path = CONTROLLERPATH;
@@ -89,38 +115,6 @@ class CoreRouter extends RouterBase{
 		// Check the method exists within the controller
 		if ( $this->check_method() === false )
 			return;
-	}
-
-	/**
-	 * Actually handles the request
-	 * @param null $request
-	 * @param array $options
-	 * @return bool|Response
-	 */
-	public function handleRequest($request, $options = []) {
-		$main_controller = $this->controller;
-
-		if ( $this->getError() !== false || $main_controller === null ) {
-			$response = new Response([], Status::HTTP_NOT_FOUND );
-			return $response;
-		}
-
-		$main_controller->set_request( $request );
-		call_user_func_array( array( $main_controller, "pre_function_call" ), [ $this->class_method, $this->method_docblock ] );
-
-		// If the security check was passed
-		if ( $main_controller->getSecurityPassed() ) {
-			// Call the main method
-			$result = call_user_func_array( array( $main_controller, $this->class_method ), $this->url_parts );
-		}
-		else {
-			// Get the result of the security check
-			$result = $main_controller->getSecurityCheckResult();
-		}
-
-		if ( $result === null )
-			return false;
-		return $result;
 	}
 
 	protected function init() {
@@ -238,7 +232,8 @@ class CoreRouter extends RouterBase{
 	 */
 	private function check_class() {
 
-		include_once $this->class_file;
+		include $this->class_file;
+
 		if ( !isset( $_ns ) )
 			$_ns = '\\Wibbler\\User\\Modules';
 		$this->full_class_name = $_ns . "\\" . $this->class_name;
