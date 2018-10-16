@@ -6,7 +6,6 @@ use Twig_Extension_Debug;
 use Twig_Environment;
 use Twig_Extension;
 use Twig_SimpleFilter;
-use Twig_Filter;
 use Twig_FactoryRuntimeLoader;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Form\Forms;
@@ -38,6 +37,7 @@ class twig2 extends base
 
 	function __construct( array $options = null )
 	{
+		parent::__construct( $options );
 		if ( $options === null ) {
 			global $twig_options;
 			$this->_config = $twig_options;
@@ -143,7 +143,7 @@ class twig2 extends base
 		// Note the filter has been loaded
 		$this->loaded_filters[] = $name;
 		// Load the filter
-		$this->_twig->addFilter( new Twig_Filter( $name, $filter ) );
+		$this->_twig->addFilter( new Twig_SimpleFilter( $name, $filter ) );
 	}
 
 	/**
