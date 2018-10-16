@@ -1,5 +1,12 @@
 <?php
 namespace Trunk\Wibbler;
+if ( defined( "PROPEL_INC" ) ) {
+	\Propel::init( COMMONPATH . 'propel/build/conf/' . PROPEL_INC );
+	// Add the generated 'classes' directory to the include path
+	set_include_path( COMMONPATH . "propel/build/classes" . PATH_SEPARATOR . get_include_path());
+} else {
+	require_once COMMONPATH . '/propel/generated-conf/config.php';
+}
 
 class WibblerController {
 	private $_dependencies;
@@ -22,41 +29,10 @@ class WibblerController {
 	protected $config;
 
 	/**
-	 * @var
-	 */
-	protected $request;
-
-	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
 		$this->_load_configs();
-	}
-
-	/**
-	 * Whether security checks were passed or not
-	 */
-	private $security_check_result = true;
-
-	/**
-	 * @return bool
-	 */
-	public function getSecurityPassed() {
-		return $this->security_check_result === true;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getSecurityCheckResult() {
-		return $this->security_check_result;
-	}
-
-	/**
-	 * @param $security_check_result
-	 */
-	protected function setSecurityPassed( $security_check_result ) {
-		$this->security_check_result = $security_check_result;
 	}
 
 	/**
@@ -102,13 +78,6 @@ class WibblerController {
 		$this->controller_path_parts = $controller_path_parts;
 	}
 
-	/**
-	 * Sets the request object
-	 * @param $request
-	 */
-	public function set_request( $request ) {
-		$this->request = $request;
-	}
 	/**
 	 * Uses the loaded config to autoload modules, helpers and services as required
 	 */
