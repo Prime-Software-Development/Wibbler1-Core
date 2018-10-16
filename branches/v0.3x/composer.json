@@ -1,0 +1,10 @@
+{
+	"name": "Trunk/Wibbler",
+	"require": {
+		"twig/twig": ">=1.31",
+		"symfony/yaml": "2.8.18"
+	},
+	"autoload":{
+		"classmap": ["/src/"]
+	}
+}

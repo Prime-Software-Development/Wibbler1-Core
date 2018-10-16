@@ -1,0 +1,30 @@
+{% set Options = {
+DataPath: "user/",
+SearchText: "User",
+jsManageObject: "web1/user/user_manager",
+ObjectId: user.getId
+} %}
+{% extends manage_page ? "_extend/base_manage.twig" : "_extend/base_search.twig" %}
+
+{% block SearchOptions %}
+	{% embed "_generic/manage_panel.twig" %}
+		{% block PanelTitle %}
+		{% endblock %}
+
+		{% block PanelBody %}
+			{% include "_generic/frm_input.twig" with { "Label": "Name", "Name": "SearchUserName" } %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+{% block ManageContents %}
+	{% embed "_generic/manage_panel.twig" %}
+		{% block PanelTitle %}
+		{% endblock %}
+
+		{% block PanelBody %}
+			{% include "_generic/frm_input.twig" with { "Label": "Forename", "Name": "UserForename", "Value": user.getForename } %}
+			{% include "_generic/frm_input.twig" with { "Label": "Surname", "Name": "UserSurname", "Value": user.getSurname } %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
