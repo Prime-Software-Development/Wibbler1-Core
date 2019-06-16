@@ -1,6 +1,7 @@
 {
-  "name": "Trunk/Wibbler",
+  "name": "trunk/wibbler",
   "type": "library",
+  "description": "TrunkSoftware Wibbler framework",
   "homepage": "http://www.trunknetworks.com/",
   "authors": [
 	{
