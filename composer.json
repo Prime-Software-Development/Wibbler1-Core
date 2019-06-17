@@ -18,7 +18,8 @@
   "require": {
 	"php": ">=7",
 	"twig/twig": "2.*",
-	"symfony/yaml": "4.*"
+	"symfony/yaml": "4.*",
+	"trunk/http": "*"
   },
   "suggest": {
 	"doctrine/orm": "Allows connecting to databases via Doctrine",
