@@ -1,7 +1,6 @@
 <?php
 namespace Trunk\Wibbler;
-use Trunk\Wibbler\Modules\config;
-use TrunkSoftware\Component\Http\Request;
+use Trunk\Component\Http\Request;
 
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 

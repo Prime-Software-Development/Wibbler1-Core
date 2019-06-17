@@ -9,6 +9,12 @@
 	  "email": "chris.weller@trunknetworks.com"
 	}
   ],
+  "repositories": [
+	{
+	  "type": "vcs",
+	  "url": "https://github.com/ChrisWeller/Trunk-Wibbler1-ComponentHttp"
+	}
+  ],
   "require": {
 	"php": ">=7",
 	"twig/twig": "2.*",
