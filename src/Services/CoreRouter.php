@@ -1,7 +1,7 @@
 <?php
 namespace Trunk\Wibbler\Services;
-use TrunkSoftware\Component\Http\Response;
-use TrunkSoftware\Component\Http\Status;
+use Trunk\Component\Http\Response;
+use Trunk\Component\Http\Status;
 
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
