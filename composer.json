@@ -1,12 +1,12 @@
 {
-  "name": "trunk/wibbler",
+  "name": "primesoftwaredevelopment/wibbler",
   "type": "library",
-  "description": "TrunkSoftware Wibbler framework",
-  "homepage": "http://www.trunknetworks.com/",
+  "description": "Prime Software Development Wibbler framework",
+  "homepage": "http://www.primesoftwaredevelopment.co.uk/",
   "authors": [
 	{
 	  "name": "Chris Weller",
-	  "email": "chris.weller@trunknetworks.com"
+	  "email": "chris@primesoftwaredevelopment.co.uk"
 	}
   ],
   "repositories": [
@@ -19,7 +19,7 @@
 	"php": ">=7",
 	"twig/twig": "2.*",
 	"symfony/yaml": "4.*",
-	"trunk/http": "*"
+	"primesoftwaredevelopment/http": "*"
   },
   "suggest": {
 	"doctrine/orm": "Allows connecting to databases via Doctrine",
