@@ -2,6 +2,9 @@
 namespace Trunk\Wibbler;
 
 class WibblerController {
+	/**
+	 * @var WibblerDependencyContainer
+	 */
 	private $_dependencies;
 
 	/**
@@ -21,10 +24,23 @@ class WibblerController {
 	 */
 	protected $config;
 
-	/**
-	 * @var
-	 */
 	protected $request;
+
+	/**
+	 * Holds loaded helpers
+	 * @var array
+	 */
+	private $__helpers = [];
+	/**
+	 * Holds loaded modules
+	 * @var array
+	 */
+	private $__modules = [];
+	/**
+	 * Holds loaded services
+	 * @var array
+	 */
+	private $__services = [];
 
 	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
@@ -71,7 +87,8 @@ class WibblerController {
 	 * @param string $module Name of the module to load
 	 */
 	public function load_module( $module, $namespace = null, $option = null ) {
-		$this->$module = $this->_dependencies->getModule( $module, $namespace, $option );
+		$this->__modules[ $module ] = $this->_dependencies->getModule( $module, $namespace, $option );
+		return $this->__modules[ $module ];
 	}
 
 	/**
@@ -79,7 +96,8 @@ class WibblerController {
 	 * @param string $helper Name of the helper file to load
 	 */
 	public function load_helper( $helper ) {
-		$this->_dependencies->getHelper( $helper );
+		$this->__helpers[ $helper ] = $this->_dependencies->getHelper( $helper );
+		return $this->__helpers[ $helper ];
 	}
 
 	/**
@@ -88,7 +106,8 @@ class WibblerController {
 	 * @return mixed
 	 */
 	public function load_service( $service_name ) {
-		return $this->_dependencies->getService( $service_name );
+		$this->__services[ $service_name ] = $this->_dependencies->getService( $service_name );
+		return $this->__services[ $service_name ];
 	}
 
 	/**
@@ -118,7 +137,7 @@ class WibblerController {
 		$this->_dependencies = WibblerDependencyContainer::Instance();
 
 		// Load the configuration loading module
-		$this->load_module( "config" );
+		$this->config = $this->load_module( "config" );
 
 		// Get the autoload config
 		$loaded_config = $this->config->getConfig( 'config' );
@@ -168,7 +187,24 @@ class WibblerController {
 	 */
 	private function __load_services( $services ) {
 		foreach ( $services as $service_name ) {
-			$this->$service_name = $this->_dependencies->getService( $service_name );
+			$this->load_service( $service_name );
+		}
+	}
+
+	/**
+	 * Getter
+	 * @param string $name
+	 * @return mixed|void
+	 */
+	public function __get( string $name ) {
+		if ( array_key_exists( $name, $this->__services ) ) {
+			return $this->__services[ $name ];
+		}
+		if ( array_key_exists( $name, $this->__modules ) ) {
+			return $this->__modules[ $name ];
+		}
+		if ( array_key_exists( $name, $this->__helpers ) ) {
+			return $this->__helpers[ $name ];
 		}
 	}
 }

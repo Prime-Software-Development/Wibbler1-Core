@@ -36,6 +36,11 @@ class twig2 extends base
 	 */
 	private $loaded_extensions = [ ];
 
+	/**
+	 * @var array|string[]
+	 */
+	private $_config = [];
+
 	function __construct( array $options = null )
 	{
 		parent::__construct( $options );

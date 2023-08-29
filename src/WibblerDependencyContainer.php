@@ -1,5 +1,7 @@
 <?php
 namespace Trunk\Wibbler;
+use Trunk\Wibbler\Modules\config;
+
 if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 /**
@@ -25,6 +27,11 @@ final class WibblerDependencyContainer {
 	 * @var null
 	 */
 	private static $_instance = null;
+
+	/**
+	 * @var config
+	 */
+	protected $config;
 
 	/**
 	 * Private constructor - stops creation of this without using Instance (below)
