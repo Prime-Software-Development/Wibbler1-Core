@@ -43,6 +43,11 @@ class WibblerController {
 	private $__services = [];
 
 	/**
+	 * @var array
+	 */
+	public $url_parts = [];
+
+	/**
 	 * Initiate the controller - called after construction by the main Wibbler class
 	 */
 	function __construct() {
