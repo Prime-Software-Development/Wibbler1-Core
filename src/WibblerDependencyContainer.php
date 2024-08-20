@@ -179,7 +179,7 @@ final class WibblerDependencyContainer {
 				return false;
 
 			$arguments = isset( $data[ 'args' ] ) ? $data[ 'args' ] : null;
-			$reflect = new \ReflectionClass( $data[ 'class' ] );
+			$reflect = new \ReflectionClass( is_array( $data[ 'class' ] ) ? $data[ 'class' ][1] : $data[ 'class' ] );
 
 			if ( $arguments ) {
 				$service = $reflect->newInstance( $arguments );
