@@ -72,6 +72,16 @@ final class WibblerDependencyContainer {
 	}
 
 	/**
+	 * For testing purposes only - resets the instance
+	 * @return void
+	 */
+	public static function ClearInstance() {
+		if ( php_sapi_name() == "cli" ) {
+			self::$_instance = null;
+		}
+	}
+
+	/**
 	 * Returns the module or attempts to load if not already loaded
 	 * @param      $module
 	 * @param null $namespace

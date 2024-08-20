@@ -97,7 +97,7 @@ class urls extends base
 
 	public function get_requested_url()
 	{
-		$requested_uri = $_SERVER[ 'REQUEST_URI' ];
+		$requested_uri = $_SERVER[ 'REQUEST_URI' ] ?? "";
 		if ( strpos( $requested_uri ?? "", '/' ) === 0 ) {
 			$requested_uri = substr( $requested_uri ?? "", 1 );
 		}
