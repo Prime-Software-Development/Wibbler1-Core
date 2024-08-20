@@ -59,7 +59,7 @@ class urls extends base
 
 		// If index.php is in the request - then we aren't using htaccess rewrites
 		// Therefore find the path quickly from the request
-		if ( strpos( $requested, "index.php" ) > 0 ) {
+		if ( strpos( $requested ?? "", "index.php" ) > 0 ) {
 			$result = substr( $requested, 0, strpos( $requested, "index.php" ) );
 			$this->controller_path = substr( $requested, 0, strpos( $requested, "index.php" ) + 9 ) . '/';
 			return $result;
@@ -98,8 +98,8 @@ class urls extends base
 	public function get_requested_url()
 	{
 		$requested_uri = $_SERVER[ 'REQUEST_URI' ];
-		if ( strpos( $requested_uri, '/' ) === 0 ) {
-			$requested_uri = substr( $requested_uri, 1 );
+		if ( strpos( $requested_uri ?? "", '/' ) === 0 ) {
+			$requested_uri = substr( $requested_uri ?? "", 1 );
 		}
 		return $requested_uri;
 	}
